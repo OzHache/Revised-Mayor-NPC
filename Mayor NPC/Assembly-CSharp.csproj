@@ -55,14 +55,15 @@
     <Analyzer Include="/Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/AddIns/MonoDevelop.Unity/Analyzers/Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/InventorySystem.cs" />
+    <Compile Include="Assets/Scripts/InventoryItem.cs" />
     <Compile Include="Assets/Scripts/Collectable.cs" />
     <Compile Include="Assets/Scripts/PlayerController.cs" />
+    <Compile Include="Assets/Scripts/InventoryCell.cs" />
     <Compile Include="Assets/Scripts/MouseUI.cs" />
     <Compile Include="Assets/Shroom.cs" />
     <Compile Include="Assets/Scripts/IInteractable.cs" />
-    <Compile Include="Assets/InventorySystem.cs" />
-    <Compile Include="Assets/Scripts/InventoryCell.cs" />
-    <Compile Include="Assets/Scripts/InventoryItem.cs" />
+    <Compile Include="Assets/GameManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets/TextMesh Pro/Resources/Shaders/TMPro.cginc" />
