@@ -24,6 +24,8 @@ public class Shroom : Collectable
         {
             case InteractionTypes.Take:
                 Debug.Log("Take");
+                //Send a message to the Game Manager to take the object
+
                 break;
             case InteractionTypes.Use:
                 Debug.Log("Use");
