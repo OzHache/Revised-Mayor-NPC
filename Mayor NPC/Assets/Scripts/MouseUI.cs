@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.UI;
 
-
 public class MouseUI : MonoBehaviour
 {
     public LayerMask interactableLayer = 0;
@@ -14,6 +13,7 @@ public class MouseUI : MonoBehaviour
     private Vector2 currentPosition = Vector2.zero;
     //reference to the Canvas
     private GameObject canvas;
+    [SerializeField]private RectTransform iconRect; 
     [SerializeField]private TextMeshProUGUI descriptionTMP;
     [SerializeField]private TextMeshProUGUI action_OneTMP;
     [SerializeField]private TextMeshProUGUI action_TwoTMP;
@@ -45,8 +45,7 @@ public class MouseUI : MonoBehaviour
             return;
         }
         player = GameObject.FindGameObjectWithTag("Player");
-
-
+        iconRect.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -178,4 +177,13 @@ public class MouseUI : MonoBehaviour
 
     }
     #endregion Button Clicks
+
+    #region IconDrag
+    private void ActivateIcon(Sprite sprite)
+    {
+        //todo: make this add the spirte of the dragable object and then drop it onto another inventory object that will accept it or send it back OR drop on the ground
+
+    }
+
+    #endregion IconDrag
 }

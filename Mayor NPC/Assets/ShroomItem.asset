@@ -15,4 +15,5 @@ MonoBehaviour:
   itemName: shroom
   description: A Shroom
   art: {fileID: 993999254130579058, guid: 484e522e5e305d0478ce0d56836c8fe8, type: 3}
-  usesRemaining: 1
+  isReuseable: 0
+  isConsumeable: 1
