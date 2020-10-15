@@ -42,7 +42,7 @@ public class InventorySystem : MonoBehaviour
         {
             if(cell.item == null)
             {
-                cell.AddItem(item);
+                cell.AddItem(item, this);
                 Debug.Log(item.name + " has been placed in to " + inventoryCells.IndexOf(cell));
                 return; 
             }

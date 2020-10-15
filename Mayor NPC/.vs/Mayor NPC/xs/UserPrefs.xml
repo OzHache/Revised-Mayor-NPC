@@ -1,15 +1,14 @@
 ﻿<Properties StartupConfiguration="{3263827B-544A-D989-4741-7829AFAFB382}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MouseUI.cs">
     <Files>
-      <File FileName="Assets/GameManager.cs" Line="33" Column="35" />
-      <File FileName="Assets/Scripts/MouseUI.cs" Line="185" Column="1" />
-      <File FileName="Assets/InventorySystem.cs" Line="4" Column="1" />
-      <File FileName="Assets/Shroom.cs" Line="28" Column="45" />
-      <File FileName="Assets/Scripts/IInteractable.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Collectable.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/InventoryItem.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/InventoryCell.cs" Line="5" Column="1" />
-      <File FileName="Assets/Scripts/DragAndDrop.cs" Line="31" Column="6" />
+      <File FileName="Assets/Scripts/MouseUI.cs" Line="152" Column="80" />
+      <File FileName="Assets/Scripts/IInteractable.cs" />
+      <File FileName="Assets/Scripts/Collectable.cs" />
+      <File FileName="Assets/Scripts/InventoryItem.cs" />
+      <File FileName="Assets/Scripts/InventoryCell.cs" Line="81" Column="1" />
+      <File FileName="Assets/Scripts/DragAndDrop.cs" Line="35" Column="52" NotebookId="1" />
+      <File FileName="Assets/Scripts/MouseInventory.cs" Line="69" Column="82" NotebookId="1" />
+      <File FileName="Assets/Scripts/InventorySystem.cs" Line="27" Column="1" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -27,15 +26,9 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="07a0f929-d197-4b5b-a13f-fe899575e0c0" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4abbe7c5-1537-41d3-8064-90b6e679b85d" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/InventoryCell.cs" relfile="Assets/Scripts/InventoryCell.cs" line="81" column="1" />
-      <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/InventoryCell.cs" relfile="Assets/Scripts/InventoryCell.cs" line="59" column="1" />
-      <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/InventoryCell.cs" relfile="Assets/Scripts/InventoryCell.cs" line="35" column="1" />
-      <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/InventorySystem.cs" relfile="Assets/Scripts/InventorySystem.cs" line="34" column="1" />
-      <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/InventorySystem.cs" relfile="Assets/Scripts/InventorySystem.cs" line="27" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

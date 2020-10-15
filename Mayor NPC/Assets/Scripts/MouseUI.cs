@@ -2,22 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using TMPro;
-using UnityEngine.UI;
 
 public class MouseUI : MonoBehaviour
 {
+
+    
+    
+    
     public LayerMask interactableLayer = 0;
     //Reference to the current on screen position
     private Vector2 currentPosition = Vector2.zero;
     //reference to the Canvas
-    private GameObject canvas;
-    [SerializeField]private RectTransform iconRect; 
+    [SerializeField]private Canvas interactionCanvas;
+    
+    //TextMseshPro
     [SerializeField]private TextMeshProUGUI descriptionTMP;
     [SerializeField]private TextMeshProUGUI action_OneTMP;
     [SerializeField]private TextMeshProUGUI action_TwoTMP;
     [SerializeField]private TextMeshProUGUI action_ThreeTMP;
+
 
     //References to the player
     private GameObject player = null;
@@ -32,9 +36,11 @@ public class MouseUI : MonoBehaviour
 
     void Start()
     {
+        
         //Set the reference to the canvas object and disable it
-        canvas = transform.GetChild(0).gameObject;
-        canvas.SetActive(false);
+        
+        interactionCanvas.gameObject.SetActive(false);
+        
         
         //Set References to the Player
 
@@ -45,7 +51,7 @@ public class MouseUI : MonoBehaviour
             return;
         }
         player = GameObject.FindGameObjectWithTag("Player");
-        iconRect.gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -58,22 +64,23 @@ public class MouseUI : MonoBehaviour
         //Check for clicks
         if (Input.GetMouseButtonDown(0))
         {
-            if (!canvas.activeInHierarchy)
+            if (!interactionCanvas.gameObject.activeInHierarchy)
             {
                 player.SendMessage("Move", GetMousePosition(), SendMessageOptions.DontRequireReceiver);
             }
         }
-        
     }
+
+    
 
     private void SetUIActive()
     {
-        if (canvas.activeInHierarchy)
+        if (interactionCanvas.gameObject.activeInHierarchy)
         {
             //Check the distance bettween the mouses current position and the UI
             if (Vector2.Distance(GetMousePosition(), currentPosition) > 2.75f)
             {
-                canvas.SetActive(false);
+                interactionCanvas.gameObject.SetActive(false);
                 focusItem = null;
             }
         }
@@ -92,13 +99,16 @@ public class MouseUI : MonoBehaviour
                 // Update the UI
                 UpdateUI(hit.transform.gameObject);
                 //Move the UI so it can be over elements in the screen
-                transform.position = GetMousePosition();
+                Vector2 worldPos = GetMousePosition();
+                Vector2 mousePos = new Vector2((int)worldPos.x, (int)worldPos.y) + Vector2.one / 2;
+                transform.position = mousePos;
                 currentPosition = transform.position;
-                canvas.SetActive(true);
+                interactionCanvas.gameObject.SetActive(true);
                 
             }
         }
     }
+   
 
     private void UpdateUI(GameObject hoverObject)
     {
@@ -132,14 +142,19 @@ public class MouseUI : MonoBehaviour
         }
     }
 
-    private Vector2 GetMousePosition()
+    //Returns the World Location of the mouse
+    public Vector2 GetMousePosition(float scale = float.MinValue)
     {
+        if(scale == float.MinValue)
+        {
+            scale = interactionCanvas.scaleFactor;
+        }
         // get the pixel position of the mouse in the world, convert it to a grid location
         Vector2 pixelPosition = Input.mousePosition;
-        Vector2 worldPos = Camera.main.ScreenToWorldPoint(pixelPosition);
-        Vector2 mousePos = new Vector2((int)worldPos.x, (int)worldPos.y) + Vector2.one / 2;
+        Vector2 worldPos = Camera.main.ScreenToWorldPoint(pixelPosition)* scale;
+        //Vector2 mousePos = new Vector2((int)worldPos.x, (int)worldPos.y) + Vector2.one / 2;
 
-        return mousePos;
+        return worldPos;
 
     }
 
@@ -178,12 +193,5 @@ public class MouseUI : MonoBehaviour
     }
     #endregion Button Clicks
 
-    #region IconDrag
-    private void ActivateIcon(Sprite sprite)
-    {
-        //todo: make this add the spirte of the dragable object and then drop it onto another inventory object that will accept it or send it back OR drop on the ground
-
-    }
-
-    #endregion IconDrag
+    
 }

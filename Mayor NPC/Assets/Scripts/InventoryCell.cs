@@ -8,7 +8,7 @@ public class InventoryCell : MonoBehaviour
     public InventoryItem item { get; private set; }
     //Counter for how many items
     private int numberOfItems;
-
+    private InventorySystem iSystem;
     //Refernces to UI Elements
     //Image in the Panel
     private Image image;
@@ -52,12 +52,13 @@ public class InventoryCell : MonoBehaviour
         UpdateUI();
     }
 
-    internal void AddItem(InventoryItem newItem)
+    internal void AddItem(InventoryItem newItem, InventorySystem system)
     {
         this.item = newItem;
         numberOfItems = 1;
         UpdateUI();
         Debug.Log("A new item has been added" + item.name);
+        iSystem = system;
     }
 
     //Clears the UI

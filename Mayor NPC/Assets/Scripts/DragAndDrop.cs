@@ -10,26 +10,37 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     [SerializeField] Canvas canvas;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
-    private GameObject duplicate;
+    private Vector3 dropPosition;
+    //the cell that this item is coming from
+    private InventoryCell cell;
+
+    private void Start()
+    {
+        cell = gameObject.GetComponent<InventoryCell>();
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        //pass the sprite of this gameobject to the mouseUI
+        MouseInventory.GetMouseInvUI().ActivateIcon(gameObject.GetComponentInChildren<Image>().sprite);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        dropPosition = MouseInventory.GetMouseInvUI().DeactivateIcon();
+        //todo: If this is in the world, Take the item out of the inventory and place it in the world
+        
+
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        // new System.NotImplementedException();
     }
 
     private void Awake()
