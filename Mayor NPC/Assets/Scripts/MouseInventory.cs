@@ -17,9 +17,16 @@ public class MouseInventory : MonoBehaviour
     //Canvas that holds the sprite for the item being dragged
     [SerializeField] private Canvas dragCanvas;
     [SerializeField] private RectTransform dragIconRect;
-    //System we dragged from and item being dragged
-    private InventorySystem dragFromSystem;
+
+    //item being dragged
     private InventoryItem item;
+
+    //Cell we are dragging from
+    InventoryCell fromCell;
+    //Cell we are dragging to
+    InventoryCell toCell;
+    //Cell we are over right now
+    InventoryCell hoverCell;
 
     // Start is called before the first frame update
     void Start()
@@ -56,9 +63,10 @@ public class MouseInventory : MonoBehaviour
             MouseDrop();
         }
     }
+
     private void MouseDrop()
     {
-        // drop this item in the world at position.
+        
     }
     //Set the dragUI Position
     private void SetDragUI()
@@ -68,17 +76,44 @@ public class MouseInventory : MonoBehaviour
             dragCanvas.transform.position = mouseUI.GetMousePosition(dragCanvas.scaleFactor);
         }
     }
-    #region IconDrag
-    public void ActivateIcon(Sprite sprite)
+    //The cell the mouse is over
+    public void SetActiveCell(InventoryCell cell = null)
     {
+        hoverCell = cell;
+    }
+
+
+    #region IconDrag
+    public void PickUp(InventoryCell cell)
+    {
+
+        fromCell = cell;
         //todo: make this add the spirte of the dragable object and then drop it onto another inventory object that will accept it or send it back OR drop on the ground
-        dragIconRect.GetComponent<Image>().sprite = sprite;
+        dragIconRect.GetComponent<Image>().sprite = fromCell.item.art;
+        //Set the Drag Canvas to active
         dragIconRect.gameObject.SetActive(true);
         dragCanvas.gameObject.SetActive(true);
     }
 
-    internal Vector3 DeactivateIcon()
+    internal Vector3 Drop()
     {
+        //Check if we are over a cell that is not this cell
+        if(hoverCell!= null && hoverCell != fromCell)
+        {
+            //See if we can drop this here
+            //Add one
+            if(hoverCell.item == fromCell.item)
+            {
+                hoverCell.AddOne();
+                fromCell.RemoveOne();
+            }else if (hoverCell.item == null)
+            {
+                hoverCell.AddItem(fromCell.item);
+                fromCell.RemoveOne();
+            }
+        }
+
+        //Deactivate the Drag cell
         dragIconRect.gameObject.SetActive(false);
         dragCanvas.gameObject.SetActive(false);
         return mouseUI.GetMousePosition();

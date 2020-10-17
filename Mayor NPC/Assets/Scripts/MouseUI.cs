@@ -7,12 +7,27 @@ using TMPro;
 public class MouseUI : MonoBehaviour
 {
 
-    
-    
+    private static MouseUI mouseUI;
+
+    public static MouseUI GetMouseUI()
+    {
+        if (mouseUI == null)
+        {
+            mouseUI = GameObject.Find("MouseObject").GetComponent<MouseUI>();
+            if(mouseUI == null)
+            {
+                Debug.LogError("No MouseObject");
+            }
+        }
+        return mouseUI;
+    }
     
     public LayerMask interactableLayer = 0;
     //Reference to the current on screen position
     private Vector2 currentPosition = Vector2.zero;
+
+
+
     //reference to the Canvas
     [SerializeField]private Canvas interactionCanvas;
     
@@ -31,6 +46,7 @@ public class MouseUI : MonoBehaviour
     //if the UI isActive
     public bool isUIActive;
     Dictionary<UIButtonValues, string> UIActions = new Dictionary<UIButtonValues, string>();
+    private bool isMouseOverUI = false;
 
     // Start is called before the first frame update
 
@@ -64,14 +80,25 @@ public class MouseUI : MonoBehaviour
         //Check for clicks
         if (Input.GetMouseButtonDown(0))
         {
-            if (!interactionCanvas.gameObject.activeInHierarchy)
+            //Raycast to see if we are on the UI layer
+            
+            if (!interactionCanvas.gameObject.activeInHierarchy && !isMouseOverUI)
             {
                 player.SendMessage("Move", GetMousePosition(), SendMessageOptions.DontRequireReceiver);
             }
         }
     }
 
-    
+    //Manage when the mouse is over the UI
+    internal void MouseOver()
+    {
+        isMouseOverUI = true;
+    }
+
+    internal void MouseExit()
+    {
+        isMouseOverUI = false;
+    }
 
     private void SetUIActive()
     {

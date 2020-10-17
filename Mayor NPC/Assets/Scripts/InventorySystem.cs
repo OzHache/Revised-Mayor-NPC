@@ -8,20 +8,24 @@ public class InventorySystem : MonoBehaviour
 
     private void Start()
     {
-       
+       foreach(InventoryCell cell in inventoryCells)
+        {
+            cell.SetInventorySystem(this);
+        }
     }
 
-    public void AddInventoryCell(InventoryCell cell)
-    {
-        if (inventoryCells.Contains(cell)){
-            //this cell already exist in the inventory system.
-            return;
-        }
-        else
-        {
-            inventoryCells.Add(cell);
-        }
-    }
+    // todo: Delete this if there is no Errors
+    //public void AddInventoryCell(InventoryCell cell)
+    //{
+    //    if (inventoryCells.Contains(cell)){
+    //        //this cell already exist in the inventory system.
+    //        return;
+    //    }
+    //    else
+    //    {
+    //        inventoryCells.Add(cell);
+    //    }
+    //}
 
     public void AddToInventory(InventoryItem item) {
         foreach(InventoryCell cell in inventoryCells)
@@ -42,7 +46,7 @@ public class InventorySystem : MonoBehaviour
         {
             if(cell.item == null)
             {
-                cell.AddItem(item, this);
+                cell.AddItem(item);
                 Debug.Log(item.name + " has been placed in to " + inventoryCells.IndexOf(cell));
                 return; 
             }

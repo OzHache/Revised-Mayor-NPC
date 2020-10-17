@@ -2,12 +2,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+[RequireComponent(typeof(DragAndDrop))]
 public class InventoryCell : MonoBehaviour
 {
     //Refences to item
     public InventoryItem item { get; private set; }
     //Counter for how many items
     private int numberOfItems;
+    private int durability = 0;
     private InventorySystem iSystem;
     //Refernces to UI Elements
     //Image in the Panel
@@ -18,21 +20,29 @@ public class InventoryCell : MonoBehaviour
     public void Start()
     {
         //Add this cell to the inventory system.
-        GameManager.GetGameManager().playerInventory.AddInventoryCell(this);
+        //GameManager.GetGameManager().playerInventory.AddInventoryCell(this);
 
         image = GetComponent<Image>();
         counter = GetComponentInChildren<TextMeshProUGUI>();
         durabiltySlider = GetComponentInChildren<Slider>();
-        if (item != null)
-        {
-            UpdateUI();
-        }
+        
+         UpdateUI();
     }
 
     internal void AddOne()
     {
         numberOfItems++;
         UpdateUI();
+    }
+    internal void RemoveOne()
+    {
+        numberOfItems--;
+        if (numberOfItems == 0 || (item.isReuseable && durability <= 0))
+        {
+            Clear();
+        }
+        UpdateUI();
+
     }
 
     public void Use()
@@ -48,17 +58,20 @@ public class InventoryCell : MonoBehaviour
             //The item is durable and set the value to the durability
             
         }
+        if(numberOfItems == 0 || (item.isReuseable && durability <= 0))
+        {
+            Clear();
+        }
         
         UpdateUI();
     }
 
-    internal void AddItem(InventoryItem newItem, InventorySystem system)
+    internal void AddItem(InventoryItem newItem)
     {
         this.item = newItem;
         numberOfItems = 1;
         UpdateUI();
         Debug.Log("A new item has been added" + item.name);
-        iSystem = system;
     }
 
     //Clears the UI
@@ -66,14 +79,13 @@ public class InventoryCell : MonoBehaviour
     {
         item = null;
         numberOfItems = 0;
-        UpdateUI();
     }
 
     private void UpdateUI() {
         //if we have cleared the item
         if(item == null)
         {
-            image = null;
+            image.sprite = null;
             counter.text = "";
         }
         else
@@ -85,6 +97,9 @@ public class InventoryCell : MonoBehaviour
         //Update the durability slider or the Counter
     }
 
-    
+    public void SetInventorySystem(InventorySystem inventorySystem)
+    {
+        iSystem = inventorySystem;
+    }
     
 }

@@ -19,10 +19,23 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         cell = gameObject.GetComponent<InventoryCell>();
     }
 
+        //Manage mouse over UI
+
+    private void OnMouseOver()
+    {
+        MouseUI.GetMouseUI().MouseOver();
+        MouseInventory.GetMouseInvUI().SetActiveCell(cell);
+    }
+    private void OnMouseExit()
+    {
+        MouseUI.GetMouseUI().MouseExit();
+        MouseInventory.GetMouseInvUI().SetActiveCell();
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         //pass the sprite of this gameobject to the mouseUI
-        MouseInventory.GetMouseInvUI().ActivateIcon(gameObject.GetComponentInChildren<Image>().sprite);
+        MouseInventory.GetMouseInvUI().PickUp(cell);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -32,7 +45,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        dropPosition = MouseInventory.GetMouseInvUI().DeactivateIcon();
+        dropPosition = MouseInventory.GetMouseInvUI().Drop();
         //todo: If this is in the world, Take the item out of the inventory and place it in the world
         
 

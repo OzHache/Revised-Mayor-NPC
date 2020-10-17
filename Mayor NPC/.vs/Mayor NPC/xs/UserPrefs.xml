@@ -1,14 +1,15 @@
 ﻿<Properties StartupConfiguration="{3263827B-544A-D989-4741-7829AFAFB382}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MouseUI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/MouseUI.cs" Line="152" Column="80" />
+      <File FileName="Assets/Scripts/DragAndDrop.cs" Line="47" Column="1" />
+      <File FileName="Assets/Scripts/InventoryCell.cs" />
+      <File FileName="Assets/Scripts/MouseInventory.cs" />
+      <File FileName="Assets/Scripts/MouseUI.cs" />
       <File FileName="Assets/Scripts/IInteractable.cs" />
       <File FileName="Assets/Scripts/Collectable.cs" />
       <File FileName="Assets/Scripts/InventoryItem.cs" />
-      <File FileName="Assets/Scripts/InventoryCell.cs" Line="81" Column="1" />
-      <File FileName="Assets/Scripts/DragAndDrop.cs" Line="35" Column="52" NotebookId="1" />
-      <File FileName="Assets/Scripts/MouseInventory.cs" Line="69" Column="82" NotebookId="1" />
-      <File FileName="Assets/Scripts/InventorySystem.cs" Line="27" Column="1" NotebookId="1" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="61" Column="24" />
+      <File FileName="Assets/Scripts/InventorySystem.cs" Line="1" Column="1" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,7 +17,7 @@
           <Node name="Mayor NPC" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="MouseUI.cs" selected="True" />
+                <Node name="GameManager.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -26,7 +27,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4abbe7c5-1537-41d3-8064-90b6e679b85d" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5c9ca6e4-fc1e-4103-8907-60041eb6d56b" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

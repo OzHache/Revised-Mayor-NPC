@@ -60,12 +60,14 @@
     <Compile Include="Assets/Scripts/Collectable.cs" />
     <Compile Include="Assets/Scripts/PlayerController.cs" />
     <Compile Include="Assets/Scripts/GameManager.cs" />
+    <Compile Include="Assets/Scripts/MouseInventory.cs" />
     <Compile Include="Assets/Scripts/InventoryCell.cs" />
     <Compile Include="Assets/Scripts/MouseUI.cs" />
     <Compile Include="Assets/Scripts/DragAndDrop.cs" />
     <Compile Include="Assets/Scripts/Shroom.cs" />
     <Compile Include="Assets/Scripts/IInteractable.cs" />
-    <Compile Include="Assets/Scripts/MouseInventory.cs" />
+    <Compile Include="Assets/Scripts/InventoryObject.cs" />
+    <Compile Include="Assets/Scripts/WorldInventory.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets/TextMesh Pro/Resources/Shaders/TMPro.cginc" />
