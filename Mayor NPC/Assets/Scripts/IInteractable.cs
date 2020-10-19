@@ -9,4 +9,14 @@ public interface IInteractable
      */
     
     Dictionary<UIButtonValues,string> Identify();
+   
+}
+public enum InteractionTypes
+{
+    Take,
+    Use,
+    Misc,
+    Unused,
+    Build, 
+    Add
 }

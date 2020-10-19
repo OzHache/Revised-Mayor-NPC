@@ -21,7 +21,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
         //Manage mouse over UI
 
-    private void OnMouseOver()
+    private void OnMouseEnter()
     {
         MouseUI.GetMouseUI().MouseOver();
         MouseInventory.GetMouseInvUI().SetActiveCell(cell);
@@ -36,11 +36,11 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     {
         //pass the sprite of this gameobject to the mouseUI
         MouseInventory.GetMouseInvUI().PickUp(cell);
+        
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        //throw new System.NotImplementedException();
     }
 
     public void OnEndDrag(PointerEventData eventData)

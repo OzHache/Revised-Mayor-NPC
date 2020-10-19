@@ -7,8 +7,11 @@ public class InventoryCell : MonoBehaviour
 {
     //Refences to item
     public InventoryItem item { get; private set; }
+    //If this inventory should only accept a certian type
+    public InventoryItem onlyAccepts { get; private set; }
+    public bool lockedInventory { get { return onlyAccepts != null; } }
     //Counter for how many items
-    private int numberOfItems;
+    public int numberOfItems { get; private set; }
     private int durability = 0;
     private InventorySystem iSystem;
     //Refernces to UI Elements
@@ -16,6 +19,7 @@ public class InventoryCell : MonoBehaviour
     private Image image;
     private TextMeshProUGUI counter;
     private Slider durabiltySlider;
+    
 
     public void Start()
     {
@@ -75,10 +79,12 @@ public class InventoryCell : MonoBehaviour
     }
 
     //Clears the UI
-    private void Clear()
+    public void Clear()
     {
         item = null;
+        onlyAccepts = null;
         numberOfItems = 0;
+        UpdateUI();
     }
 
     private void UpdateUI() {
@@ -101,5 +107,23 @@ public class InventoryCell : MonoBehaviour
     {
         iSystem = inventorySystem;
     }
-    
+
+    /// <summary>
+    /// Lock and unlock the inventory with the item to lock
+    /// </summary>
+    /// <param name="itemToLock">InventoryItem to locok the inventory with</param>
+    public void LockInventory (InventoryItem itemToLock)
+    {
+        onlyAccepts = itemToLock;
+    }
+    public void UnlockInventory()
+    {
+        onlyAccepts = null;
+    }
+
+    internal void Remove(int currentAmountNeeded)
+    {
+        numberOfItems -= currentAmountNeeded;
+        UpdateUI();
+    }
 }

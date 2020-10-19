@@ -11,6 +11,9 @@ public class WorldInventory : MonoBehaviour
     [SerializeField]private Canvas inventoryCanvas;
     // Number of inventory Slots
     [SerializeField] InventorySystem inventorySystem;
+    private bool isMouseOver;
+    private bool isMouseOff;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,5 +36,41 @@ public class WorldInventory : MonoBehaviour
     void Update()
     {
         
+    }
+    private void OnMouseEnter()
+    {
+        inventoryCanvas.gameObject.SetActive(true);
+        isMouseOver = true;
+        
+    }
+    private void OnMouseOver()
+    {
+        if (isMouseOff)
+        {
+            StopCoroutine("MouseOff");
+            isMouseOff = false;
+        }
+    }
+    private void OnMouseExit()
+    {
+        OnMouseOff();
+    }
+    public void OnMouseOn()
+    {
+        OnMouseOver();
+    }
+    public void OnMouseOff()
+    {
+        StartCoroutine("MouseOff");
+    }
+
+    //mouse off Coroutine
+    IEnumerator  MouseOff()
+    {
+        isMouseOff = true;
+        yield return new WaitForSeconds(.5f);
+        inventoryCanvas.gameObject.SetActive(false);
+        isMouseOff = false;
+
     }
 }

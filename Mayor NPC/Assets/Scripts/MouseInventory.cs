@@ -58,14 +58,6 @@ public class MouseInventory : MonoBehaviour
         {
             SetDragUI();
         }
-        if (Input.GetMouseButtonUp(0) && dragCanvas.gameObject.activeInHierarchy)
-        {
-            MouseDrop();
-        }
-    }
-
-    private void MouseDrop()
-    {
         
     }
     //Set the dragUI Position
@@ -100,6 +92,18 @@ public class MouseInventory : MonoBehaviour
         //Check if we are over a cell that is not this cell
         if(hoverCell!= null && hoverCell != fromCell)
         {
+            //See if this cell is locked
+            if (hoverCell.lockedInventory)
+            {
+                if(fromCell.item != hoverCell.onlyAccepts)
+                {
+                    //Deactivate the Drag cell
+                    dragIconRect.gameObject.SetActive(false);
+                    dragCanvas.gameObject.SetActive(false);
+                    return mouseUI.GetMousePosition();
+                }
+            }
+
             //See if we can drop this here
             //Add one
             if(hoverCell.item == fromCell.item)

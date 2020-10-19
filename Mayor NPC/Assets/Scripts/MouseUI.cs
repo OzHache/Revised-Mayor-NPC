@@ -74,7 +74,7 @@ public class MouseUI : MonoBehaviour
     void Update()
     {
         //Set the position of the UI
-        SetUIPosition();
+        //SetUIPosition();
         //See if the UI needs to stay active
         SetUIActive();
         //Check for clicks
@@ -113,9 +113,9 @@ public class MouseUI : MonoBehaviour
         }
     }
 
-    private void SetUIPosition()
+    private void SetUIPosition(Vector3 pos)
     {
-        //See if there is somethign interactable there
+        /*//See if there is somethign interactable there
         RaycastHit2D hit = Physics2D.Raycast(GetMousePosition() - Vector2.up, Vector2.up, .75f);
         if (hit)
         {
@@ -133,10 +133,19 @@ public class MouseUI : MonoBehaviour
                 interactionCanvas.gameObject.SetActive(true);
                 
             }
-        }
+        }*/
+        transform.position = pos;
+        currentPosition = pos;
+        interactionCanvas.gameObject.SetActive(true);
+        
     }
-   
 
+    public void MouseHover(GameObject hoverObject)
+    {
+        UpdateUI(hoverObject);
+        SetUIPosition(hoverObject.transform.position);
+        
+    }
     private void UpdateUI(GameObject hoverObject)
     {
         //set a reference to the Hover Object
@@ -216,6 +225,9 @@ public class MouseUI : MonoBehaviour
         string action;
         UIActions.TryGetValue(buttonValues, out action);
         focusItem.SendMessage("Activate",action);
+        //Remoe UI and Deselect Focus Item
+        interactionCanvas.gameObject.SetActive(false);
+        focusItem = null;
 
     }
     #endregion Button Clicks

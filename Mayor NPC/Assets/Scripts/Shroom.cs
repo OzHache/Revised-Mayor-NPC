@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shroom : Collectable
+public class Shroom : UIInteractable
 {
-    //Identify the object
-    public override Dictionary<UIButtonValues, string> Identify()
-    {
-        return interactionDescriptions;
-    }
+    //Reference to the inventory item
+    [SerializeField] protected InventoryItem item;
 
     protected override void Activate(string message)
     {
@@ -26,57 +23,14 @@ public class Shroom : Collectable
                 Debug.Log("Adding this item to the inventory");
                 //Send a message to the Game Manager to take the object
                 GameManager.GetGameManager().AddToPlayerInventory(item);
+                Destroy(gameObject);
                 break;
-            case InteractionTypes.Use:
-                Debug.Log("Use");
-                break;
-            case InteractionTypes.Misc:
-                Debug.Log("Misc");
+            default:
 
                 break;
         }
     }
 
-    protected override void FillInteractionDescription()
-    {
-        
-
-        var i = 0;
-        foreach (InteractionTypes iType in interactions)
-        {
-            switch (i)
-            {
-                case 0:
-                    //fill the first action
-                    interactionDescriptions.Add(UIButtonValues.Action_1, iType.ToString());
-                    break;
-                case 1:
-                    //Fill the second action
-                    interactionDescriptions.Add(UIButtonValues.Action_2, iType.ToString());
-                    break;
-                case 2:
-                    //fill the third action
-                    interactionDescriptions.Add(UIButtonValues.Action_3, iType.ToString());
-
-                    break;
-                default:
-                    Debug.Log(i + " There is an extra itype beyond the allowed 3");
-                    break;
-            }
-            i++;
-        }
-    }
-
-    protected override void Setup()
-    {
-        //Make sure there is a description
-        if (descriptionOfObject == null)
-        {
-            descriptionOfObject = "???";
-        }
-        interactionDescriptions.Add(UIButtonValues.Description, descriptionOfObject);
-        FillInteractionDescription();
-    }
 
     // Start is called before the first frame update
     void Start()
