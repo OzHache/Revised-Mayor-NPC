@@ -13,20 +13,6 @@ public class InventorySystem : MonoBehaviour
             cell.SetInventorySystem(this);
         }
     }
-
-    // todo: Delete this if there is no Errors
-    //public void AddInventoryCell(InventoryCell cell)
-    //{
-    //    if (inventoryCells.Contains(cell)){
-    //        //this cell already exist in the inventory system.
-    //        return;
-    //    }
-    //    else
-    //    {
-    //        inventoryCells.Add(cell);
-    //    }
-    //}
-
     public void AddToInventory(InventoryItem item) {
         foreach(InventoryCell cell in inventoryCells)
         {

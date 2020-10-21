@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     }
     private static GameManager gameManager;
     //Reference to the player
-    private GameObject Player;
+    public GameObject Player { get; private set; }
     //Reference to the Inventory System
     public InventorySystem playerInventory;
     // Start is called before the first frame update
@@ -47,6 +47,19 @@ public class GameManager : MonoBehaviour
             return;
         }
         gameManager = this;
+        if (Player == null)
+        {
+            if (!GameObject.FindGameObjectWithTag("Player"))
+            {
+                Debug.LogError("There is no Tagged Player");
+
+            }
+            else
+            {
+                Player = GameObject.FindGameObjectWithTag("Player");
+            }
+        }
+        playerInventory = GetComponent<InventorySystem>();
     }
 
     // Update is called once per frame

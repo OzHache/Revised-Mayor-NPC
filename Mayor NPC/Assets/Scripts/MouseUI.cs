@@ -66,7 +66,7 @@ public class MouseUI : MonoBehaviour
             Destroy(this, 0f);
             return;
         }
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameManager.GetGameManager().Player;
         
     }
 
@@ -80,12 +80,31 @@ public class MouseUI : MonoBehaviour
         //Check for clicks
         if (Input.GetMouseButtonDown(0))
         {
-            //Raycast to see if we are on the UI layer
+            GetObjectAtMouse();
             
-            if (!interactionCanvas.gameObject.activeInHierarchy && !isMouseOverUI)
+            
+        }
+    }
+
+    private void GetObjectAtMouse()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
+        if (hit)
+        {
+            //See if this is a combatant
+            if (hit.transform.GetComponent<Combatant>())
             {
-                player.SendMessage("Move", GetMousePosition(), SendMessageOptions.DontRequireReceiver);
+                player.GetComponent<PlayerController>().Engage(hit.transform.gameObject);
             }
+
+            //detect what this object is
+            //Manage if dragging
+        }
+        // Otherwise check if the object being clicked is an active UI, if not then move
+        else if (!interactionCanvas.gameObject.activeInHierarchy && !isMouseOverUI)
+        {
+            player.GetComponent<PlayerController>().Move(GetMousePosition());
         }
     }
 
@@ -115,25 +134,7 @@ public class MouseUI : MonoBehaviour
 
     private void SetUIPosition(Vector3 pos)
     {
-        /*//See if there is somethign interactable there
-        RaycastHit2D hit = Physics2D.Raycast(GetMousePosition() - Vector2.up, Vector2.up, .75f);
-        if (hit)
-        {
-            //We have hit something so set this as the position.
-            //Debug.Log(hit.transform.name);
-            //Make sure this is interactable
-            if (hit.collider.gameObject.CompareTag("Interactable")){
-                // Update the UI
-                UpdateUI(hit.transform.gameObject);
-                //Move the UI so it can be over elements in the screen
-                Vector2 worldPos = GetMousePosition();
-                Vector2 mousePos = new Vector2((int)worldPos.x, (int)worldPos.y) + Vector2.one / 2;
-                transform.position = mousePos;
-                currentPosition = transform.position;
-                interactionCanvas.gameObject.SetActive(true);
-                
-            }
-        }*/
+        
         transform.position = pos;
         currentPosition = pos;
         interactionCanvas.gameObject.SetActive(true);
