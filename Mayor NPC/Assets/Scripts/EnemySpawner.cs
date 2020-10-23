@@ -20,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.gray * new Vector4(1, 1, 1, .25f);
-        Gizmos.DrawCube(transform.position, spawnSpace);
+        Gizmos.DrawCube(transform.position, spawnSpace * 2);
        
     }
 
@@ -55,11 +55,15 @@ public class EnemySpawner : MonoBehaviour
                         safe = !Physics2D.BoxCast(new Vector2(x, y), Vector2.one, 0f, Vector2.zero);
                     }
                     enemy.transform.position = new Vector3(x, y, 0);
+                    enemy.SetActive(true);
+                    canSpawn = true;
                     break;
-                    
-
                 }
-                canSpawn = false;                
+                else
+                {
+                    canSpawn = false;
+                    continue;
+                }              
             }
             yield return new WaitForSeconds(spawnDelay);
         }
