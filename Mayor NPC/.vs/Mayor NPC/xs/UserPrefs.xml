@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{3263827B-544A-D989-4741-7829AFAFB382}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/EnemySpawner.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/WoodCutting.cs">
     <Files>
       <File FileName="Assets/Scripts/EnemySpawner.cs" Line="23" Column="61" />
-      <File FileName="Assets/Scripts/GameManager.cs" Line="12" Column="1" />
-      <File FileName="Assets/Scripts/EnemyBehaviour.cs" Line="25" Column="1" />
+      <File FileName="Assets/Scripts/GameManager.cs" />
+      <File FileName="Assets/Scripts/EnemyBehaviour.cs" />
       <File FileName="Assets/Scripts/DragAndDrop.cs" />
       <File FileName="Assets/Scripts/InventoryCell.cs" />
       <File FileName="Assets/Scripts/MouseInventory.cs" />
@@ -12,7 +12,7 @@
       <File FileName="Assets/Scripts/InventoryItem.cs" />
       <File FileName="Assets/Scripts/PlayerController.cs" />
       <File FileName="Assets/Scripts/WorldInventory.cs" />
-      <File FileName="Assets/Scripts/WoodCutting.cs" />
+      <File FileName="Assets/Scripts/WoodCutting.cs" Line="11" Column="6" />
       <File FileName="Assets/Scripts/Weapon.cs" />
       <File FileName="Assets/Scripts/Combatant.cs" />
     </Files>
@@ -22,7 +22,7 @@
           <Node name="Mayor NPC" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="EnemySpawner.cs" selected="True" />
+                <Node name="WoodCutting.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -32,7 +32,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="3274b8d6-aab9-4771-a285-19daaa8ff7df" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="9f19afe5-9d8a-4ff1-ae44-8e87499a07fa" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/Combatant.cs" relfile="Assets/Scripts/Combatant.cs" line="104" column="1" />
