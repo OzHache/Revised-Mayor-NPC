@@ -493,6 +493,7 @@ GameObject:
   - component: {fileID: 1484970552}
   - component: {fileID: 1484970551}
   - component: {fileID: 1484970555}
+  - component: {fileID: 1484970556}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -514,9 +515,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayer: 0
   health: 10
-  meleeRange: 0
+  meleeRange: 1.5
   chanceToCrit: 0.01
-  weaponItem: {fileID: 0}
+  weaponItem: {fileID: 11400000, guid: cd54f271100014409a7bb41ce2daa518, type: 2}
 --- !u!61 &1484970552
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -629,6 +630,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &1484970556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484970550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848aa95cfba3a47008967304a22ed6d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1175959832}
+  visionRange: 5
+  canSeePlayer: 0
+  newLookInterval: 2
+  activeLookInterval: 0.5
+  speed: 2
 --- !u!1 &1486397282
 GameObject:
   m_ObjectHideFlags: 0
@@ -8335,11 +8354,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8828785601879350117, guid: ad58d44541875d2408940659547ef7e6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.48
       objectReference: {fileID: 0}
     - target: {fileID: 8828785601879350117, guid: ad58d44541875d2408940659547ef7e6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.45
       objectReference: {fileID: 0}
     - target: {fileID: 8828785601879350117, guid: ad58d44541875d2408940659547ef7e6, type: 3}
       propertyPath: m_LocalPosition.z

@@ -73,7 +73,7 @@ public class Combatant : MonoBehaviour
         //manage defense;
         //manage skills like dodge
         health -= rawDamage;
-        Debug.Log(health);
+        Debug.Log(gameObject.name +" "+health);
     }
 
     //register that the mosue has been set on this object
