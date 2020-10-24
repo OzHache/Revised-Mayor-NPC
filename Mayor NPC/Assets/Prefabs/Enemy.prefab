@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
-  health: 10
+  health: 1
   meleeRange: 1.5
   chanceToCrit: 0.01
   weaponItem: {fileID: 11400000, guid: cd54f271100014409a7bb41ce2daa518, type: 2}

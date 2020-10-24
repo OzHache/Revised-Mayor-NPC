@@ -35,6 +35,40 @@ public class EnemySpawner : MonoBehaviour
             enemyPool.Add(newEnemy);
         }
     }
+
+    internal void Restart()
+    {
+        foreach(GameObject enemy in enemyPool)
+        {
+            enemy.SetActive(false);
+        }
+        canSpawn = true;
+        //subscribe to the newday event
+        GameManager.NewDayEvent += StartSpawning;
+
+    }
+    private void StartSpawning()
+    {
+        StartCoroutine(SpawnEnemy());
+        //unsubscribe from event
+        GameManager.NewDayEvent -= StartSpawning;
+    }
+
+    internal bool EnemiesActive(out int numOfActive)
+    {
+        numOfActive = 0;
+        bool activeEnemies = false;
+        foreach(GameObject enemy in enemyPool)
+        {
+            if (enemy.activeInHierarchy)
+            {
+                numOfActive++;
+                activeEnemies =  true;
+            }
+        }
+        return activeEnemies;
+    }
+
     IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(spawnDelay);

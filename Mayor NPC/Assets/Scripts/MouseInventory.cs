@@ -108,7 +108,7 @@ public class MouseInventory : MonoBehaviour
             //Add one
             if(hoverCell.item == fromCell.item)
             {
-                hoverCell.AddOne();
+                hoverCell.Add();
                 fromCell.RemoveOne();
             }else if (hoverCell.item == null)
             {

@@ -31,17 +31,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //Get input
-        GetInput();
-        //If we can move, then move
-        if (isMoving && !isAttacking)
-        {
-            Moving();
-        }
-    }
-    //Handle movement between frames
-    private void Moving()
-    {
-        Move(destination);
+        //GetInput();
     }
     // Handle movement input from the Mouse
     public void Move(Vector2 newPosition)
@@ -56,15 +46,27 @@ public class PlayerController : MonoBehaviour
             StopCoroutine("MoveToTarget");
             isAttacking = false;
         }
-        if (Vector2.Distance(newPosition, position) > .05f)
+        if (Vector2.Distance(newPosition, position) > .05f && !isMoving)
         {
             isMoving = true;
             destination = newPosition;
+            StartCoroutine(MoveToPosition());
         }
-        if (isMoving)
+        
+    }
+
+    internal void Sleep(bool isSafe, bool enemiesPreset)
+    {
+        if (!isSafe)
         {
-            transform.position = Vector2.MoveTowards(position, destination, speed * Time.deltaTime);
-            isMoving = Vector2.Distance(destination, position) > .05f;
+            if (enemiesPreset)
+            {
+                Debug.Log("lose 50% of goods");
+            }
+            else
+            {
+                Debug.Log("lose 25% of goods");
+            }
         }
     }
 
@@ -103,16 +105,27 @@ public class PlayerController : MonoBehaviour
     //Moving
     IEnumerator MoveToTarget(Combatant combatant)
     {
+        StopCoroutine("MoveToPosition");
         isAttacking = true;
         Vector2 enemyPos = combatant.transform.position;
         while(Vector2.Distance(transform.position, enemyPos) > combat.meleeRange)
         {
-            Move(enemyPos, fromMouse: false);
+            transform.position = Vector2.MoveTowards(position, enemyPos, speed * Time.deltaTime);
             yield return null;
             enemyPos = combatant.transform.position;
         }
         isAttacking = false;
         isMoving = false;
         combat.Melee(combatant);
+    }
+    IEnumerator MoveToPosition()
+    {
+        StopCoroutine("MoveToTarget");
+        while(Vector2.Distance(transform.position, destination) > .05f)
+        {
+            transform.position = Vector2.MoveTowards(position, destination, speed * Time.deltaTime);
+            yield return null;
+        }
+        isMoving = false;
     }
 }

@@ -1,9 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(InventorySystem))]
 public class GameManager : MonoBehaviour
 {
+    private static GameManager gameManager;
+    //Reference to the player
+    public GameObject Player { get; private set; }
+    //Reference to the Inventory System
+    public InventorySystem playerInventory;
     //Static reference
     public static GameManager GetGameManager()
     {
@@ -13,11 +19,43 @@ public class GameManager : MonoBehaviour
         }
         return gameManager;
     }
-    private static GameManager gameManager;
-    //Reference to the player
-    public GameObject Player { get; private set; }
-    //Reference to the Inventory System
-    public InventorySystem playerInventory;
+
+    //Event Handlers
+    public delegate void NewDay();
+    public static event NewDay NewDayEvent; 
+
+
+    internal void PlayerSleep(bool isSafe)
+    {
+        bool enemiesPreset = false;
+        //See if there are enemies around
+        EnemySpawner[] spawners = FindObjectsOfType<EnemySpawner>();
+        foreach(EnemySpawner spawner in spawners)
+        {
+            int numberOfEnemies = 0;
+            if (spawner.EnemiesActive(out numberOfEnemies))
+            {
+                enemiesPreset = true;
+                break;
+            }
+            spawner.Restart();
+        }
+        Player.GetComponent<PlayerController>().Sleep(isSafe: isSafe, enemiesPreset: enemiesPreset);
+
+        //if there were enemies present, send all buildings a raid chance.
+        //todo: make a building manager that handles all the buildings so the buildings are raided once only.
+        if (enemiesPreset)
+        {
+            //BuildingManager.GetManager().Raid(numberOfEnemies:numberOfEnemies);
+        }
+
+        if (NewDayEvent != null)
+        {
+            NewDayEvent();
+        }
+    }
+
+    
     // Start is called before the first frame update
     private void Reset()
     {
@@ -68,9 +106,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // Player Inventory managment
-    public void AddToPlayerInventory(InventoryItem addItem)
+    public void AddToPlayerInventory(InventoryItem addItem, int amount = 1)
     {
-        playerInventory.AddToInventory(addItem);
+        playerInventory.AddToInventory(addItem, amount);
+
     }
 }

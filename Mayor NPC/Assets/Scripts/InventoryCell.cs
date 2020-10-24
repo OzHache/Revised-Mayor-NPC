@@ -33,9 +33,9 @@ public class InventoryCell : MonoBehaviour
          UpdateUI();
     }
 
-    internal void AddOne()
+    internal void Add(int amount = 1)
     {
-        numberOfItems++;
+        numberOfItems += amount;
         UpdateUI();
     }
     internal void RemoveOne()
@@ -70,7 +70,7 @@ public class InventoryCell : MonoBehaviour
         UpdateUI();
     }
 
-    internal void AddItem(InventoryItem newItem)
+    internal void AddItem(InventoryItem newItem, int amount = 1)
     {
         this.item = newItem;
         numberOfItems = 1;

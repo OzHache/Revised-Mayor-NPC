@@ -106,6 +106,13 @@ public class EnemyBehaviour : MonoBehaviour
             continue;
         }
     }
+    /// <summary>
+    /// reset all applicable traits to what they are when first spawned
+    /// </summary>
+    internal void Restart()
+    {
+        canSeePlayer = false;   
+    }
 
     /// Basic behaviour: See if player is in visible range, 
 

@@ -13,7 +13,7 @@ public class InventorySystem : MonoBehaviour
             cell.SetInventorySystem(this);
         }
     }
-    public void AddToInventory(InventoryItem item) {
+    public void AddToInventory(InventoryItem item, int amount) {
         foreach(InventoryCell cell in inventoryCells)
         {
             //If the item is in the cell and it is reuseable, add it to the count
@@ -21,7 +21,7 @@ public class InventorySystem : MonoBehaviour
             {
                 //If this item exist, add one
 
-                cell.AddOne();
+                cell.Add(amount);
                 Debug.Log(item.name + " has been added to " + inventoryCells.IndexOf(cell));
                 return;
             }
@@ -32,7 +32,7 @@ public class InventorySystem : MonoBehaviour
         {
             if(cell.item == null)
             {
-                cell.AddItem(item);
+                cell.AddItem(item, amount);
                 Debug.Log(item.name + " has been placed in to " + inventoryCells.IndexOf(cell));
                 return; 
             }

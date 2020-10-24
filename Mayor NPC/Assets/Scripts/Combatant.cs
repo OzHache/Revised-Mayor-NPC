@@ -16,6 +16,7 @@ public class Combatant : MonoBehaviour
     [SerializeField] private bool isPlayer = false;
     //Class scalars
     [SerializeField] private int health = 10;
+    private int healthRemaining;
     //MeleeRange
     [SerializeField] internal float meleeRange = 1f;
     //Probably dependant on weapons but for now this is a simple 50/50
@@ -25,7 +26,10 @@ public class Combatant : MonoBehaviour
 
     //manage defence
 
-
+    private void Start()
+    {
+        RestartCharacter();
+    }
 
     //all classes can melee
     virtual public void Melee(Combatant opposition)
@@ -72,8 +76,19 @@ public class Combatant : MonoBehaviour
     {
         //manage defense;
         //manage skills like dodge
-        health -= rawDamage;
-        Debug.Log(gameObject.name +" "+health);
+        healthRemaining -= rawDamage;
+        Debug.Log(gameObject.name +" "+ healthRemaining);
+        if (!gameObject.CompareTag("Player"))
+        {
+            var i = 1;
+        }
+        if(healthRemaining <= 0)
+        {
+            this.enabled = false;
+            RestartCharacter();
+            OnMouseExit();
+            gameObject.SetActive(false);
+        }
     }
 
     //register that the mosue has been set on this object
@@ -85,6 +100,7 @@ public class Combatant : MonoBehaviour
     {
         MouseUI.GetMouseUI().MouseExit();
     }
+    
     IEnumerator WeaponCoolDown(bool didMiss)
     {
         isWeaponReady = false;
@@ -105,5 +121,14 @@ public class Combatant : MonoBehaviour
             
         }
         isWeaponReady = true;
+    }
+    //Any actions needed to reset the character back to normal
+    public void RestartCharacter()
+    {
+        healthRemaining = health;
+        if (GetComponent<EnemyBehaviour>()!= null)
+        {
+            GetComponent<EnemyBehaviour>().Restart();
+        }
     }
 }
