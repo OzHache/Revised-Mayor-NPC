@@ -63,6 +63,7 @@
     <Compile Include="Assets/Scripts/WorldInventory.cs" />
     <Compile Include="Assets/Scripts/Weapon.cs" />
     <Compile Include="Assets/Scripts/GameManager.cs" />
+    <Compile Include="Assets/Scripts/SleepingBag.cs" />
     <Compile Include="Assets/Scripts/MouseInventory.cs" />
     <Compile Include="Assets/Scripts/WeaponItem.cs" />
     <Compile Include="Assets/Scripts/WoodCutting.cs" />
@@ -73,12 +74,12 @@
     <Compile Include="Assets/Scripts/DragAndDrop.cs" />
     <Compile Include="Assets/Scripts/Building.cs" />
     <Compile Include="Assets/Scripts/WorldInventoryCell.cs" />
+    <Compile Include="Assets/Scripts/TreeCutting.cs" />
     <Compile Include="Assets/Scripts/InventoryObject.cs" />
     <Compile Include="Assets/Scripts/Combatant.cs" />
     <Compile Include="Assets/Scripts/Shroom.cs" />
     <Compile Include="Assets/Scripts/IInteractable.cs" />
-    <Compile Include="Assets/Scripts/TreeCutting.cs" />
-    <Compile Include="Assets/Scripts/SleepingBag.cs" />
+    <Compile Include="Assets/Scripts/WorldTime.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets/TextMesh Pro/Resources/Shaders/TMPro.cginc" />

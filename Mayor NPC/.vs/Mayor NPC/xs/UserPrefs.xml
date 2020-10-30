@@ -1,26 +1,36 @@
 ﻿<Properties StartupConfiguration="{3263827B-544A-D989-4741-7829AFAFB382}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/WorldTime.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameManager.cs" Line="47" Column="27" />
-      <File FileName="Assets/Scripts/WoodCutting.cs" Line="41" Column="6" />
-      <File FileName="Assets/Scripts/EnemyBehaviour.cs" />
-      <File FileName="Assets/Scripts/Combatant.cs" />
-      <File FileName="Assets/Scripts/SleepingBag.cs" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="23" Column="5" />
+      <File FileName="Assets/Scripts/SleepingBag.cs" Line="13" Column="32" />
+      <File FileName="Assets/Scripts/WorldTime.cs" Line="35" Column="18" />
       <File FileName="Assets/Scripts/MouseUI.cs" Line="112" Column="24" NotebookId="1" IsPinned="True" />
       <File FileName="Assets/Scripts/TreeCutting.cs" NotebookId="1" />
       <File FileName="Assets/Scripts/InventorySystem.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/PlayerController.cs" Line="42" Column="39" NotebookId="1" />
-      <File FileName="Assets/Scripts/EnemySpawner.cs" Line="63" Column="41" NotebookId="1" />
+      <File FileName="Assets/Scripts/PlayerController.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/EnemySpawner.cs" NotebookId="1" />
       <File FileName="Assets/Scripts/CameraFollow.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/Building.cs" NotebookId="1" />
       <File FileName="Assets/Scripts/InventoryCell.cs" NotebookId="1" />
       <File FileName="Assets/Scripts/WorldInventory.cs" NotebookId="1" />
       <File FileName="Assets/Scripts/MouseInventory.cs" NotebookId="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Mayor NPC" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="WorldTime.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="81b36e62-6044-4889-b74f-fd0d503deb8f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="cceeffb3-b3c5-4b92-98e1-bc72b2ab27e9" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint enabled="false" file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/PlayerController.cs" relfile="Assets/Scripts/PlayerController.cs" line="44" column="1" />
@@ -31,7 +41,6 @@
       <Breakpoint enabled="false" file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/PlayerController.cs" relfile="Assets/Scripts/PlayerController.cs" line="124" column="1" />
       <Breakpoint enabled="false" file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/PlayerController.cs" relfile="Assets/Scripts/PlayerController.cs" line="126" column="1" />
       <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/EnemySpawner.cs" relfile="Assets/Scripts/EnemySpawner.cs" line="98" column="1" />
-      <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/Combatant.cs" relfile="Assets/Scripts/Combatant.cs" line="90" column="1" />
       <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/MouseUI.cs" relfile="Assets/Scripts/MouseUI.cs" line="83" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
