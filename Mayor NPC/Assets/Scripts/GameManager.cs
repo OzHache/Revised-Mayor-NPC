@@ -8,8 +8,13 @@ public class GameManager : MonoBehaviour
     private static GameManager gameManager;
     //Reference to the player
     public GameObject Player { get; private set; }
+    public PlayerController playerController;
     //Reference to the Inventory System
     public InventorySystem playerInventory;
+    //Make a list of items that have the UpdateUI Interface
+    //private List<IUpdateUI> updateUIs = new List<IUpdateUI>();
+    public PlayerStatUI stamina;
+
     //Static reference
     public static GameManager GetGameManager()
     {
@@ -69,6 +74,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 Player = GameObject.FindGameObjectWithTag("Player");
+                
             }
         }
         playerInventory = GetComponent<InventorySystem>();
@@ -95,6 +101,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 Player = GameObject.FindGameObjectWithTag("Player");
+                playerController = Player.GetComponent<PlayerController>();
             }
         }
         playerInventory = GetComponent<InventorySystem>();
@@ -111,4 +118,5 @@ public class GameManager : MonoBehaviour
         playerInventory.AddToInventory(addItem, amount);
 
     }
+
 }

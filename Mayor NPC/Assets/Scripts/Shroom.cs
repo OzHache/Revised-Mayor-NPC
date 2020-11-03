@@ -6,6 +6,7 @@ public class Shroom : UIInteractable
 {
     //Reference to the inventory item
     [SerializeField] protected InventoryItem item;
+    [SerializeField] protected float staminaValue;
 
     protected override void Activate(string message)
     {
@@ -19,6 +20,10 @@ public class Shroom : UIInteractable
 
         switch (action)
         {
+            case InteractionTypes.Use:
+                GameManager.GetGameManager().playerController.AddStamina (staminaValue);
+                Destroy(gameObject);
+                break;
             case InteractionTypes.Take:
                 Debug.Log("Adding this item to the inventory");
                 //Send a message to the Game Manager to take the object

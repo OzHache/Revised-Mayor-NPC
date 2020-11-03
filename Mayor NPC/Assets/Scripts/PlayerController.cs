@@ -2,59 +2,67 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
-using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
-
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
     //Player scalers
     [SerializeField] private float speed = 5;
-
+    [SerializeField] private float maxStamina = 10;
+    private float usedStamina = 0f;
+    public float getStamina { get { return maxStamina - usedStamina; } }
+    public float getMaxStamina { get { return maxStamina; } }
     //References
-    private Vector2 destination = -Vector2.one;
+    Vector2 moveDirection = Vector2.zero;
+    Rigidbody2D rb;
+
     private bool isMoving = false;
     private bool isAttacking = false;
     private Combatant combat;
+
+    internal void AddStamina(float amount)
+    {
+        StaminaUpdate(-amount);
+    }
+
+    //Updaters
+    //Stamina Updater
+    public delegate void Stamina();
+    public static event Stamina StaminaUpdater;
+
+    //Health Updater
+    public delegate void Health();
+    public static event Stamina HealthUpdater;
+
 
     //Calculated value of the position in 2D space
     private Vector2 position { get { return (Vector2)transform.position; } }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //Set References
         combat = GetComponent<Combatant>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
         //Get input
-        //GetInput();
-    }
-    // Handle movement input from the Mouse
-    public void Move(Vector2 newPosition)
-    {
-        Move(newPosition, true);
-    }
-    // Handle movement from the attack
-    public void Move(Vector2 newPosition, bool fromMouse = true)
-    {
-        if (fromMouse)
-        {
-            StopCoroutine("MoveToTarget");
+       GetInput();
+        if(moveDirection != Vector2.zero){
+            StopAllCoroutines();
             isAttacking = false;
         }
-        if (Vector2.Distance(newPosition, position) > .05f && !isMoving)
-        {
-            isMoving = true;
-            destination = newPosition;
-            StartCoroutine(MoveToPosition());
-        }
-        
     }
-
+    private void FixedUpdate()
+    {
+        //Move the player in the direction of travel
+        var directionToMove = moveDirection.normalized * speed;
+        rb.velocity = directionToMove;
+    }
     internal void Sleep(bool isSafe, bool enemiesPreset)
     {
         if (!isSafe)
@@ -73,18 +81,10 @@ public class PlayerController : MonoBehaviour
     //Get the input values
     private void GetInput()
     {
-     //
+        //Controls -> wasd for movememt
+        moveDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
     }
-    //Return the position of the mouse as a Integer Vector 2
-    private Vector2 GetMousePosition()
-    {
-        // get the pixel position of the mouse in the world, convert it to a grid location
-        Vector2 pixelPosition = Input.mousePosition;
-        Vector2 worldPos = Camera.main.ScreenToWorldPoint(pixelPosition);
-        Vector2 mousePos = new Vector2((int)worldPos.x, (int)worldPos.y) + Vector2.one / 2;
-
-        return mousePos;
-    }
+    
     public void Engage(GameObject engageWith)
     {
         //See if this is a combatant
@@ -99,6 +99,8 @@ public class PlayerController : MonoBehaviour
             else
             {
                 combat.Melee(engageWith.GetComponent<Combatant>());
+                //Adjust based on the type of weapon
+                StaminaUpdate(1);
             }
         }
     }
@@ -108,7 +110,7 @@ public class PlayerController : MonoBehaviour
         StopCoroutine("MoveToPosition");
         isAttacking = true;
         Vector2 enemyPos = combatant.transform.position;
-        while(Vector2.Distance(transform.position, enemyPos) > combat.meleeRange)
+        while (Vector2.Distance(transform.position, enemyPos) > combat.meleeRange)
         {
             transform.position = Vector2.MoveTowards(position, enemyPos, speed * Time.deltaTime);
             yield return null;
@@ -117,15 +119,33 @@ public class PlayerController : MonoBehaviour
         isAttacking = false;
         isMoving = false;
         combat.Melee(combatant);
+        StaminaUpdate(1);
+
     }
-    IEnumerator MoveToPosition()
+    private void StaminaUpdate(float amount)
     {
-        StopCoroutine("MoveToTarget");
-        while(Vector2.Distance(transform.position, destination) > .05f)
+        usedStamina  = Mathf.Clamp(usedStamina += amount, 0, maxStamina);
+
+        if(StaminaUpdater != null)
         {
-            transform.position = Vector2.MoveTowards(position, destination, speed * Time.deltaTime);
-            yield return null;
+            StaminaUpdater();
         }
-        isMoving = false;
+    }
+
+    //get the players health from the combatant
+    public float GetHealth()
+    {
+        float health = combat.healthRemaining;
+        return health;
+    }
+    public float GetMaxHealth()
+    {
+        float maxHealth = combat.getMaxHealth;
+        return maxHealth;
+    }
+    public void TakeDamage()
+    {
+        HealthUpdater();
     }
 }
+

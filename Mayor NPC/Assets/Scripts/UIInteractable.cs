@@ -13,7 +13,7 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
     //To be Modified if the object can be NOT interactable.
     public bool isInteractable = true;
 
-    
+
     abstract protected void Activate(string action);
 
     [SerializeField] protected List<InteractionTypes> interactions = new List<InteractionTypes>();
@@ -49,7 +49,8 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
 
 
     //Fill the interactions Dictionary with "Name","methodName",The First Item is always"Description" "Description of the item"
-    private void FillInteractionDescription() {
+    private void FillInteractionDescription()
+    {
         var i = 0;
         foreach (InteractionTypes iType in interactions)
         {
@@ -81,13 +82,28 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
         {
             return;
         }
-        if(interactionDescriptions.Count == 0)
+        if (interactionDescriptions.Count == 0)
         {
             return;
         }
-        MouseUI.GetMouseUI().MouseHover(gameObject);
+        if (!MouseUI.GetMouseUI().MouseHover(gameObject))
+        {
+            //keep trying until it does pop up;
+            StartCoroutine(MouseHovering());
+        }
     }
 
+
+
+    IEnumerator MouseHovering()
+    {
+        
+        while (!MouseUI.GetMouseUI().MouseHover(gameObject))
+        {
+            yield return null;
+            //Keep trying, you'll get better !!
+        }
+    }
 }
 //Located in UIIteractable.cs
 public enum UIButtonValues

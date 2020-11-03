@@ -8,7 +8,8 @@ public class WorldTime : MonoBehaviour
     //Static instance of this WorldTimer
     private static WorldTime instance;
     //WorldTime value
-    TimeSpan time = TimeSpan.FromMinutes(0);
+    private TimeSpan time = TimeSpan.FromMinutes(0);
+    public string GetTime() { return time.ToString(@"hh\:mm"); }
     //4am in minutes since midnight
     private int startTime = 240;
 
@@ -31,11 +32,11 @@ public class WorldTime : MonoBehaviour
     public delegate void NewDay();
     public static event NewDay NewDayEvent;
 
-    public delegate void NewMinute();
+    public delegate void NewSecond();
     /// <summary>
     /// Called once for every world time update
     /// </summary>
-    public static event NewMinute NewSecondEvent;
+    public static event NewSecond NewSecondEvent;
 
     private void Awake()
     {
@@ -66,6 +67,10 @@ public class WorldTime : MonoBehaviour
             yield return new WaitForSeconds(.5f);
             minutes++;
             time = TimeSpan.FromMinutes(minutes);
+            if(NewSecondEvent != null)
+            {
+                NewSecondEvent();
+            }
         }
     }
 

@@ -47,6 +47,8 @@ public class MouseUI : MonoBehaviour
     public bool isUIActive;
     Dictionary<UIButtonValues, string> UIActions = new Dictionary<UIButtonValues, string>();
     private bool isMouseOverUI = false;
+    //Range that the player can interact with objects
+    [SerializeField] float interactableRange;
 
     // Start is called before the first frame update
 
@@ -81,8 +83,6 @@ public class MouseUI : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             GetObjectAtMouse();
-            
-            
         }
     }
 
@@ -101,11 +101,11 @@ public class MouseUI : MonoBehaviour
             //detect what this object is
             //Manage if dragging
         }
-        // Otherwise check if the object being clicked is an active UI, if not then move
+       /* // Otherwise check if the object being clicked is an active UI, if not then move
         else if (!interactionCanvas.gameObject.activeInHierarchy && !isMouseOverUI)
         {
             player.GetComponent<PlayerController>().Move(GetMousePosition());
-        }
+        }*/
     }
 
     //Manage when the mouse is over the UI
@@ -129,23 +129,40 @@ public class MouseUI : MonoBehaviour
                 interactionCanvas.gameObject.SetActive(false);
                 focusItem = null;
             }
+
+            //check the distance between the mouse and the player
+            if(Vector2.Distance(player.transform.position, focusItem.transform.position) > interactableRange)
+            { 
+                interactionCanvas.gameObject.SetActive(false);
+            } 
+            else if(focusItem != null)
+            {
+                interactionCanvas.gameObject.SetActive(true);
+            }
         }
     }
 
     private void SetUIPosition(Vector3 pos)
     {
-        
         transform.position = pos;
         currentPosition = pos;
         interactionCanvas.gameObject.SetActive(true);
-        
     }
 
-    public void MouseHover(GameObject hoverObject)
+    public bool MouseHover(GameObject hoverObject)
     {
-        UpdateUI(hoverObject);
-        SetUIPosition(hoverObject.transform.position);
-        
+        //See if this object is within the interactable range
+        if (Vector2.Distance(hoverObject.transform.position, player.transform.position) > interactableRange)
+        {
+            //Activate the move in range UI
+            return false;
+        }
+        else
+        {
+            UpdateUI(hoverObject);
+            SetUIPosition(hoverObject.transform.position);
+            return true;
+        }
     }
     private void UpdateUI(GameObject hoverObject)
     {
@@ -173,6 +190,7 @@ public class MouseUI : MonoBehaviour
                 action_TwoTMP.text = action_2;
                 action_ThreeTMP.text = action_3;
 
+                break;
 
             }
 
@@ -193,11 +211,6 @@ public class MouseUI : MonoBehaviour
 
         return worldPos;
 
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.up *.5f);
     }
 
     #region Button Clicks
@@ -232,6 +245,4 @@ public class MouseUI : MonoBehaviour
 
     }
     #endregion Button Clicks
-
-    
 }

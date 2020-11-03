@@ -16,7 +16,8 @@ public class Combatant : MonoBehaviour
     [SerializeField] private bool isPlayer = false;
     //Class scalars
     [SerializeField] private int health = 10;
-    private int healthRemaining;
+    public int getMaxHealth { get { return health; } }
+    public int healthRemaining { get; private set; }
     //MeleeRange
     [SerializeField] internal float meleeRange = 1f;
     //Probably dependant on weapons but for now this is a simple 50/50
@@ -78,9 +79,9 @@ public class Combatant : MonoBehaviour
         //manage skills like dodge
         healthRemaining -= rawDamage;
         Debug.Log(gameObject.name +" "+ healthRemaining);
-        if (!gameObject.CompareTag("Player"))
+        if (gameObject.CompareTag("Player"))
         {
-            var i = 1;
+            GameManager.GetGameManager().playerController.TakeDamage();
         }
         if(healthRemaining <= 0)
         {
