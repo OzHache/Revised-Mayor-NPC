@@ -1,18 +1,13 @@
 ﻿<Properties StartupConfiguration="{3263827B-544A-D989-4741-7829AFAFB382}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/WorldTime.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Shroom.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameManager.cs" Line="23" Column="5" />
-      <File FileName="Assets/Scripts/SleepingBag.cs" Line="13" Column="32" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="120" Column="1" />
+      <File FileName="Assets/Scripts/SleepingBag.cs" />
       <File FileName="Assets/Scripts/WorldTime.cs" Line="35" Column="18" />
-      <File FileName="Assets/Scripts/MouseUI.cs" Line="112" Column="24" NotebookId="1" IsPinned="True" />
-      <File FileName="Assets/Scripts/TreeCutting.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/InventorySystem.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/PlayerController.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/EnemySpawner.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/CameraFollow.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/InventoryCell.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/WorldInventory.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/MouseInventory.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/NewMonoBehaviour.cs" Line="17" Column="46" />
+      <File FileName="Assets/Scripts/UIInteractable.cs" Line="25" Column="5" />
+      <File FileName="Assets/Scripts/InventorySystem.cs" Line="54" Column="22" />
+      <File FileName="Assets/Scripts/Shroom.cs" Line="33" Column="10" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -20,7 +15,7 @@
           <Node name="Mayor NPC" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="WorldTime.cs" selected="True" />
+                <Node name="Shroom.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -30,7 +25,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="cceeffb3-b3c5-4b92-98e1-bc72b2ab27e9" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d9b082bc-00bf-4515-98f5-28a890284c52" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint enabled="false" file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/PlayerController.cs" relfile="Assets/Scripts/PlayerController.cs" line="44" column="1" />

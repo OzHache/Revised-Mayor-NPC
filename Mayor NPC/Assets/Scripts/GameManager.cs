@@ -113,10 +113,15 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void AddToPlayerInventory(InventoryItem addItem, int amount = 1)
+    public bool AddToPlayerInventory(InventoryItem addItem, int amount = 1)
     {
-        playerInventory.AddToInventory(addItem, amount);
+        //see if there is available space
+        bool spaceAvailable = playerInventory.IsSpaceAvailable(addItem);
 
+        if(spaceAvailable)
+            playerInventory.AddToInventory(addItem, amount);
+
+        return spaceAvailable;
     }
 
 }

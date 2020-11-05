@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 using UnityEngine;
-
+[RequireComponent(typeof(Collider2D))]
 public abstract class UIInteractable : MonoBehaviour, IInteractable
 {
     //Dictionary for interactions
@@ -22,8 +22,19 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
     {
         return interactionDescriptions;
     }
+    #region Default Interactions
+    protected void Take(InventoryItem item)
+    {
+        //this item is only taken into the inventory
+        bool added = GameManager.GetGameManager().AddToPlayerInventory(item);
+        if (added)
+        {
+            Destroy(gameObject);
+        }
+    }
 
 
+    #endregion Default interactions
     protected void Setup()
     {
         //Make sure there is a description

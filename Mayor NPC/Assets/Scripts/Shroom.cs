@@ -25,10 +25,7 @@ public class Shroom : UIInteractable
                 Destroy(gameObject);
                 break;
             case InteractionTypes.Take:
-                Debug.Log("Adding this item to the inventory");
-                //Send a message to the Game Manager to take the object
-                GameManager.GetGameManager().AddToPlayerInventory(item);
-                Destroy(gameObject);
+                Take(item);
                 break;
             default:
 

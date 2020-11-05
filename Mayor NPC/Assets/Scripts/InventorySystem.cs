@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,5 +38,19 @@ public class InventorySystem : MonoBehaviour
                 return; 
             }
         }
+    }
+
+    internal bool IsSpaceAvailable(InventoryItem itemToCheck)
+    {
+        foreach (InventoryCell cell in inventoryCells)
+        {
+            if (cell.item == null || cell.item == itemToCheck)
+            {
+                return true;
+            }
+        }
+        //if there is no empty spot and there is no matching items already in inventory
+        Debug.Log("There are no empty slots and no matching item in Player Inventory for" + itemToCheck.name);
+        return false;
     }
 }
