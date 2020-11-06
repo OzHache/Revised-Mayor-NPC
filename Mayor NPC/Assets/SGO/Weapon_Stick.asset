@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf0978904a8444618ef863359aeede9, type: 3}
   m_Name: Weapon_Stick
   m_EditorClassIdentifier: 
-  WeaponName: Stick
+  itemName: Staff
   description: A standard Stick
   art: {fileID: -2092917018372988255, guid: c29f9adcff255a04a8a3d72f947bd097, type: 3}
+  isReuseable: 1
+  isConsumeable: 0
+  heldArt: {fileID: -2092917018372988255, guid: c29f9adcff255a04a8a3d72f947bd097, type: 3}
   hitChance: 0.75
   maxDamage: 3
   minDamage: 1

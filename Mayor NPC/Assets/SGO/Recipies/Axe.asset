@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d7e9ba4688534c0189dab75b9e3eb9a, type: 3}
+  m_Name: Axe
+  m_EditorClassIdentifier: 
+  itemName: Axe
+  description: An Axe
+  inputOne: {fileID: 11400000, guid: 48be10dee3495469d9d11b7d8c4b0277, type: 2}
+  inputOneAmount: 1
+  inputTwo: {fileID: 11400000, guid: 977ec9e7bf6aa4740b47d904b0f2d1d7, type: 2}
+  inputTwoAmount: 1
+  output: {fileID: 11400000, guid: 509447dcf88c24e768f333e697c55e19, type: 2}
+  outAmount: 1

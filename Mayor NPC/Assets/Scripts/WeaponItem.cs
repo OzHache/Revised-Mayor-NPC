@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 [CreateAssetMenu(fileName = "New_Weapon", menuName = "WeaponItem")]
-public class WeaponItem : ScriptableObject
+public class WeaponItem : InventoryItem
 {
-    public string WeaponName;
-    public string description;
 
-    public Sprite art;
+    public Sprite heldArt;
     //Does it take ammo?
     [Range(0,1)]public float hitChance;
     public int maxDamage;

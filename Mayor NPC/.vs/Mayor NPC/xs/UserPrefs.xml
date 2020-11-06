@@ -1,13 +1,22 @@
 ﻿<Properties StartupConfiguration="{3263827B-544A-D989-4741-7829AFAFB382}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Shroom.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ConnectCells.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameManager.cs" Line="120" Column="1" />
-      <File FileName="Assets/Scripts/SleepingBag.cs" />
-      <File FileName="Assets/Scripts/WorldTime.cs" Line="35" Column="18" />
-      <File FileName="Assets/Scripts/NewMonoBehaviour.cs" Line="17" Column="46" />
-      <File FileName="Assets/Scripts/UIInteractable.cs" Line="25" Column="5" />
-      <File FileName="Assets/Scripts/InventorySystem.cs" Line="54" Column="22" />
-      <File FileName="Assets/Scripts/Shroom.cs" Line="33" Column="10" />
+      <File FileName="Assets/ConnectCells.cs" Line="72" Column="30" />
+      <File FileName="Assets/Scripts/MouseUI.cs" Line="220" Column="1" />
+      <File FileName="Assets/Scripts/CraftSupplies.cs" Line="20" Column="1" />
+      <File FileName="Assets/Scripts/UIInteractable.cs" Line="29" Column="1" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="131" Column="1" />
+      <File FileName="Assets/Scripts/InventorySystem.cs" Line="32" Column="1" />
+      <File FileName="Assets/Scripts/CraftingStation.cs" Line="41" Column="1" />
+      <File FileName="Assets/Scripts/UIController.cs" Line="20" Column="1" />
+      <File FileName="Assets/Scripts/UIManager.cs" Line="74" Column="1" />
+      <File FileName="Assets/Scripts/PlayerController.cs" Line="59" Column="1" />
+      <File FileName="Assets/Scripts/Shroom.cs" Line="47" Column="1" />
+      <File FileName="Assets/Scripts/WorldInventory.cs" Line="39" Column="1" />
+      <File FileName="Assets/Scripts/Building.cs" Line="89" Column="10" />
+      <File FileName="Assets/Scripts/InventoryItem.cs" Line="15" Column="6" NotebookId="1" />
+      <File FileName="Assets/Scripts/Recipie.cs" Line="30" Column="6" NotebookId="1" />
+      <File FileName="Assets/Scripts/InventoryCell.cs" Line="25" Column="6" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,7 +24,7 @@
           <Node name="Mayor NPC" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="Shroom.cs" selected="True" />
+                <Node name="ConnectCells.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -35,8 +44,9 @@
       <Breakpoint enabled="false" file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/PlayerController.cs" relfile="Assets/Scripts/PlayerController.cs" line="108" column="1" />
       <Breakpoint enabled="false" file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/PlayerController.cs" relfile="Assets/Scripts/PlayerController.cs" line="124" column="1" />
       <Breakpoint enabled="false" file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/PlayerController.cs" relfile="Assets/Scripts/PlayerController.cs" line="126" column="1" />
-      <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/EnemySpawner.cs" relfile="Assets/Scripts/EnemySpawner.cs" line="98" column="1" />
-      <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/MouseUI.cs" relfile="Assets/Scripts/MouseUI.cs" line="83" column="1" />
+      <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/MouseUI.cs" relfile="Assets/Scripts/MouseUI.cs" line="220" column="1" />
+      <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/InventoryCell.cs" relfile="Assets/Scripts/InventoryCell.cs" line="99" column="1" />
+      <Breakpoint file="/Users/charleshache/Desktop/Revised-Mayor-NPC/Mayor NPC/Assets/Scripts/InventoryCell.cs" relfile="Assets/Scripts/InventoryCell.cs" line="29" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

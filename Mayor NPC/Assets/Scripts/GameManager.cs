@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     //Make a list of items that have the UpdateUI Interface
     //private List<IUpdateUI> updateUIs = new List<IUpdateUI>();
     public PlayerStatUI stamina;
+    //Public bool for if the game is paused
+    public bool isGamePaused { get; private set; }
 
     //Static reference
     public static GameManager GetGameManager()
@@ -27,7 +29,14 @@ public class GameManager : MonoBehaviour
 
     //Event Handlers
     public delegate void NewDay();
-    public static event NewDay NewDayEvent; 
+    public static event NewDay NewDayEvent;
+    public delegate void Pause();
+    public static event Pause GamePaused;
+
+    private void Start()
+    {
+        UIManager.UIHasActivated += GamePause;
+    }
 
 
     internal void PlayerSleep(bool isSafe)
@@ -122,6 +131,16 @@ public class GameManager : MonoBehaviour
             playerInventory.AddToInventory(addItem, amount);
 
         return spaceAvailable;
+    }
+
+    private void GamePause()
+    {
+        isGamePaused = UIManager.isUIActive;
+        //Activate all elements that need to be paused
+        if(GamePaused != null)
+        {
+            GamePaused();
+        }
     }
 
 }

@@ -6,17 +6,17 @@ using TMPro;
 public class InventoryCell : MonoBehaviour
 {
     //Refences to item
-    public InventoryItem item { get; private set; }
+    public InventoryItem item { get; protected set; }
     //If this inventory should only accept a certian type
     public InventoryItem onlyAccepts { get; private set; }
     public bool lockedInventory { get { return onlyAccepts != null; } }
     //Counter for how many items
-    public int numberOfItems { get; private set; }
+    public int numberOfItems { get; protected set; }
     private int durability = 0;
     private InventorySystem iSystem;
     //Refernces to UI Elements
     //Image in the Panel
-    private Image image;
+    public Image image;
     private TextMeshProUGUI counter;
     private Slider durabiltySlider;
     
@@ -33,12 +33,12 @@ public class InventoryCell : MonoBehaviour
          UpdateUI();
     }
 
-    internal void Add(int amount = 1)
+    virtual internal void Add(int amount = 1)
     {
         numberOfItems += amount;
         UpdateUI();
     }
-    internal void RemoveOne()
+    virtual internal void RemoveOne()
     {
         numberOfItems--;
         if (numberOfItems == 0 || (item.isReuseable && durability <= 0))
@@ -49,7 +49,7 @@ public class InventoryCell : MonoBehaviour
 
     }
 
-    public void Use()
+    virtual public void Use()
     {
         if (item.isConsumeable)
         {
@@ -70,7 +70,7 @@ public class InventoryCell : MonoBehaviour
         UpdateUI();
     }
 
-    internal void AddItem(InventoryItem newItem, int amount = 1)
+    virtual internal void AddItem(InventoryItem newItem, int amount = 1)
     {
         this.item = newItem;
         numberOfItems = 1;
@@ -79,7 +79,7 @@ public class InventoryCell : MonoBehaviour
     }
 
     //Clears the UI
-    public void Clear()
+    virtual public void Clear()
     {
         item = null;
         onlyAccepts = null;
@@ -87,7 +87,7 @@ public class InventoryCell : MonoBehaviour
         UpdateUI();
     }
 
-    private void UpdateUI() {
+    virtual protected void UpdateUI() {
         //if we have cleared the item
         if(item == null)
         {
@@ -121,7 +121,7 @@ public class InventoryCell : MonoBehaviour
         onlyAccepts = null;
     }
 
-    internal void Remove(int currentAmountNeeded)
+    virtual internal void Remove(int currentAmountNeeded)
     {
         numberOfItems -= currentAmountNeeded;
         UpdateUI();
