@@ -6,7 +6,7 @@ using TMPro;
 public class InventoryCell : MonoBehaviour
 {
     //Refences to item
-    public InventoryItem item { get; protected set; }
+    public InventoryItem item;
     //If this inventory should only accept a certian type
     public InventoryItem onlyAccepts { get; private set; }
     public bool lockedInventory { get { return onlyAccepts != null; } }
@@ -16,9 +16,9 @@ public class InventoryCell : MonoBehaviour
     private InventorySystem iSystem;
     //Refernces to UI Elements
     //Image in the Panel
-    public Image image;
-    private TextMeshProUGUI counter;
-    private Slider durabiltySlider;
+    [SerializeField] private Image image;
+    [SerializeField] private TextMeshProUGUI counter;
+    [SerializeField] private Slider durabiltySlider;
     
 
     public void Start()
@@ -26,9 +26,9 @@ public class InventoryCell : MonoBehaviour
         //Add this cell to the inventory system.
         //GameManager.GetGameManager().playerInventory.AddInventoryCell(this);
 
-        image = GetComponent<Image>();
-        counter = GetComponentInChildren<TextMeshProUGUI>();
-        durabiltySlider = GetComponentInChildren<Slider>();
+       
+        //counter = GetComponentInChildren<TextMeshProUGUI>();
+        //durabiltySlider = GetComponentInChildren<Slider>();
         
          UpdateUI();
     }
@@ -91,11 +91,12 @@ public class InventoryCell : MonoBehaviour
         //if we have cleared the item
         if(item == null)
         {
-            image.sprite = null;
+            image.enabled = false;
             counter.text = "";
         }
         else
         {
+            image.enabled = true;
             image.sprite = item.art;
             counter.text = numberOfItems.ToString();
         }
