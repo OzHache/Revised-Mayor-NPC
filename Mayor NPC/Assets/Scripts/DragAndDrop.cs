@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler
 {
     [SerializeField] Canvas canvas;
     private RectTransform rectTransform;
@@ -43,13 +43,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     {
     }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        dropPosition = MouseInventory.GetMouseInvUI().Drop();
-        //todo: If this is in the world, Take the item out of the inventory and place it in the world
-        
-
-    }
+    
 
     public void OnPointerDown(PointerEventData eventData)
     {

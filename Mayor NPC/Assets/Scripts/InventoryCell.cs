@@ -2,8 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 [RequireComponent(typeof(DragAndDrop))]
-public class InventoryCell : MonoBehaviour
+public class InventoryCell : MonoBehaviour, IDropHandler
 {
     //Refences to item
     public InventoryItem item;
@@ -126,5 +127,23 @@ public class InventoryCell : MonoBehaviour
     {
         numberOfItems -= currentAmountNeeded;
         UpdateUI();
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        InventoryItem dropItem = MouseInventory.GetMouseInvUI().hasItem;
+        //see if the mouse inventory has an item
+        if ( dropItem != null)
+        {
+            if (dropItem == item || item == null)
+            {
+               
+                int numberOfItems = MouseInventory.GetMouseInvUI().GetNumberOfItems();
+                MouseInventory.GetMouseInvUI().ClearInventory();
+                AddItem(dropItem, numberOfItems);
+                UpdateUI();
+            }
+        }
+        int x = 0;
     }
 }

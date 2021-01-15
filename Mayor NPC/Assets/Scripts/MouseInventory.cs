@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,7 +21,7 @@ public class MouseInventory : MonoBehaviour
 
     //item being dragged
     private InventoryItem item;
-
+    public InventoryItem hasItem { get { return fromCell.item; } }
     //Cell we are dragging from
     InventoryCell fromCell;
     //Cell we are dragging to
@@ -65,7 +66,9 @@ public class MouseInventory : MonoBehaviour
     {
         if (dragCanvas.gameObject.activeInHierarchy)
         {
-            dragCanvas.transform.position = mouseUI.GetMousePosition(dragCanvas.scaleFactor);
+
+            dragIconRect.transform.position = Input.mousePosition;
+            //dragCanvas.transform.position = mouseUI.GetMousePosition(dragCanvas.scaleFactor);
         }
     }
     //The cell the mouse is over
@@ -87,40 +90,24 @@ public class MouseInventory : MonoBehaviour
         dragCanvas.gameObject.SetActive(true);
     }
 
-    internal Vector3 Drop()
+    
+
+    internal void ClearInventory()
     {
-        //Check if we are over a cell that is not this cell
-        if(hoverCell!= null && hoverCell != fromCell)
-        {
-            //See if this cell is locked
-            if (hoverCell.lockedInventory)
-            {
-                if(fromCell.item != hoverCell.onlyAccepts)
-                {
-                    //Deactivate the Drag cell
-                    dragIconRect.gameObject.SetActive(false);
-                    dragCanvas.gameObject.SetActive(false);
-                    return mouseUI.GetMousePosition();
-                }
-            }
-
-            //See if we can drop this here
-            //Add one
-            if(hoverCell.item == fromCell.item)
-            {
-                hoverCell.Add();
-                fromCell.RemoveOne();
-            }else if (hoverCell.item == null)
-            {
-                hoverCell.AddItem(fromCell.item);
-                fromCell.RemoveOne();
-            }
-        }
-
         //Deactivate the Drag cell
         dragIconRect.gameObject.SetActive(false);
         dragCanvas.gameObject.SetActive(false);
-        return mouseUI.GetMousePosition();
+    }
+
+    internal int GetNumberOfItems()
+    {
+        //return the number of items in the stack
+        return 1;
+    }
+
+    internal InventoryItem GetItem()
+    {
+        return fromCell.item;
     }
     #endregion IconDrag
 }

@@ -86,7 +86,7 @@ public class MouseUI : MonoBehaviour
         }
     }
 
-    private void GetObjectAtMouse()
+    public GameObject GetObjectAtMouse()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
@@ -96,16 +96,18 @@ public class MouseUI : MonoBehaviour
             if (hit.transform.GetComponent<Combatant>())
             {
                 player.GetComponent<PlayerController>().Engage(hit.transform.gameObject);
+                return null;
             }
-
+            return hit.transform.gameObject;
             //detect what this object is
             //Manage if dragging
         }
-       /* // Otherwise check if the object being clicked is an active UI, if not then move
-        else if (!interactionCanvas.gameObject.activeInHierarchy && !isMouseOverUI)
-        {
-            player.GetComponent<PlayerController>().Move(GetMousePosition());
-        }*/
+        /* // Otherwise check if the object being clicked is an active UI, if not then move
+         else if (!interactionCanvas.gameObject.activeInHierarchy && !isMouseOverUI)
+         {
+             player.GetComponent<PlayerController>().Move(GetMousePosition());
+         }*/
+        return null;
     }
 
     //Manage when the mouse is over the UI

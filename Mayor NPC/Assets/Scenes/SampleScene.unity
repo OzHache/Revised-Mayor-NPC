@@ -33845,6 +33845,10 @@ PrefabInstance:
       propertyPath: m_RenderMode
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2229402891131660589, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
+      propertyPath: m_Name
+      value: DragCanvas
+      objectReference: {fileID: 0}
     - target: {fileID: 2229402891131660590, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
@@ -33859,43 +33863,47 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2229402891131660590, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.020512821
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2229402891131660590, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.020512821
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2229402891131660590, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.020512821
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2229402891131660590, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 867
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2229402891131660590, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 487.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2229402891131660590, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2229402891131660590, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2229402891131660590, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 89
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2229402891131660590, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -3.46
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2229402891131660590, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.35000002
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229402891131660591, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2229402891131660593, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_Camera
@@ -33903,7 +33911,7 @@ PrefabInstance:
       objectReference: {fileID: 519420031}
     - target: {fileID: 2229402891131660593, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_RenderMode
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2229402891725309034, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_Name
@@ -33963,7 +33971,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2229402892076116834, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.7000122
+      value: 230.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229402892076116834, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 12.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229402892076116834, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -857.2277
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229402892076116834, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -460.70392
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229402892076116835, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e84e36f6aef4a6a40bd18a7a318c40ff, type: 3}
