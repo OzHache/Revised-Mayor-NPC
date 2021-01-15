@@ -90,10 +90,14 @@ public class MouseInventory : MonoBehaviour
         dragCanvas.gameObject.SetActive(true);
     }
 
-    
 
-    internal void ClearInventory()
+
+    internal void ClearInventory(bool wasDropped)
     {
+        //remove one from the available
+        //todo: eventually make this remove as many as we are dragging
+        if(wasDropped)
+            fromCell.RemoveOne();
         //Deactivate the Drag cell
         dragIconRect.gameObject.SetActive(false);
         dragCanvas.gameObject.SetActive(false);

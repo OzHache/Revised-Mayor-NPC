@@ -73,6 +73,7 @@ public class InventoryCell : MonoBehaviour, IDropHandler
 
     virtual internal void AddItem(InventoryItem newItem, int amount = 1)
     {
+        //
         this.item = newItem;
         numberOfItems = 1;
         UpdateUI();
@@ -133,17 +134,31 @@ public class InventoryCell : MonoBehaviour, IDropHandler
     {
         InventoryItem dropItem = MouseInventory.GetMouseInvUI().hasItem;
         //see if the mouse inventory has an item
-        if ( dropItem != null)
+        if (dropItem != null)
         {
-            if (dropItem == item || item == null)
+            if (dropItem == item)
+            {
+                int numberOfItems = MouseInventory.GetMouseInvUI().GetNumberOfItems();
+                MouseInventory.GetMouseInvUI().ClearInventory(true);
+                Add(numberOfItems);
+            }
+            else if((item == null))
             {
                
                 int numberOfItems = MouseInventory.GetMouseInvUI().GetNumberOfItems();
-                MouseInventory.GetMouseInvUI().ClearInventory();
+                MouseInventory.GetMouseInvUI().ClearInventory(true);
                 AddItem(dropItem, numberOfItems);
-                UpdateUI();
             }
+            else
+            {
+                MouseInventory.GetMouseInvUI().ClearInventory(false);
+            }
+            UpdateUI();
+            
         }
-        int x = 0;
+        else
+        {
+            MouseInventory.GetMouseInvUI().ClearInventory(false);
+        }
     }
 }
