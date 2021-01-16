@@ -9,7 +9,9 @@ public interface IInteractable
      */
     
     Dictionary<UIButtonValues,string> Identify();
-   
+
+    ToolType GetTool();
+
 }
 public enum InteractionTypes
 {

@@ -3,15 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 using UnityEngine;
+public enum ToolType
+{
+    Axe, Shovel, Hoe, Misc
+}
+
 [RequireComponent(typeof(Collider2D))]
+
 public abstract class UIInteractable : MonoBehaviour, IInteractable
 {
     //Dictionary for interactions
     protected Dictionary<UIButtonValues, string> interactionDescriptions = new Dictionary<UIButtonValues, string>();
+
+    //Dictionary for required tools
+    protected Dictionary<ToolType, string> interactionToolRequirements = new Dictionary<ToolType, string>();
+    [SerializeField] private ToolType interactionTool;
+
+    public ToolType GetTool() { return interactionTool; }
+
     //Description of the obejct todo: Probably delete this
     [SerializeField] protected string descriptionOfObject;
     //To be Modified if the object can be NOT interactable.
     public bool isInteractable = true;
+
+    
 
 
     abstract protected void Activate(string action);

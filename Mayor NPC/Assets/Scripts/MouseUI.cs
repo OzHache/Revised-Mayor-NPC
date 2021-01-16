@@ -175,8 +175,13 @@ public class MouseUI : MonoBehaviour
         {
             if(monoBehaviour is IInteractable)
             {
+                
                 var interactable = monoBehaviour as IInteractable;
+                //check if there is an interactable tool requirement
+                ToolType requiredTool = interactable.GetTool();
 
+                //see if the player has this tool
+                GameManager.GetGameManager().CheckForTool(requiredTool);
 
                 UIActions = interactable.Identify();
                 string desc = "???";

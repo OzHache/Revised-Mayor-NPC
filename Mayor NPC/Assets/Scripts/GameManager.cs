@@ -143,4 +143,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    internal void CheckForTool(ToolType requiredTool)
+    {
+        //Check through the inventory for this particular tool. 
+    }
 }

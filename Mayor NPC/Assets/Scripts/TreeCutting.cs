@@ -4,13 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class TreeCutting : UIInteractable
 {
-   
+
     //Reference to the inventory item
     [SerializeField] protected InventoryItem item;
     [SerializeField] private int numberOfHits;
     private int hitCount = 0;
     [SerializeField] private int amountPerHit;
     [SerializeField] private int amountWhenFell;
+    
     //animator
     private Animator animator;
 
