@@ -16,7 +16,7 @@ MonoBehaviour:
   description: An Axe
   inputOne: {fileID: 11400000, guid: 48be10dee3495469d9d11b7d8c4b0277, type: 2}
   inputOneAmount: 1
-  inputTwo: {fileID: 11400000, guid: 977ec9e7bf6aa4740b47d904b0f2d1d7, type: 2}
+  inputTwo: {fileID: 11400000, guid: 40fc393d8c5e54077923c30ac6137a84, type: 2}
   inputTwoAmount: 1
   output: {fileID: 11400000, guid: 509447dcf88c24e768f333e697c55e19, type: 2}
   outAmount: 1

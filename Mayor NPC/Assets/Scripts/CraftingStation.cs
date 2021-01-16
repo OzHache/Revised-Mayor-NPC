@@ -15,7 +15,7 @@ public class CraftingStation : MonoBehaviour
     
 
     //Output Cell
-    [SerializeField] private InventoryCell outputCell;
+    [SerializeField] private CraftingOutput outputCell;
 
 
     //Craft Monitor
@@ -35,7 +35,7 @@ public class CraftingStation : MonoBehaviour
         }
         else if (currentRecipie != null)
         {
-            currentRecipie = null;
+            //currentRecipie = null;
         }
         
     }
@@ -63,6 +63,13 @@ public class CraftingStation : MonoBehaviour
 
     public void Activated()
     {
-
+        //if this is a valid recipie
+        if(currentRecipie != null)
+        {
+            leftCell.RemoveOne();
+            rightCell.RemoveOne();
+            currentRecipie = null;
+        }
+        //remove one from both 
     }
 }

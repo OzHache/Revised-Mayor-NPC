@@ -13,7 +13,7 @@ public class InventoryCell : MonoBehaviour, IDropHandler
     public bool lockedInventory { get { return onlyAccepts != null; } }
     //Counter for how many items
     public int numberOfItems { get; protected set; }
-    private int durability = 0;
+    protected int durability = 0;
     private InventorySystem iSystem;
     //Refernces to UI Elements
     //Image in the Panel
