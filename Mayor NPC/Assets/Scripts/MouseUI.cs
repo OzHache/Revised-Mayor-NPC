@@ -102,11 +102,6 @@ public class MouseUI : MonoBehaviour
             //detect what this object is
             //Manage if dragging
         }
-        /* // Otherwise check if the object being clicked is an active UI, if not then move
-         else if (!interactionCanvas.gameObject.activeInHierarchy && !isMouseOverUI)
-         {
-             player.GetComponent<PlayerController>().Move(GetMousePosition());
-         }*/
         return null;
     }
 
@@ -177,11 +172,6 @@ public class MouseUI : MonoBehaviour
             {
                 
                 var interactable = monoBehaviour as IInteractable;
-                //check if there is an interactable tool requirement
-                ToolType requiredTool = interactable.GetTool();
-
-                //see if the player has this tool
-                GameManager.GetGameManager().CheckForTool(requiredTool);
 
                 UIActions = interactable.Identify();
                 string desc = "???";

@@ -261,6 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d738dcf44164140bb3f4fcb091ad9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionTool: 4
   descriptionOfObject: Stone
   isInteractable: 1
   interactions: 00000000
@@ -346,6 +347,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &109300583 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6331475074546255642, guid: daf92e3c8827c1c4296e6f6d58acdef7, type: 3}
+  m_PrefabInstance: {fileID: 6331475073400829998}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f78cc35ebbb078b4994f5c31f008754d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &123097870
 GameObject:
   m_ObjectHideFlags: 0
@@ -4266,6 +4278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d738dcf44164140bb3f4fcb091ad9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionTool: 4
   descriptionOfObject: Stone
   isInteractable: 1
   interactions: 00000000
@@ -5140,6 +5153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d738dcf44164140bb3f4fcb091ad9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionTool: 4
   descriptionOfObject: 
   isInteractable: 1
   interactions: 00000000
@@ -5815,6 +5829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d738dcf44164140bb3f4fcb091ad9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionTool: 0
   descriptionOfObject: 
   isInteractable: 1
   interactions: 00000000
@@ -9114,6 +9129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d738dcf44164140bb3f4fcb091ad9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionTool: 4
   descriptionOfObject: Stone
   isInteractable: 1
   interactions: 00000000
@@ -10279,6 +10295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d738dcf44164140bb3f4fcb091ad9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionTool: 4
   descriptionOfObject: Stone
   isInteractable: 1
   interactions: 00000000
@@ -34768,6 +34785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8699446be6ca05d4f8b23eb029653815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionTool: 0
   descriptionOfObject: Chop Wood
   isInteractable: 1
   interactions: 01000000
@@ -35548,6 +35566,10 @@ PrefabInstance:
       propertyPath: counter
       value: 
       objectReference: {fileID: 679751164}
+    - target: {fileID: 6331475074787462542, guid: daf92e3c8827c1c4296e6f6d58acdef7, type: 3}
+      propertyPath: cell
+      value: 
+      objectReference: {fileID: 109300583}
     - target: {fileID: 6331475074787462543, guid: daf92e3c8827c1c4296e6f6d58acdef7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.5

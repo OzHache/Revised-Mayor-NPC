@@ -53,4 +53,24 @@ public class InventorySystem : MonoBehaviour
         Debug.Log("There are no empty slots and no matching item in Player Inventory for" + itemToCheck.name);
         return false;
     }
+
+    public List<ToolType> GetTools()
+    {
+        List<ToolType> tools = new List<ToolType>();
+        foreach(InventoryCell cell in inventoryCells)
+        {
+            //continue if the cell is empty
+            if (cell.item == null)
+                continue;
+            //check if this is a tool
+            if (cell.item.IsTool())
+            {
+                //see if this tool is already in the list,
+                //if not add it
+                tools.Add(cell.item.GetToolType());
+            }
+        }
+        //send back the list of tools
+        return tools;
+    }
 }

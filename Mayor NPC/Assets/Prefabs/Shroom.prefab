@@ -112,6 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 667981af307e54a88b4af872c246c4ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionTool: 2
   descriptionOfObject: A Shroom
-  item: {fileID: 11400000, guid: 22c734617515d4d398faed48a7c09706, type: 2}
+  isInteractable: 1
   interactions: 000000000100000002000000
+  item: {fileID: 11400000, guid: 22c734617515d4d398faed48a7c09706, type: 2}
+  staminaValue: 0

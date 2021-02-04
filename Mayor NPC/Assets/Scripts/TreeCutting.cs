@@ -12,6 +12,7 @@ public class TreeCutting : UIInteractable
     [SerializeField] private int amountPerHit;
     [SerializeField] private int amountWhenFell;
     
+    
     //animator
     private Animator animator;
 

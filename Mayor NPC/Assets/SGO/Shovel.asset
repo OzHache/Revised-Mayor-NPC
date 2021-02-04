@@ -17,6 +17,7 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 90403d3dc02a044c19670f35e60482a4, type: 3}
   isReuseable: 1
   isConsumeable: 0
+  toolType: 1
   heldArt: {fileID: 21300000, guid: 90403d3dc02a044c19670f35e60482a4, type: 3}
   hitChance: 0
   maxDamage: 0

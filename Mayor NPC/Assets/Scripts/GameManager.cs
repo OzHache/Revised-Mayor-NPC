@@ -142,9 +142,13 @@ public class GameManager : MonoBehaviour
             GamePaused();
         }
     }
-
-    internal void CheckForTool(ToolType requiredTool)
+    /// <summary>
+    /// Search the inventory for all tools
+    /// </summary>
+    /// <returns> a list of tool types in the inventory</returns>
+    internal List<ToolType> GetTools()
     {
-        //Check through the inventory for this particular tool. 
+        List<ToolType> tools = playerInventory.GetTools();
+        return tools;
     }
 }

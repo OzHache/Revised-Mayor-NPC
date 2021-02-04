@@ -5,7 +5,7 @@ using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 using UnityEngine;
 public enum ToolType
 {
-    Axe, Shovel, Hoe, Misc
+    Axe, Shovel, Hoe, Misc, None
 }
 
 [RequireComponent(typeof(Collider2D))]
@@ -17,7 +17,7 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
 
     //Dictionary for required tools
     protected Dictionary<ToolType, string> interactionToolRequirements = new Dictionary<ToolType, string>();
-    [SerializeField] private ToolType interactionTool;
+    [SerializeField] protected ToolType interactionTool;
 
     public ToolType GetTool() { return interactionTool; }
 
@@ -35,6 +35,18 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
 
     public Dictionary<UIButtonValues, string> Identify()
     {
+        List<ToolType> playerTools = GameManager.GetGameManager().GetTools();
+        //check if this can be interacted with
+        if (interactionTool != ToolType.None)
+        {
+            //if the tool is not available then cancel the interaction.
+            if (!playerTools.Contains(interactionTool))
+            {
+                Dictionary<UIButtonValues, string> returnValue = new Dictionary<UIButtonValues, string>();
+                returnValue.Add(UIButtonValues.Description, descriptionOfObject);
+                return returnValue;
+            }
+        }
         return interactionDescriptions;
     }
     #region Default Interactions
@@ -77,6 +89,11 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
     //Fill the interactions Dictionary with "Name","methodName",The First Item is always"Description" "Description of the item"
     private void FillInteractionDescription()
     {
+       
+
+        //todo: Convert these into strategies that can accomodate tools
+
+        
         var i = 0;
         foreach (InteractionTypes iType in interactions)
         {

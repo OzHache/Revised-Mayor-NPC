@@ -2613,6 +2613,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f78cc35ebbb078b4994f5c31f008754d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item: {fileID: 0}
+  image: {fileID: 0}
+  counter: {fileID: 0}
+  durabiltySlider: {fileID: 0}
   inventory: {fileID: 0}
 --- !u!1 &6331475074552156397
 GameObject:
@@ -3114,6 +3118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65116dd1a466a546a6bb90b59d54b78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionTool: 0
   descriptionOfObject: A Building
   isInteractable: 0
   interactions: 05000000

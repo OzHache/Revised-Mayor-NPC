@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 [CreateAssetMenu(fileName = "New_Item", menuName = "InventoryItem")]
 public class InventoryItem : ScriptableObject
 {
@@ -9,7 +10,8 @@ public class InventoryItem : ScriptableObject
     public bool isReuseable;
     public bool isConsumeable;
     public int durability { get { return durability; } private set { durability = value; } }
-    
+    public bool IsTool() { return toolType != ToolType.None; }  
+    [SerializeField] private ToolType toolType = ToolType.None;
 
     public int Use()
     {
@@ -28,5 +30,10 @@ public class InventoryItem : ScriptableObject
             return durability;
         }
 
+    }
+
+    internal ToolType GetToolType()
+    {
+        return toolType;
     }
 }

@@ -29,15 +29,14 @@ public class WoodCutting : UIInteractable
 
                 break;
         }
-    }
-
-
+    } 
  
 
     // Start is called before the first frame update
     void Start()
     {
         Setup();
+        interactionTool = ToolType.Axe;
     }
 
     // Update is called once per frame

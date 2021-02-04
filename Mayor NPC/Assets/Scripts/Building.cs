@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class Building : UIInteractable
 {
-    InventoryCell cell;
+    [SerializeField] private InventoryCell cell;
     //There are 3 stages to a building, 
     [SerializeField] private GameObject foundation;
     [SerializeField] private GameObject framing;
@@ -33,7 +33,7 @@ public class Building : UIInteractable
     {
         SetStage();
         Setup();
-        cell = GetComponent<InventorySystem>().inventoryCells.First<InventoryCell>();
+        //cell = GetComponent<InventorySystem>().inventoryCells.First<InventoryCell>();
     }
 
     private void SetStage()
