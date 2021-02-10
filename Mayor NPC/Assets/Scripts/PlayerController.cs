@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isMoving = false;
     private bool isAttacking = false;
-    private Combatant combat;
+    private Combatant combatant;
 
     internal void AddStamina(float amount)
     {
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         //Set References
-        combat = GetComponent<Combatant>();
+        combatant = GetComponent<Combatant>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -91,14 +91,14 @@ public class PlayerController : MonoBehaviour
         if (engageWith.GetComponent<Combatant>())
         {
             //Am I within Range?
-            if (Vector2.Distance(transform.position, engageWith.transform.position) > combat.meleeRange)
+            if (Vector2.Distance(transform.position, engageWith.transform.position) > combatant.meleeRange)
             {
                 StartCoroutine(MoveToTarget(engageWith.GetComponent<Combatant>()));
                 //Move towards target and strike them, otherwise, strike them
             }
             else
             {
-                combat.Melee(engageWith.GetComponent<Combatant>());
+                combatant.Melee(engageWith.GetComponent<Combatant>());
                 //Adjust based on the type of weapon
                 StaminaUpdate(1);
             }
@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
         StopCoroutine("MoveToPosition");
         isAttacking = true;
         Vector2 enemyPos = combatant.transform.position;
-        while (Vector2.Distance(transform.position, enemyPos) > combat.meleeRange)
+        while (Vector2.Distance(transform.position, enemyPos) > this.combatant.meleeRange)
         {
             transform.position = Vector2.MoveTowards(position, enemyPos, speed * Time.deltaTime);
             yield return null;
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
         }
         isAttacking = false;
         isMoving = false;
-        combat.Melee(combatant);
+        this.combatant.Melee(combatant);
         StaminaUpdate(1);
 
     }
@@ -135,16 +135,20 @@ public class PlayerController : MonoBehaviour
     //get the players health from the combatant
     public float GetHealth()
     {
-        float health = combat.healthRemaining;
+        float health = combatant.healthRemaining;
         return health;
     }
+
+    //Return the health from the combat base class
     public float GetMaxHealth()
     {
-        float maxHealth = combat.getMaxHealth;
+        float maxHealth = combatant.getMaxHealth;
         return maxHealth;
     }
+
     public void TakeDamage()
     {
+        
         HealthUpdater();
     }
 }

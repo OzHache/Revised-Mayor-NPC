@@ -8,9 +8,9 @@ public class GameManager : MonoBehaviour
     private static GameManager gameManager;
     //Reference to the player
     public GameObject Player { get; private set; }
-    public PlayerController playerController;
+    public PlayerController playerController { get; private set; }
     //Reference to the Inventory System
-    public InventorySystem playerInventory;
+    public InventorySystem playerInventory { get; private set; }
     //Make a list of items that have the UpdateUI Interface
     //private List<IUpdateUI> updateUIs = new List<IUpdateUI>();
     public PlayerStatUI stamina;
@@ -90,6 +90,9 @@ public class GameManager : MonoBehaviour
 
 
     }
+    /// <summary>
+    /// Setup before the game
+    /// </summary>
     void Awake()
     {
         if (gameManager != null && gameManager != this)
@@ -116,11 +119,6 @@ public class GameManager : MonoBehaviour
         playerInventory = GetComponent<InventorySystem>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public bool AddToPlayerInventory(InventoryItem addItem, int amount = 1)
     {
@@ -151,4 +149,9 @@ public class GameManager : MonoBehaviour
         List<ToolType> tools = playerInventory.GetTools();
         return tools;
     }
+
+
+
+    ///Any time the player does something they should be able to call update thier stamina value and trigger the stamina event which causes the UI to be updated.
+
 }

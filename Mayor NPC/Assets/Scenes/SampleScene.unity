@@ -9752,7 +9752,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1484970551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11264,7 +11264,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 2164979468188571903, guid: a6c32c066e9d7489a99614d809afdb2f, type: 3}
-  enemyPool: []
+  enemyPool:
+  - {fileID: 2164979468188571903, guid: a6c32c066e9d7489a99614d809afdb2f, type: 3}
   amountToPool: 3
   spawnDelay: 2
   spawnSpace: {x: 30, y: 10}

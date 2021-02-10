@@ -78,7 +78,8 @@ public class MouseUI : MonoBehaviour
         //Set the position of the UI
         //SetUIPosition();
         //See if the UI needs to stay active
-        SetUIActive();
+        if (interactionCanvas.gameObject.activeInHierarchy)
+            SetUIActive();
         //Check for clicks
         if (Input.GetMouseButtonDown(0))
         {
@@ -118,6 +119,9 @@ public class MouseUI : MonoBehaviour
 
     private void SetUIActive()
     {
+        //If the focus item is null don't perform this action
+        if (focusItem == null)
+            return;
         if (interactionCanvas.gameObject.activeInHierarchy)
         {
             //Check the distance bettween the mouses current position and the UI
