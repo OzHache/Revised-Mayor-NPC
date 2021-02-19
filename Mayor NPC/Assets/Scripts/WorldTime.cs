@@ -12,6 +12,19 @@ public class WorldTime : MonoBehaviour
     public string GetTime() { return time.ToString(@"hh\:mm"); }
     //4am in minutes since midnight
     private int startTime = 240;
+    // Pause Time
+    private bool pauseTime = false;
+    private bool isNewDay = false;
+
+    public void PauseDay()
+    {
+        pauseTime = !pauseTime;
+    }
+    private void Start()
+    {
+        GameManager.NewDayEvent += DayReset;
+        GameManager.StartDay += PauseDay;
+    }
 
     public static WorldTime GetWorldTime()
     {
@@ -51,19 +64,35 @@ public class WorldTime : MonoBehaviour
         }
         StartCoroutine(GameTime());
     }
+    private void DayReset()
+    {
+        PauseDay();
+        isNewDay = true;
+        //wait forStartNewDay
+
+    }
 
 
     //10 minutes of gameplay
     IEnumerator GameTime()
     {
-        //4am - 12am
-        //each minute is 2 hours
+        // 4am - 12am
+        // each minute is 2 hours
         // each 30 seconds is 1 hour
         // each second is 2 minutes
         int minutes = startTime;
 
         while (true)
         {
+            while (pauseTime )
+            {
+                if (isNewDay && minutes != startTime)
+                {
+                    minutes = startTime;
+                }
+                yield return null;
+                
+            }
             yield return new WaitForSeconds(.5f);
             minutes++;
             time = TimeSpan.FromMinutes(minutes);

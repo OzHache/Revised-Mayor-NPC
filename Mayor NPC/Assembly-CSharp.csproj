@@ -58,6 +58,7 @@
     <Compile Include="Assets/Scripts/InventorySystem.cs" />
     <Compile Include="Assets/Scripts/InventoryItem.cs" />
     <Compile Include="Assets/Scripts/EnemySpawner.cs" />
+    <Compile Include="Assets/Scripts/CraftingOutput.cs" />
     <Compile Include="Assets/Scripts/UIInteractable.cs" />
     <Compile Include="Assets/Scripts/PlayerController.cs" />
     <Compile Include="Assets/Scripts/UIManager.cs" />
@@ -88,7 +89,9 @@
     <Compile Include="Assets/Scripts/Combatant.cs" />
     <Compile Include="Assets/Scripts/Shroom.cs" />
     <Compile Include="Assets/Scripts/IInteractable.cs" />
-    <Compile Include="Assets/Scripts/CraftingOutput.cs" />
+    <Compile Include="Assets/Scripts/EquipmentCell.cs" />
+    <Compile Include="Assets/Scripts/ToolItem.cs" />
+    <Compile Include="Assets/Scripts/ArmourItem.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets/TextMesh Pro/Resources/Shaders/TMPro.cginc" />

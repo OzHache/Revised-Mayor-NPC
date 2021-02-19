@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     public static event NewDay NewDayEvent;
     public delegate void Pause();
     public static event Pause GamePaused;
+    public delegate void Startday();
+    public static event Startday StartDay;
 
     private void Start()
     {
@@ -41,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     internal void PlayerSleep(bool isSafe)
     {
-        bool enemiesPreset = false;
+        bool enemiesPresent = false;
         //See if there are enemies around
         EnemySpawner[] spawners = FindObjectsOfType<EnemySpawner>();
         foreach(EnemySpawner spawner in spawners)
@@ -49,16 +51,16 @@ public class GameManager : MonoBehaviour
             int numberOfEnemies = 0;
             if (spawner.EnemiesActive(out numberOfEnemies))
             {
-                enemiesPreset = true;
+                enemiesPresent = true;
                 break;
             }
             spawner.Restart();
         }
-        Player.GetComponent<PlayerController>().Sleep(isSafe: isSafe, enemiesPreset: enemiesPreset);
+        Player.GetComponent<PlayerController>().Sleep(isSafe: isSafe, enemiesPreset: enemiesPresent);
 
         //if there were enemies present, send all buildings a raid chance.
         //todo: make a building manager that handles all the buildings so the buildings are raided once only.
-        if (enemiesPreset)
+        if (enemiesPresent)
         {
             //BuildingManager.GetManager().Raid(numberOfEnemies:numberOfEnemies);
         }
@@ -67,8 +69,24 @@ public class GameManager : MonoBehaviour
         {
             NewDayEvent();
         }
+        //start wait for new day
+        StartCoroutine(WaitForNewDay());
     }
+    IEnumerator WaitForNewDay()
+    {
+        //for now, use a timer
+        float seconds = 2;
+        while (seconds > 0)
+        {
+            yield return null;
+            seconds -= Time.deltaTime;
+        }
+        if (StartDay != null)
+        {
+            StartDay();
+        }
 
+    }
     
     // Start is called before the first frame update
     private void Reset()
@@ -146,12 +164,12 @@ public class GameManager : MonoBehaviour
     /// <returns> a list of tool types in the inventory</returns>
     internal List<ToolType> GetTools()
     {
+        //todo change this to look in the equipment
         List<ToolType> tools = playerInventory.GetTools();
         return tools;
     }
 
 
 
-    ///Any time the player does something they should be able to call update thier stamina value and trigger the stamina event which causes the UI to be updated.
 
 }

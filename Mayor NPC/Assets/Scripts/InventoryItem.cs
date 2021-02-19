@@ -10,7 +10,7 @@ public class InventoryItem : ScriptableObject
     public bool isReuseable;
     public bool isConsumeable;
     public int durability { get { return durability; } private set { durability = value; } }
-    public bool IsTool() { return toolType != ToolType.None; }  
+    public bool IsTool() { return toolType != ToolType.None; }
     [SerializeField] private ToolType toolType = ToolType.None;
 
     public int Use()

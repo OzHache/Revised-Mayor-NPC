@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     //Player scalers
     [SerializeField] private float speed = 5;
-    [SerializeField] private float maxStamina = 10;
+    [SerializeField] private float maxStamina = 50;
     private float usedStamina = 0f;
     public float getStamina { get { return maxStamina - usedStamina; } }
     public float getMaxStamina { get { return maxStamina; } }
@@ -76,6 +76,10 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("lose 25% of goods");
             }
         }
+        combatant.RestartCharacter();
+        HealthUpdater();
+        usedStamina = 0;
+        StaminaUpdate(0);
     }
 
     //Get the input values
@@ -151,5 +155,6 @@ public class PlayerController : MonoBehaviour
         
         HealthUpdater();
     }
+
 }
 

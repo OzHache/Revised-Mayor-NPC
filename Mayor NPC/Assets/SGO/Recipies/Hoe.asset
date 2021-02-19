@@ -18,5 +18,5 @@ MonoBehaviour:
   inputOneAmount: 1
   inputTwo: {fileID: 11400000, guid: 40fc393d8c5e54077923c30ac6137a84, type: 2}
   inputTwoAmount: 1
-  output: {fileID: 11400000, guid: 327bbf4bae4d94a00a745016af568c43, type: 2}
+  output: {fileID: 11400000, guid: 32711f4cb35b34da296960e1788586c5, type: 2}
   outAmount: 1

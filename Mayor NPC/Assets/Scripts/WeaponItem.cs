@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 [CreateAssetMenu(fileName = "New_Weapon", menuName = "WeaponItem")]
-public class WeaponItem : InventoryItem
+public class WeaponItem : InventoryItem, IEquipment
 {
-
+    private EquipmentTypes equipmentType = EquipmentTypes.Weapon;
     public Sprite heldArt;
     //Does it take ammo?
     [Range(0,1)]public float hitChance;
@@ -13,6 +13,9 @@ public class WeaponItem : InventoryItem
     public int critMultiplyer;
     public float coolDown;
 
+    public EquipmentTypes GetEquipmentTypes()
+    {
+        return equipmentType;
+    }
 
-        
 }

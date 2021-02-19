@@ -130,7 +130,7 @@ public class InventoryCell : MonoBehaviour, IDropHandler
         UpdateUI();
     }
 
-    public void OnDrop(PointerEventData eventData)
+    public virtual void OnDrop(PointerEventData eventData)
     {
         InventoryItem dropItem = MouseInventory.GetMouseInvUI().hasItem;
         //see if the mouse inventory has an item
