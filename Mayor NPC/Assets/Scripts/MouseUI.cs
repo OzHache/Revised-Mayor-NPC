@@ -94,7 +94,7 @@ public class MouseUI : MonoBehaviour
         if (hit)
         {
             //See if this is a combatant
-            if (hit.transform.GetComponent<Combatant>())
+            if (hit.transform.GetComponent<Combatant>() && !hit.transform.CompareTag("Player"))
             {
                 player.GetComponent<PlayerController>().Engage(hit.transform.gameObject);
                 return null;
@@ -129,10 +129,7 @@ public class MouseUI : MonoBehaviour
             {
                 interactionCanvas.gameObject.SetActive(false);
                 focusItem = null;
-            }
-
-            //check the distance between the mouse and the player
-            if(Vector2.Distance(player.transform.position, focusItem.transform.position) > interactableRange)
+            }else if(Vector2.Distance(player.transform.position, focusItem.transform.position) > interactableRange)
             { 
                 interactionCanvas.gameObject.SetActive(false);
             } 

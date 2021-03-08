@@ -24,8 +24,6 @@ public class TreeCutting : UIInteractable
             action = (InteractionTypes)System.Enum.Parse(typeof(InteractionTypes), message);
         }
 
-
-
         switch (action)
         {
             case InteractionTypes.Use:
@@ -37,12 +35,14 @@ public class TreeCutting : UIInteractable
                     {
                         amount = amountWhenFell;
                         animator.SetBool("Cut", true);
+                       
                     }
                     else
                     {
                         animator.SetTrigger("Chop");
                     }
                     //Send a message to the Game Manager to take the object
+                    MessageFactory.GetMessageFactory().CreateFloatingMessage("-1 STA",FloatingMessage.MessageCategory.k_Stamina,gameObject);
                     GameManager.GetGameManager().AddToPlayerInventory(item, amount);
                 }
                 if(hitCount == numberOfHits)

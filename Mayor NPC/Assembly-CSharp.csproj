@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\UIManager.cs" />
     <Compile Include="Assets\Scripts\ArmourItem.cs" />
     <Compile Include="Assets\Scripts\Recipie.cs" />
+    <Compile Include="Assets\Scripts\FloatingMessage.cs" />
     <Compile Include="Assets\Scripts\ConnectCells.cs" />
     <Compile Include="Assets\Scripts\TimeUI.cs" />
     <Compile Include="Assets\Scripts\WorldInventory.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Assets\Scripts\WoodCutting.cs" />
     <Compile Include="Assets\Scripts\InventoryCell.cs" />
     <Compile Include="Assets\Scripts\MouseUI.cs" />
+    <Compile Include="Assets\Scripts\HealthMonitor.cs" />
     <Compile Include="Assets\Scripts\UIController.cs" />
     <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
@@ -92,7 +94,8 @@
     <Compile Include="Assets\Scripts\Combatant.cs" />
     <Compile Include="Assets\Scripts\Shroom.cs" />
     <Compile Include="Assets\Scripts\IInteractable.cs" />
-    <Compile Include="Assets\HealthMonitor.cs" />
+    <Compile Include="Assets\Scripts\MessageFactory.cs" />
+    <Compile Include="Assets\Scripts\CharacterDialogue.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

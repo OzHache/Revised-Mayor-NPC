@@ -35,6 +35,7 @@ public class Combatant : MonoBehaviour
     //all classes can melee
     virtual public void Melee(Combatant opposition)
     {
+        
         //The weapon is still cooling down
         if (!isWeaponReady)
             return;
@@ -47,7 +48,7 @@ public class Combatant : MonoBehaviour
             {
                 opposition.TakeDamage(1);
                 didMiss = false;
-                
+                MessageFactory.GetMessageFactory().CreateFloatingMessage("Miss", FloatingMessage.MessageCategory.k_HP, gameObject);
             }
             //Missed
             Debug.Log("Miss");
@@ -64,12 +65,13 @@ public class Combatant : MonoBehaviour
             {
                 opposition.TakeDamage(rawDamage: weaponItem.hitDamage);
             }
+            
             Debug.Log(gameObject.name + " Hit " + opposition.gameObject.name);
             didMiss = false;
         }
         
         else
-            Debug.Log("Miss");
+        
         StartCoroutine(WeaponCoolDown(didMiss));
     }
 
@@ -90,6 +92,7 @@ public class Combatant : MonoBehaviour
             OnMouseExit();
             gameObject.SetActive(false);
         }
+        MessageFactory.GetMessageFactory().CreateFloatingMessage(rawDamage.ToString(), FloatingMessage.MessageCategory.k_HP, gameObject);
     }
 
     //register that the mosue has been set on this object
