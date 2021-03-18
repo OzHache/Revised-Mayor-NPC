@@ -6,11 +6,11 @@ public class TreeCutting : UIInteractable
 {
 
     //Reference to the inventory item
-    [SerializeField] protected InventoryItem item;
-    [SerializeField] private int numberOfHits;
+    [SerializeField] protected InventoryItem m_item;
+    [SerializeField] private int m_numberOfHits = 3;
     private int hitCount = 0;
-    [SerializeField] private int amountPerHit;
-    [SerializeField] private int amountWhenFell;
+    [SerializeField] private int m_amountPerHit = 1;
+    [SerializeField] private int m_amountWhenFell = 3;
     
     
     //animator
@@ -27,13 +27,13 @@ public class TreeCutting : UIInteractable
         switch (action)
         {
             case InteractionTypes.Use:
-                if (hitCount < numberOfHits)
+                if (hitCount < m_numberOfHits)
                 {
-                    int amount = amountPerHit;
+                    int amount = m_amountPerHit;
                     hitCount++;
-                    if(hitCount == numberOfHits)
+                    if(hitCount == m_numberOfHits)
                     {
-                        amount = amountWhenFell;
+                        amount = m_amountWhenFell;
                         animator.SetBool("Cut", true);
                        
                     }
@@ -43,9 +43,9 @@ public class TreeCutting : UIInteractable
                     }
                     //Send a message to the Game Manager to take the object
                     MessageFactory.GetMessageFactory().CreateFloatingMessage("-1 STA",FloatingMessage.MessageCategory.k_Stamina,gameObject);
-                    GameManager.GetGameManager().AddToPlayerInventory(item, amount);
+                    GameManager.GetGameManager().AddToPlayerInventory(m_item, amount);
                 }
-                if(hitCount == numberOfHits)
+                if(hitCount == m_numberOfHits)
                 {
                     GetComponent<BoxCollider2D>().enabled = false;
                 }

@@ -19,7 +19,7 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
 
     public ToolType GetTool() { return m_interactionTool; }
 
-    //Description of the obejct todo: Probably delete this
+    //Description of the object todo: Probably delete this
     [SerializeField] protected string m_descriptionOfObject;
     //To be Modified if the object can be NOT interactable.
     public bool m_isInteractable = true;
@@ -84,7 +84,6 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
         return m_descriptionOfObject;
     }
 
-
     //Fill the interactions Dictionary with "Name","methodName",The First Item is always"Description" "Description of the item"
     private void FillInteractionDescription()
     {
@@ -132,8 +131,6 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
         }
     }
 
-
-
     IEnumerator MouseHovering()
     {
         
@@ -143,6 +140,7 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
             //Keep trying, you'll get better !!
         }
     }
+
 }
 //Located in UIIteractable.cs
 public enum UIButtonValues

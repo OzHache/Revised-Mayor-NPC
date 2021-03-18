@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEditor;
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject enemy;
-    [SerializeField] private List<GameObject> enemyPool = new List<GameObject>();
-    [SerializeField] private int amountToPool;
-    [SerializeField] private float spawnDelay;
-    [SerializeField] private Vector2 spawnSpace;
-    private bool canSpawn = true;
+    [SerializeField] private GameObject m_enemy;
+    [SerializeField] private List<GameObject> m_enemyPool = new List<GameObject>();
+    [SerializeField] private int m_amountToPool;
+    [SerializeField] private float m_spawnDelay;
+    [SerializeField] private Vector2 m_spawnSpace;
+    [SerializeField] private bool m_ShowSpawn = false;
+    private bool m_canSpawn = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,30 +20,33 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.gray * new Vector4(1, 1, 1, .25f);
-        Gizmos.DrawCube(transform.position, spawnSpace * 2);
+        if (m_ShowSpawn)
+        {
+            Gizmos.color = Color.gray * new Vector4(1, 1, 1, .25f);
+            Gizmos.DrawCube(transform.position, m_spawnSpace * 2);
+        }
        
     }
 
     IEnumerator SmartPooling()
     {
-        for(int i = enemyPool.Count; i < amountToPool; i++)
+        for(int i = m_enemyPool.Count; i < m_amountToPool; i++)
         {
             //pause between frames.
             yield return null;
-            GameObject newEnemy = Instantiate(enemy);
+            GameObject newEnemy = Instantiate(m_enemy);
             newEnemy.SetActive(false);
-            enemyPool.Add(newEnemy);
+            m_enemyPool.Add(newEnemy);
         }
     }
 
     internal void Restart()
     {
-        foreach(GameObject enemy in enemyPool)
+        foreach(GameObject enemy in m_enemyPool)
         {
             enemy.SetActive(false);
         }
-        canSpawn = true;
+        m_canSpawn = true;
         //subscribe to the newday event
         GameManager.NewDayEvent += StartSpawning;
 
@@ -58,7 +62,7 @@ public class EnemySpawner : MonoBehaviour
     {
         numOfActive = 0;
         bool activeEnemies = false;
-        foreach(GameObject enemy in enemyPool)
+        foreach(GameObject enemy in m_enemyPool)
         {
             if (enemy.activeInHierarchy)
             {
@@ -71,10 +75,10 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemy()
     {
-        yield return new WaitForSeconds(spawnDelay);
-        while (canSpawn)
+        yield return new WaitForSeconds(m_spawnDelay);
+        while (m_canSpawn)
         {
-            foreach(GameObject enemy in enemyPool)
+            foreach(GameObject enemy in m_enemyPool)
             {
                 if (!enemy.activeInHierarchy)
                 {
@@ -84,29 +88,23 @@ public class EnemySpawner : MonoBehaviour
                     while (!safe)
                     {
                         //find a safe space
-                        x = Random.Range(transform.position.x - spawnSpace.x, transform.position.x + spawnSpace.x);
-                        y = Random.Range(transform.position.y - spawnSpace.y, transform.position.y + spawnSpace.y);
+                        x = Random.Range(transform.position.x - m_spawnSpace.x, transform.position.x + m_spawnSpace.x);
+                        y = Random.Range(transform.position.y - m_spawnSpace.y, transform.position.y + m_spawnSpace.y);
                         safe = !Physics2D.BoxCast(new Vector2(x, y), Vector2.one, 0f, Vector2.zero);
                     }
                     enemy.transform.position = new Vector3(x, y, 0);
                     enemy.SetActive(true);
-                    canSpawn = true;
+                    m_canSpawn = true;
                     break;
                 }
                 else
                 {
-                    canSpawn = false;
+                    m_canSpawn = false;
                     continue;
                 }              
             }
-            yield return new WaitForSeconds(spawnDelay);
+            yield return new WaitForSeconds(m_spawnDelay);
         }
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
