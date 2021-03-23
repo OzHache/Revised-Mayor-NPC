@@ -27,11 +27,11 @@ namespace Assets.Scripts.Agent_Scripts
             {
                 if(!(item.GetTool() == ToolType.None))
                     message += ". It will require a " + item.GetTool().ToString();
+                //add quest for tool
+                QuestManager.GetQuestManager().AddQuest(item.GetQuest());
             }
 
             //manage all the other descriptions
-
-            //add Quests
 
 
             m_dialogue.SetCurrentMessage(message, true);

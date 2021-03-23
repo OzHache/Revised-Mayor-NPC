@@ -47,6 +47,12 @@ internal class QuestManager
             }
         }
     }
+
+    internal void AddQuest(object p)
+    {
+        throw new NotImplementedException();
+    }
+
     public void RemoveQuest(QuestLog log)
     {
         string keyWord = log.GetQuestKey();

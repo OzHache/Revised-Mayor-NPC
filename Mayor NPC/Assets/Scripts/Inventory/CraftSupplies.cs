@@ -20,4 +20,9 @@ public class CraftSupplies: UIInteractable
         Take(item);
 
     }
+
+    internal override Quest GetQuest()
+    {
+        return item.GetQuest();
+    }
 }

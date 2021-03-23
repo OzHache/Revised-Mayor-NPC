@@ -7,6 +7,7 @@ public class Shroom : UIInteractable
     //Reference to the inventory item
     [SerializeField] protected InventoryItem item;
     [SerializeField] protected float staminaValue;
+    [SerializeField] private Quest m_quest;
 
     protected override void Activate(string message)
     {
@@ -31,6 +32,11 @@ public class Shroom : UIInteractable
 
                 break;
         }
+    }
+
+    internal override Quest GetQuest()
+    {
+        return null;
     }
 
 
