@@ -13,13 +13,13 @@ README.txt
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
-/[Uu]ser[Ss]ettings/
+/Mayor NPC/[Ll]ibrary/
+/Mayor NPC/[Tt]emp/
+/Mayor NPC/[Oo]bj/
+/Mayor NPC/[Bb]uild/
+/Mayor NPC/[Bb]uilds/
+/Mayor NPC/[Ll]ogs/
+/Mayor NPC/[Uu]ser[Ss]ettings/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data

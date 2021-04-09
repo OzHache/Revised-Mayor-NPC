@@ -28,8 +28,6 @@ internal class QuestManager
     {
         m_availableQuests = startingQuests;
     }
-<<<<<<< HEAD:Mayor NPC/Assets/Scripts/Quests/QuestManager.cs
-=======
 
     public void AddQuest(Quest quest)
     {
@@ -55,7 +53,6 @@ internal class QuestManager
         throw new NotImplementedException();
     }
 
->>>>>>> 52ced34902ae8f9519221ac4e3a042ebbe47517d:Mayor NPC/Assets/Scripts/Manager/QuestManager.cs
     public void RemoveQuest(QuestLog log)
     {
         string keyWord = log.GetQuestKey();

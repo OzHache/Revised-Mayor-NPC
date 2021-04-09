@@ -175,4 +175,10 @@ public class Building : UIInteractable
 
         }
     }
+
+    internal override Quest GetQuest()
+    {
+        Debug.Log("Building has no quest");
+        return null;
+    }
 }

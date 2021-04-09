@@ -56,6 +56,12 @@ public class TreeCutting : UIInteractable
         }
     }
 
+    internal override Quest GetQuest()
+    {
+        Debug.Log("TreeCutting has no quest");
+        return null;
+    }
+
 
 
 

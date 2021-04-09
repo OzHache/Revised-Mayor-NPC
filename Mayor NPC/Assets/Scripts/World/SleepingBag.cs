@@ -22,4 +22,10 @@ public class SleepingBag : UIInteractable
     {
         Sleep();
     }
+
+    internal override Quest GetQuest()
+    {
+        Debug.Log("Sleeping Bag has no quests");
+        return null;
+    }
 }
