@@ -11,7 +11,7 @@ public class EquipmentCell : InventoryCell
     [SerializeField] private EquipmentTypes equipmentType;
     public override void OnDrop(PointerEventData eventData)
     {
-        InventoryItem dropItem = MouseInventory.GetMouseInvUI().hasItem;
+        InventoryItem dropItem = MouseInventory.GetMouseInvUI().GetItem();
         //see if the mouse inventory has an item
         if (dropItem != null)
         {

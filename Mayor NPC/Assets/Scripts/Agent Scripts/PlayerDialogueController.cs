@@ -2,57 +2,63 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.Agent_Scripts
+
+[Serializable]
+[RequireComponent(typeof(CharacterDialogue))]
+class PlayerDialogueController : MonoBehaviour
 {
-    [Serializable]
-    [RequireComponent(typeof(CharacterDialogue))]
-    class PlayerDialogueController : MonoBehaviour
+    private CharacterDialogue m_dialogue;
+    private Coroutine m_talking;
+    [SerializeField] private float m_talkDuration = 5.0f;
+
+    private void Start()
     {
-        private CharacterDialogue m_dialogue;
-        private Coroutine m_talking;
-        [SerializeField]private float m_talkDuration = 5.0f;
+        m_dialogue = GetComponent<CharacterDialogue>();
+    }
 
-        private void Start()
-        {
-            m_dialogue = GetComponent<CharacterDialogue>();
-        }
+    internal void TalkAbout(UIInteractable item)
+    {
+        if (m_talking != null)
+            StopCoroutine(m_talking);
 
-        internal void TalkAbout(UIInteractable item)
+        string message = "That is a " + item.GetDescription();
+        if (!GameManager.GetGameManager().GetTools().Contains(item.GetTool()))
         {
-            if (m_talking != null)
-                StopCoroutine(m_talking);
-            
-            string message = "That is a " + item.GetDescription();
-            if (!GameManager.GetGameManager().GetTools().Contains(item.GetTool()))
-            {
-                if(!(item.GetTool() == ToolType.None))
-                    message += ". It will require a " + item.GetTool().ToString();
+            if (!(item.GetTool() == ToolType.None)) {
+                message += ". It will require a " + item.GetTool().ToString();
+                //add Quests
+                PlayerActions action = new PlayerActions();
+                action.m_action = Quest.Action.Craft;
+                action.m_keyWord = item.GetTool().ToString();
+                action.m_number = 1;
+                QuestManager.GetQuestManager().CheckQuest(action);
             }
-
-            //manage all the other descriptions
-
-            //add Quests
-
-
-            m_dialogue.SetCurrentMessage(message, true);
-
-            m_talking = StartCoroutine(Talking());
+        
         }
-        private IEnumerator Talking()
+
+        //manage all the other descriptions
+
+        
+
+        m_dialogue.SetCurrentMessage(message, true);
+
+        m_talking = StartCoroutine(Talking());
+    }
+    private IEnumerator Talking()
+    {
+        bool running = true;
+        float timer = 0.0f;
+        while (running)
         {
-            bool running = true;
-            float timer = 0.0f;
-            while (running)
-            {
-                //other interactions
-                timer += Time.deltaTime;
-                if (timer > m_talkDuration)
-                    running = false;
-                yield return null;
-            }
-            m_dialogue.Deactivate();
-            StopCoroutine(Talking());
-            yield break;
+            //other interactions
+            timer += Time.deltaTime;
+            if (timer > m_talkDuration)
+                running = false;
+            yield return null;
         }
+        m_dialogue.Deactivate();
+        StopCoroutine(Talking());
+        yield break;
     }
 }
+

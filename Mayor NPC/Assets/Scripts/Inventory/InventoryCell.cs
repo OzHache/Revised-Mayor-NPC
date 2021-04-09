@@ -130,25 +130,38 @@ public class InventoryCell : MonoBehaviour, IDropHandler
         UpdateUI();
     }
 
+    /// <summary>
+    /// Reach into the Mouse Inventory and see if we can extract the item from it
+    /// </summary>
+    /// <param name="eventData"></param>
     public virtual void OnDrop(PointerEventData eventData)
     {
-        InventoryItem dropItem = MouseInventory.GetMouseInvUI().hasItem;
+        InventoryItem dropItem = MouseInventory.GetMouseInvUI().GetItem();
         //see if the mouse inventory has an item
         if (dropItem != null)
         {
-            if (dropItem == item)
+            int numberOfItems = MouseInventory.GetMouseInvUI().GetNumberOfItems();
+            //If the item being dropped is the same or null
+            if (dropItem == item || item == null)
             {
-                int numberOfItems = MouseInventory.GetMouseInvUI().GetNumberOfItems();
+                
                 MouseInventory.GetMouseInvUI().ClearInventory(true);
-                Add(numberOfItems);
+                if (item == null)
+                {
+                    AddItem(dropItem, numberOfItems);
+                }
+                else
+                {
+                    Add(numberOfItems);
+                }
+                //Generate a new action based on what we have done
+                var action = new PlayerActions();
+                action.m_keyWord = dropItem.name;
+                action.m_number = 1;
+                action.m_action = Quest.Action.Collect;
+                QuestManager.GetQuestManager().UpdateQuests(action);
             }
-            else if((item == null))
-            {
-               
-                int numberOfItems = MouseInventory.GetMouseInvUI().GetNumberOfItems();
-                MouseInventory.GetMouseInvUI().ClearInventory(true);
-                AddItem(dropItem, numberOfItems);
-            }
+           
             else
             {
                 MouseInventory.GetMouseInvUI().ClearInventory(false);
