@@ -28,6 +28,34 @@ internal class QuestManager
     {
         m_availableQuests = startingQuests;
     }
+<<<<<<< HEAD:Mayor NPC/Assets/Scripts/Quests/QuestManager.cs
+=======
+
+    public void AddQuest(Quest quest)
+    {
+
+        //see if this quest is already discoverd
+        if (quest.IsDiscovered() && !quest.IsCompleted())
+        {
+            string keyWord = quest.GetKey();
+            var log = QuestUI.GetQuestUI().AddQuest(quest);
+            if (m_Listeners.ContainsKey(keyWord))
+            {
+                m_Listeners[keyWord].Add(log);
+            }
+            else
+            {
+                m_Listeners[keyWord] = new List<QuestLog>() { log };
+            }
+        }
+    }
+
+    internal void AddQuest(object p)
+    {
+        throw new NotImplementedException();
+    }
+
+>>>>>>> 52ced34902ae8f9519221ac4e3a042ebbe47517d:Mayor NPC/Assets/Scripts/Manager/QuestManager.cs
     public void RemoveQuest(QuestLog log)
     {
         string keyWord = log.GetQuestKey();

@@ -28,6 +28,8 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
 
     [SerializeField] protected List<InteractionTypes> interactions = new List<InteractionTypes>();
 
+    abstract internal Quest GetQuest();
+
     public Dictionary<UIButtonValues, string> Identify()
     {
         List<ToolType> playerTools = GameManager.GetGameManager().GetTools();

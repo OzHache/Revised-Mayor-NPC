@@ -11,6 +11,8 @@ public class InventoryItem : ScriptableObject
     public bool isConsumeable;
     public int durability { get { return durability; } private set { durability = value; } }
     public bool IsTool() { return toolType != ToolType.None; }
+    [SerializeField] private Quest m_quest;
+
     [SerializeField] private ToolType toolType = ToolType.None;
 
     public int Use()
@@ -30,6 +32,11 @@ public class InventoryItem : ScriptableObject
             return durability;
         }
 
+    }
+
+    internal Quest GetQuest()
+    {
+        return m_quest;
     }
 
     internal ToolType GetToolType()
