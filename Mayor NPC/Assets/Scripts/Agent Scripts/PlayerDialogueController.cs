@@ -24,8 +24,8 @@ class PlayerDialogueController : MonoBehaviour
         string message = "That is a " + item.GetDescription();
         if (!GameManager.GetGameManager().GetTools().Contains(item.GetTool()))
         {
-<<<<<<< HEAD
-            if (!(item.GetTool() == ToolType.None)) {
+            if (!(item.GetTool() == ToolType.None))
+            {
                 message += ". It will require a " + item.GetTool().ToString();
                 //add Quests
                 PlayerActions action = new PlayerActions();
@@ -33,30 +33,13 @@ class PlayerDialogueController : MonoBehaviour
                 action.m_keyWord = item.GetTool().ToString();
                 action.m_number = 1;
                 QuestManager.GetQuestManager().CheckQuest(action);
-=======
-            if (m_talking != null)
-                StopCoroutine(m_talking);
-            
-            string message = "That is a " + item.GetDescription();
-            if (!GameManager.GetGameManager().GetTools().Contains(item.GetTool()))
-            {
-                if(!(item.GetTool() == ToolType.None))
-                    message += ". It will require a " + item.GetTool().ToString();
-                //add quest for tool
-                QuestManager.GetQuestManager().AddQuest(item.GetQuest());
->>>>>>> 52ced34902ae8f9519221ac4e3a042ebbe47517d
+                if (m_talking != null)
+                    StopCoroutine(m_talking);
+
             }
         
         }
-
-<<<<<<< HEAD
         //manage all the other descriptions
-
-        
-=======
-            //manage all the other descriptions
-
->>>>>>> 52ced34902ae8f9519221ac4e3a042ebbe47517d
 
         m_dialogue.SetCurrentMessage(message, true);
 
