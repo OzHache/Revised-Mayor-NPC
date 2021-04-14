@@ -61,5 +61,17 @@ class PlayerDialogueController : MonoBehaviour
         StopCoroutine(Talking());
         yield break;
     }
+
+    internal void Say(string message)
+    {
+        //stop talking
+        if (m_talking != null)
+            StopCoroutine(m_talking);
+
+        m_dialogue.SetCurrentMessage(message, true);
+
+        m_talking = StartCoroutine(Talking());
+
+    }
 }
 

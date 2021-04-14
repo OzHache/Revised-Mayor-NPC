@@ -55,6 +55,10 @@ public class MouseInventory : MonoBehaviour, IDropHandler
         {
             SetDragUI();
         }
+        if (Input.GetMouseButtonUp(0))
+        {
+            m_dragCanvas.gameObject.SetActive(false);
+        }
     }
 
     //Set the dragUI Position
@@ -112,6 +116,7 @@ public class MouseInventory : MonoBehaviour, IDropHandler
     private IEnumerator DropOnGround()
     {
         yield return null;
+        m_dragCanvas.gameObject.SetActive(false);
         //see if the item is still in the inventory
         if(m_fromCell != null)
         {

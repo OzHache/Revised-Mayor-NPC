@@ -82,7 +82,7 @@
     <Compile Include="Assets\Scripts\Quests\Quest.cs" />
     <Compile Include="Assets\Scripts\World\WoodCutting.cs" />
     <Compile Include="Assets\Scripts\Inventory\InventoryCell.cs" />
-    <Compile Include="Assets\Scripts\UI\MouseUI.cs" />
+    <Compile Include="Assets\Scripts\Mouse\MouseUI.cs" />
     <Compile Include="Assets\Scripts\Agent Scripts\CharacterDialogue.cs" />
     <Compile Include="Assets\Scripts\UI\HealthMonitor.cs" />
     <Compile Include="Assets\Scripts\UI\UIController.cs" />

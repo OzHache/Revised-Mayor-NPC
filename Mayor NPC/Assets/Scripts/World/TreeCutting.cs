@@ -73,9 +73,4 @@ public class TreeCutting : UIInteractable
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

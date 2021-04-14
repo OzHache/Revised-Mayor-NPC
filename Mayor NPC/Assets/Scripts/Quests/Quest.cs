@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 [CreateAssetMenu(fileName = "New_Quest", menuName = "Quests")]
 public class Quest : ScriptableObject
 {
     public enum Action { Collect, Build, Use, Craft }
-    [SerializeField]private Action m_action;
-    [SerializeField]private string m_keyWord;
-    [SerializeField]private int m_remaining;
+    [SerializeField] private Action m_action;
+    [SerializeField] private string m_keyWord;
+    [SerializeField] private int m_remaining;
     [SerializeField] private int m_defaultAmount;
-    [SerializeField]private bool m_completed = false;
-    [SerializeField]private bool m_discovered = false;
-    [SerializeField]private List<Quest> m_children;
-
+    [SerializeField] private bool m_completed = false;
+    [SerializeField] private bool m_discovered = false;
+    [SerializeField] private List<Quest> m_children;
+    [SerializeField] private UnityEvent OnTriggerEvents;
     public void Reset()
     {
         m_remaining = m_defaultAmount;
@@ -27,12 +28,17 @@ public class Quest : ScriptableObject
 
     public bool IsCompleted() { return m_completed; }
 
-    internal void UpdateQuest(Action action)
+    internal void UpdateQuest(Action action, int amount = 1)
     {
         if(action == m_action)
         {
-            m_remaining--;
+            m_remaining-=amount;
             m_completed = m_remaining <= 0;
+
+        }
+        if (m_completed)
+        {
+            OnTriggerEvents.Invoke();
         }
     }
     public void SetDiscovered(bool discovered) { m_discovered = discovered; }

@@ -26,4 +26,18 @@ public class CraftingOutput : InventoryCell
         }
 
     }
+    public void ActivateCraft()
+    {
+        //Tell the Game Manager to accept this item.  and if there is space remove this item
+        if (GameManager.GetGameManager().AddToPlayerInventory(item))
+        {
+            RemoveOne();
+        }
+        else
+        {
+            //Tell the Player that you cannot craft this because you have no space. 
+            GameManager.GetGameManager().m_playerController.Say("There is not enough room in my inventory to craft this");
+        }
+
+    }
 }

@@ -9,8 +9,9 @@ public class InventoryCell : MonoBehaviour, IDropHandler
     //Refences to item
     public InventoryItem item;
     //If this inventory should only accept a certian type
-    public InventoryItem onlyAccepts { get; private set; }
-    public bool lockedInventory { get { return onlyAccepts != null; } }
+    [SerializeField]private InventoryItem m_onlyAccepts;
+    public InventoryItem m_lockedItem { get { return m_onlyAccepts; } }
+    public bool lockedInventory { get { return m_onlyAccepts != null; } }
     //Counter for how many items
     public int numberOfItems { get; protected set; }
     protected int durability = 0;
@@ -84,7 +85,7 @@ public class InventoryCell : MonoBehaviour, IDropHandler
     virtual public void Clear()
     {
         item = null;
-        onlyAccepts = null;
+        m_onlyAccepts = null;
         numberOfItems = 0;
         UpdateUI();
     }
@@ -117,16 +118,20 @@ public class InventoryCell : MonoBehaviour, IDropHandler
     /// <param name="itemToLock">InventoryItem to locok the inventory with</param>
     public void LockInventory (InventoryItem itemToLock)
     {
-        onlyAccepts = itemToLock;
+        m_onlyAccepts = itemToLock;
     }
     public void UnlockInventory()
     {
-        onlyAccepts = null;
+        m_onlyAccepts = null;
     }
 
     virtual internal void Remove(int currentAmountNeeded)
     {
-        numberOfItems -= currentAmountNeeded;
+        for (int i = 0; i < currentAmountNeeded; i++)
+        {
+            RemoveOne();
+        }
+        
         UpdateUI();
     }
 

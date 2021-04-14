@@ -28,9 +28,9 @@ public class QuestLog : MonoBehaviour
         return m_quest.GetKey();
     }
 
-    internal void UpdateQuest(Quest.Action action)
+    internal void UpdateQuest(Quest.Action action, int amount)
     {
-        m_quest.UpdateQuest(action);
+        m_quest.UpdateQuest(action, amount);
         
         UpdateUI();
     }
@@ -38,6 +38,11 @@ public class QuestLog : MonoBehaviour
     private void UpdateUI()
     {
         m_text.text = m_quest.GetQuest();
+    }
+    public void CloseQuest()
+    {
+        Debug.Log("Quest Complete" + m_quest.name);
+        Destroy(gameObject);
     }
 }
 

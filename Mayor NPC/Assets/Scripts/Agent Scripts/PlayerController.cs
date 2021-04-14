@@ -111,6 +111,12 @@ public class PlayerController : MonoBehaviour
         m_dialgoueController.TalkAbout(interactableItem);
     }
 
+    //say generic message
+    internal void Say(string message) 
+    {
+        m_dialgoueController.Say(message);
+    }
+
     //Moving
     IEnumerator MoveToTarget(Combatant combatant)
     {

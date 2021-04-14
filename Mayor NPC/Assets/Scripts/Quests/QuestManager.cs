@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using QuestPairs = System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.List<QuestLog>>;
 internal class QuestManager
 {
     private static QuestManager s_instance;
-    private Dictionary<string, List<QuestLog>> m_Listeners = new Dictionary<string, List<QuestLog>>();
+    private List<QuestPairs> m_Listeners = new List<QuestPairs>();
 
     private List<Quest> m_availableQuests = new List<Quest>();
     private List<Quest> m_currentQuests = new List<Quest>();
@@ -37,14 +38,16 @@ internal class QuestManager
         {
             string keyWord = quest.GetKey();
             var log = QuestUI.GetQuestUI().AddQuest(quest);
-            if (m_Listeners.ContainsKey(keyWord))
+            //find the pair with the keyword
+            foreach (var pair in m_Listeners)
             {
-                m_Listeners[keyWord].Add(log);
+                if (pair.Key == keyWord)
+                {
+                    pair.Value.Add(log);
+                    return;
+                }
             }
-            else
-            {
-                m_Listeners[keyWord] = new List<QuestLog>() { log };
-            }
+            m_Listeners.Add(new QuestPairs(keyWord, new List<QuestLog>() { log }));
         }
     }
 
@@ -56,14 +59,19 @@ internal class QuestManager
     public void RemoveQuest(QuestLog log)
     {
         string keyWord = log.GetQuestKey();
-        if (m_Listeners.ContainsKey(keyWord))
+        //look over all the listeners and see if any are looking for this keyword
+        foreach(var pair in m_Listeners)
         {
-            m_Listeners[keyWord].Remove(log);
+            if (pair.Key == keyWord)
+            {
+                //if remove fails. I would like to know
+                if(!pair.Value.Remove(log))
+                {
+                    UnityEngine.Debug.LogError("Log not found" + log.GetQuestKey());
+                }
+            }
         }
-        else
-        {
-            UnityEngine.Debug.LogError("Log not found" + log.GetQuestKey());
-        }
+        
         //add the children as Available Quest
         foreach(var quest in log.GetQuest().GetChildren())
         {
@@ -76,12 +84,6 @@ internal class QuestManager
         QuestUI.GetQuestUI().RemoveQuest(log.GetQuest());
     }
 
-    //todo:
-
-    /*
-     * this should be triggered on the dialogue with the player any time we want to start an quest we can send a keyword and an action
-     * 
-     */
     public void CheckQuest(PlayerActions action)
     {
 
@@ -96,14 +98,20 @@ internal class QuestManager
                 {
                     string keyWord = quest.GetKey();
                     var log = QuestUI.GetQuestUI().AddQuest(quest);
-                    if (m_Listeners.ContainsKey(keyWord))
+                    //find the listeners for this particular keyword
+                    foreach (var pair in m_Listeners)
                     {
-                        m_Listeners[keyWord].Add(log);
+                        //why am I adding in two locations
+                        if (pair.Key == keyWord)
+                        {
+                            pair.Value.Add(log);
+                            break;
+                        }
                     }
-                    else
-                    {
-                        m_Listeners[keyWord] = new List<QuestLog>() { log };
-                    }
+
+
+                    m_Listeners.Add(new QuestPairs(keyWord, new List<QuestLog>() { log }));
+
                 }
                 break;
             }
@@ -115,31 +123,54 @@ internal class QuestManager
 
     public void UpdateQuests(PlayerActions action)
     {
+        int? index = null; ;
         //look over the available quests and see if there are any that are triggered by this keyword and action
         //early out if there are no listeners
         if (m_Listeners == null || m_Listeners.Count == 0) 
             return;
-        if (m_Listeners.ContainsKey(action.m_keyWord))
+        foreach (var pair in m_Listeners)
         {
-            foreach(var quest in m_Listeners[action.m_keyWord])
+            if (pair.Key == action.m_keyWord)
             {
-                quest.UpdateQuest(action.m_action);
+                foreach (var quest in pair.Value)
+                {
+                    quest.UpdateQuest(action.m_action, action.m_number);
+                    if(quest.GetQuest().IsCompleted())
+                    {
+                        if(!index.HasValue)
+                        {
+                            index = m_Listeners.IndexOf(pair);
+                        }
+                    }
+                }
+                break;
             }
         }
-        //if there are no quests of this type, early out
-        if (m_Listeners.ContainsKey(action.m_keyWord))
+        if (index.HasValue)
         {
-            //remove completed Quest
-            //todo: cannot remove from a dictonaried list
-            var quests = m_Listeners[action.m_keyWord];
-            foreach (var quest in quests)
+            List<QuestLog> removeList = new List<QuestLog>();
+            foreach (var quest in m_Listeners[index.Value].Value)
             {
-                List<QuestLog> toRemove = new List<QuestLog>();
                 if (quest.GetQuest().IsCompleted())
                 {
-                    quests.Remove(quest);
+                    removeList.Add(quest);
                 }
             }
+            //replace the quest pair with this value
+            foreach(var questLog in removeList)
+            {
+                //remove from the list and then distroy this item
+                m_Listeners[index.Value].Value.Remove(questLog);
+                //add children quest
+                foreach(var child in questLog.GetQuest().GetChildren())
+                {
+                    child.SetDiscovered(true);
+                    AddQuest(child);
+                }
+                questLog.CloseQuest();
+                
+            }
+            
         }
     }
 }

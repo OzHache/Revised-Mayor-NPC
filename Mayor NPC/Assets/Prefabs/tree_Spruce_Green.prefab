@@ -159,10 +159,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dd5103f1101144b692ba6fdc5f4c4ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  descriptionOfObject: Tree
-  isInteractable: 1
+  m_interactionTool: 0
+  m_descriptionOfObject: Tree for Harvesting
+  m_isInteractable: 1
   interactions: 01000000
-  item: {fileID: 11400000, guid: 977ec9e7bf6aa4740b47d904b0f2d1d7, type: 2}
-  numberOfHits: 3
-  amountPerHit: 1
-  amountWhenFell: 3
+  m_item: {fileID: 11400000, guid: 977ec9e7bf6aa4740b47d904b0f2d1d7, type: 2}
+  m_numberOfHits: 3
+  m_amountPerHit: 1
+  m_amountWhenFell: 3
