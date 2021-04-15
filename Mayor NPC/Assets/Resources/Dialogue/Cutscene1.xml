@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DialogueTree owner="CutScene1">
+    <Branches>
+        <Branch id="0">
+            <Text>Welcome back to the island</Text>
+            <Choices>
+                <Choice> 
+                    <ChoiceID>1</ChoiceID>
+                    <ChoiceText>Continue</ChoiceText>
+                </Choice>
+            </Choices>
+        </Branch>
+        <Branch id="1">
+            <Text>You have been away for some time now</Text>
+            <Choices>
+                <Choice>
+                    <ChoiceID>2</ChoiceID>
+                    <ChoiceText>Continue</ChoiceText>
+                </Choice>
+            </Choices>
+        </Branch>
+        <Branch id="2">
+            <Text>Most of the villagers have left</Text>
+            <Choices>
+                <Choice>
+                    <ChoiceID>3.b</ChoiceID>
+                    <ChoiceText>Continue</ChoiceText>
+                </Choice>
+                <Choice>
+                    <ChoiceID>3.a</ChoiceID>
+                    <ChoiceText>Why?</ChoiceText>
+                </Choice>
+            </Choices>
+        </Branch>
+        <Branch id="3.a">
+            <Text>The evil wizard. You have been a way for a while haven't you? </Text>
+            <Choices>
+                <Choice>
+                    <ChoiceID>4</ChoiceID>
+                    <ChoiceText>Continue</ChoiceText>
+                </Choice>
+            </Choices>
+        </Branch>
+        <Branch id="3.b">
+            <Text>Time to get to reconstruction</Text>
+            <Choices>
+                <Choice >
+                    <ChoiceID>4</ChoiceID>
+                    <ChoiceText>Continue</ChoiceText>
+                </Choice>
+            </Choices>
+        </Branch>
+        <Branch id="4">
+            <Text>You will need to  knock down some trees to build the house to the north</Text>
+            <Choices>
+                <!-- No choices here. This is the end of the cutscene-->
+            </Choices>
+        </Branch>
+    </Branches>
+</DialogueTree>

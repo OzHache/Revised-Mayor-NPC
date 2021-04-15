@@ -231,6 +231,9 @@ public class MouseUI : MonoBehaviour
         //Remoe UI and Deselect Focus Item
         m_canvas.gameObject.SetActive(false);
         m_focusItem = null;
+
+        //todo:send a message to the player telling them which item they used
+
     }
     #endregion Button Clicks
 }

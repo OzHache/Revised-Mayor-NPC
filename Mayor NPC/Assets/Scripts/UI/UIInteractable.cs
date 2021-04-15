@@ -89,7 +89,6 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
     //Fill the interactions Dictionary with "Name","methodName",The First Item is always"Description" "Description of the item"
     private void FillInteractionDescription()
     {
-        //todo: Convert these into strategies that can accomodate tools
         
         var i = 0;
         foreach (InteractionTypes iType in interactions)

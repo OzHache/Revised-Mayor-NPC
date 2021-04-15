@@ -48,12 +48,7 @@ internal class QuestManager
                 }
             }
             m_Listeners.Add(new QuestPairs(keyWord, new List<QuestLog>() { log }));
-        }
-    }
-
-    internal void AddQuest(object p)
-    {
-        throw new NotImplementedException();
+       }
     }
 
     public void RemoveQuest(QuestLog log)

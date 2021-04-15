@@ -21,11 +21,11 @@ public class PlayerController : MonoBehaviour
     
     private PlayerDialogueController m_dialgoueController;
 
-    private bool m_isMoving = false;
-    private bool m_isAttacking = false;
+    private Coroutine m_conversation;
     private Combatant m_combatant;
+    private bool m_engagedInConversation;
 
-    
+
 
     //Updaters
     //Stamina Updater
@@ -55,7 +55,6 @@ public class PlayerController : MonoBehaviour
        GetInput();
         if(m_moveDirection != Vector2.zero){
             StopAllCoroutines();
-            m_isAttacking = false;
         }
     }
     private void FixedUpdate()
@@ -82,6 +81,9 @@ public class PlayerController : MonoBehaviour
     //Get the input values
     private void GetInput()
     {
+        //early out while engaged in a conversation
+        if (m_engagedInConversation)
+            return;
         //Controls -> wasd for movememt
         m_moveDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
     }
@@ -121,7 +123,6 @@ public class PlayerController : MonoBehaviour
     IEnumerator MoveToTarget(Combatant combatant)
     {
         StopCoroutine("MoveToPosition");
-        m_isAttacking = true;
         Vector2 enemyPos = combatant.transform.position;
         while (Vector2.Distance(transform.position, enemyPos) > this.m_combatant.meleeRange)
         {
@@ -129,8 +130,6 @@ public class PlayerController : MonoBehaviour
             yield return null;
             enemyPos = combatant.transform.position;
         }
-        m_isAttacking = false;
-        m_isMoving = false;
         this.m_combatant.Melee(combatant);
         StaminaUpdate(1);
 
@@ -169,6 +168,19 @@ public class PlayerController : MonoBehaviour
         StaminaUpdate(-amount);
     }
     
-
+    internal void StartConversation()
+    {
+        m_conversation = StartCoroutine(ConversationLock());
+        m_engagedInConversation = true;
+    }
+    internal void StopConversation()
+    {
+        m_engagedInConversation = false;
+        StopCoroutine(m_conversation);
+    }
+    private IEnumerator ConversationLock()
+    {
+        yield return new WaitUntil(()=>!m_engagedInConversation);
+    }
 }
 

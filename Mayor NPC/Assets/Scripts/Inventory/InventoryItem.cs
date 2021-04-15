@@ -14,7 +14,8 @@ public class InventoryItem : ScriptableObject
     [SerializeField] private Quest m_quest;
 
     [SerializeField] private ToolType toolType = ToolType.None;
-
+    [SerializeField] private Recipie m_recipie;
+    public Recipie GetRecipie() { return m_recipie; }
     public int Use()
     {
         if (isReuseable)

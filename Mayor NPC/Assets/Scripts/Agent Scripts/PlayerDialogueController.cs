@@ -4,16 +4,15 @@ using UnityEngine;
 
 
 [Serializable]
-[RequireComponent(typeof(CharacterDialogue))]
 class PlayerDialogueController : MonoBehaviour
 {
-    private CharacterDialogue m_dialogue;
+
+    [SerializeField]private CharacterDialogue m_dialogue;
     private Coroutine m_talking;
     [SerializeField] private float m_talkDuration = 5.0f;
 
     private void Start()
     {
-        m_dialogue = GetComponent<CharacterDialogue>();
     }
 
     internal void TalkAbout(UIInteractable item)

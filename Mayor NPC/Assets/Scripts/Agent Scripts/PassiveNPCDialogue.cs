@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class PassiveNPCDialogue : MonoBehaviour
 {
-    private CharacterDialogue dialogue;
+    [SerializeField]private CharacterDialogue m_dialogue;
 
     private void Start()
     {
-        dialogue = GetComponent<CharacterDialogue>();
-        if(dialogue == null)
+        if(m_dialogue == null)
         {
             Debug.LogError("There is no Character Dialogue on this gameObject " + gameObject.name);
             Destroy(this);
@@ -19,14 +18,14 @@ public class PassiveNPCDialogue : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            dialogue.Activate();
+            m_dialogue.Activate();
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            dialogue.Deactivate();
+            m_dialogue.Deactivate();
         }
     }
 
