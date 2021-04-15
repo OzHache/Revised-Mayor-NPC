@@ -33,7 +33,8 @@
             </Choices>
         </Branch>
         <Branch id="3.a">
-            <Text>The evil wizard. You have been a way for a while haven't you? </Text>
+            <Text>The evil wizard. 
+                You have been a way for a while haven't you? </Text>
             <Choices>
                 <Choice>
                     <ChoiceID>4</ChoiceID>
