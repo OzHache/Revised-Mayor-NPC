@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_action: 3
   m_keyWord: Axe
-  m_remaining: 1
+  m_remaining: -1
   m_defaultAmount: 1
-  m_completed: 0
+  m_completed: 1
   m_discovered: 1
   m_children:
-  - {fileID: 11400000, guid: 99a446a732a440b4e9103d03640293b9, type: 2}
+  - {fileID: 11400000, guid: 57e7c3be3bd5d0a4fbc0e0bdc40db876, type: 2}
   OnTriggerEvents:
     m_PersistentCalls:
       m_Calls: []

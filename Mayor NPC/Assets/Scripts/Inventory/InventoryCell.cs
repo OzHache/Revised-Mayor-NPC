@@ -18,7 +18,7 @@ public class InventoryCell : MonoBehaviour, IDropHandler
     private InventorySystem iSystem;
     //Refernces to UI Elements
     //Image in the Panel
-    [SerializeField] private Image image;
+    [SerializeField] protected Image image;
     [SerializeField] private TextMeshProUGUI counter;
     [SerializeField] private Slider durabiltySlider;
     

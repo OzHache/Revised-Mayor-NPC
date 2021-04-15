@@ -13,6 +13,7 @@ public class EquipmentCell : InventoryCell
     [SerializeField] private Image m_lockImage;
     [SerializeField] private Quest questPartOne;
     [SerializeField] private Quest questPartTwo;
+    private Color m_startingColor;
 
     private new void Start()
     {
@@ -23,6 +24,9 @@ public class EquipmentCell : InventoryCell
             var color = m_lockImage.color;
             color.a = 0.25f;
             m_lockImage.color = color;
+            //disable the item icon
+            m_startingColor = color;
+            image.color = Vector4.zero;
         }
     }
     public override void OnDrop(PointerEventData eventData)
@@ -53,6 +57,7 @@ public class EquipmentCell : InventoryCell
     {
         //todo: turn on the image and find where to turn off the item image.
         m_lockImage.color = Vector4.zero;
+        image.color = m_startingColor;
         base.AddItem(newItem, amount);
     }
 } 

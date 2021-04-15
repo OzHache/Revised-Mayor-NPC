@@ -172,7 +172,6 @@ public class Building : UIInteractable
                 break;
             default:
                 break;
-
         }
     }
 
