@@ -18,8 +18,6 @@ public class QuestLog : MonoBehaviour
     public void SetQuest(Quest quest)
     {
         m_quest = quest;
-        m_quest.Reset();
-        quest.SetDiscovered(true);
         UpdateUI();
     }
 
@@ -28,11 +26,12 @@ public class QuestLog : MonoBehaviour
         return m_quest.GetKey();
     }
 
-    internal void UpdateQuest(Quest.Action action, int amount)
+    internal int UpdateQuest(Quest.ActionType action, int amount)
     {
-        m_quest.UpdateQuest(action, amount);
+        int left = m_quest.UpdateQuest(action, amount);
         
         UpdateUI();
+        return left;
     }
 
     private void UpdateUI()

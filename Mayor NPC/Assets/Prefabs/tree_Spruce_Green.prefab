@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_interactionTool: 0
-  m_descriptionOfObject: Tree for Harvesting
+  m_descriptionOfObject: Tree
   m_isInteractable: 1
   interactions: 01000000
   m_item: {fileID: 11400000, guid: 977ec9e7bf6aa4740b47d904b0f2d1d7, type: 2}

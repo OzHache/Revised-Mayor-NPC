@@ -31,11 +31,6 @@ public class WoodCutting : UIInteractable
         }
     }
 
-    internal override Quest GetQuest()
-    {
-        Debug.Log("Wood has not quest");
-        return null;
-    }
 
 
     // Start is called before the first frame update

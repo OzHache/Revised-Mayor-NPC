@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "New_Item", menuName = "InventoryItem")]
 public class InventoryItem : ScriptableObject
@@ -11,11 +12,14 @@ public class InventoryItem : ScriptableObject
     public bool isConsumeable;
     public int durability { get { return durability; } private set { durability = value; } }
     public bool IsTool() { return toolType != ToolType.None; }
-    [SerializeField] private Quest m_quest;
 
     [SerializeField] private ToolType toolType = ToolType.None;
     [SerializeField] private Recipie m_recipie;
     public Recipie GetRecipie() { return m_recipie; }
+    public List<Quest> GetQuest()
+    {
+        return m_recipie.GetQuest();
+    }
     public int Use()
     {
         if (isReuseable)
@@ -35,10 +39,6 @@ public class InventoryItem : ScriptableObject
 
     }
 
-    internal Quest GetQuest()
-    {
-        return m_quest;
-    }
 
     internal ToolType GetToolType()
     {

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CraftSupplies: UIInteractable
 {
@@ -21,8 +22,4 @@ public class CraftSupplies: UIInteractable
 
     }
 
-    internal override Quest GetQuest()
-    {
-        return item.GetQuest();
-    }
 }

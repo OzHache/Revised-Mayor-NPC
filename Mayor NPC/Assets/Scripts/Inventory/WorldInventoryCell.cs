@@ -5,28 +5,33 @@ using UnityEngine.EventSystems;
 
 public class WorldInventoryCell : InventoryCell, IEndDragHandler
 {
-    [SerializeField]WorldInventory inventory;
+    private WorldInventory m_inventory;
+    private new void Start()
+    {
+        m_inventory = GetComponentInParent<WorldInventory>();
+        UpdateUI();
+    }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        inventory.OnMouseOff();
+        m_inventory.OnMouseOff();
     }
 
     public void OnMouseDrag()
     {
-        inventory.OnMouseOn();
+        m_inventory.OnMouseOn();
     }
     private void OnMouseEnter()
     {
-        inventory.OnMouseOn();
+        m_inventory.OnMouseOn();
     }
     private void OnMouseExit()
     {
-        inventory.OnMouseOff();
+        m_inventory.OnMouseOff();
     }
     private void OnMouseOver()
     {
-        inventory.OnMouseOn();
+        m_inventory.OnMouseOn();
         
     }
 

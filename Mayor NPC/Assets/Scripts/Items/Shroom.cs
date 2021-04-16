@@ -34,11 +34,6 @@ public class Shroom : UIInteractable
         }
     }
 
-    internal override Quest GetQuest()
-    {
-        return null;
-    }
-
 
     // Start is called before the first frame update
     void Start()

@@ -17,8 +17,8 @@ public class InventorySystem : MonoBehaviour
     public void AddToInventory(InventoryItem item, int amount) {
         //update the quest manager with this new information
         PlayerActions action;
-        action.m_action = Quest.Action.Collect;
-        action.m_keyWord = item.name;
+        action.m_action = Quest.ActionType.Collect;
+        action.m_keyWord = item.itemName;
         action.m_number = amount;
         QuestManager.GetQuestManager().UpdateQuests(action);
 

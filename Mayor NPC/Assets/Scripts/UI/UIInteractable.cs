@@ -28,7 +28,7 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
 
     [SerializeField] protected List<InteractionTypes> interactions = new List<InteractionTypes>();
 
-    abstract internal Quest GetQuest();
+    virtual internal List<Quest> GetQuest() { return null; }
 
     public Dictionary<UIButtonValues, string> Identify()
     {

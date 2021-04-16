@@ -34,7 +34,7 @@ internal class QuestManager
     {
 
         //see if this quest is already discoverd
-        if (quest.IsDiscovered() && !quest.IsCompleted())
+        if (!quest.IsCompleted() && quest.CanDiscover())
         {
             string keyWord = quest.GetKey();
             var log = QuestUI.GetQuestUI().AddQuest(quest);
@@ -118,9 +118,12 @@ internal class QuestManager
 
     public void UpdateQuests(PlayerActions action)
     {
-        int? index = null; ;
+        int? index = null;
+
         //look over the available quests and see if there are any that are triggered by this keyword and action
         //early out if there are no listeners
+
+        int amount = action.m_number;
         if (m_Listeners == null || m_Listeners.Count == 0) 
             return;
         foreach (var pair in m_Listeners)
@@ -129,13 +132,22 @@ internal class QuestManager
             {
                 foreach (var quest in pair.Value)
                 {
-                    quest.UpdateQuest(action.m_action, action.m_number);
+                    amount = quest.UpdateQuest(action.m_action, amount);
                     if(quest.GetQuest().IsCompleted())
                     {
                         if(!index.HasValue)
                         {
                             index = m_Listeners.IndexOf(pair);
                         }
+                    }
+                    if (amount < 0)
+                    {
+                        UnityEngine.Debug.Log("Quests have used more than they were supposed to" + quest.GetQuest().GetId().ToString());
+                        break;
+                    }
+                    if (amount == 0)
+                    {
+                        break; // should be the break
                     }
                 }
                 break;
@@ -157,9 +169,10 @@ internal class QuestManager
                 //remove from the list and then distroy this item
                 m_Listeners[index.Value].Value.Remove(questLog);
                 //add children quest
-                foreach(var child in questLog.GetQuest().GetChildren())
+                var children = questLog.GetQuest().GetChildren();
+                if (children != null)
+                foreach(var child in children)
                 {
-                    child.SetDiscovered(true);
                     AddQuest(child);
                 }
                 questLog.CloseQuest();

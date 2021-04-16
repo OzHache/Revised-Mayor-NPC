@@ -163,7 +163,7 @@ public class InventoryCell : MonoBehaviour, IDropHandler
                 var action = new PlayerActions();
                 action.m_keyWord = dropItem.name;
                 action.m_number = 1;
-                action.m_action = Quest.Action.Collect;
+                action.m_action = Quest.ActionType.Collect;
                 QuestManager.GetQuestManager().UpdateQuests(action);
             }
            

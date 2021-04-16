@@ -113,8 +113,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb185b01d9a84d71ab65b641977de01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryCells:
-  - {fileID: 8173026836577667118}
+  m_inventoryCells: []
+  m_equipmentCells: []
 --- !u!61 &8173026834859062554
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -132,7 +132,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.0666667, y: 1.0666667}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -669,4 +669,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f78cc35ebbb078b4994f5c31f008754d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item: {fileID: 0}
+  m_onlyAccepts: {fileID: 0}
+  image: {fileID: 8173026835532635629}
+  counter: {fileID: 8173026836420360465}
+  durabiltySlider: {fileID: 0}
   inventory: {fileID: 8173026834859062557}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -10,12 +11,13 @@ class PlayerDialogueController : MonoBehaviour
     [SerializeField]private CharacterDialogue m_dialogue;
     private Coroutine m_talking;
     [SerializeField] private float m_talkDuration = 5.0f;
+    private List<ToolType> m_toolQuests = new List<ToolType>();
 
     private void Start()
     {
     }
 
-    internal void TalkAbout(UIInteractable item)
+    internal void TalkAbout(UIInteractable item, Action questAction = null)
     {
         if (m_talking != null)
             StopCoroutine(m_talking);
@@ -26,15 +28,17 @@ class PlayerDialogueController : MonoBehaviour
             if (!(item.GetTool() == ToolType.None))
             {
                 message += ". It will require a " + item.GetTool().ToString();
-                //add Quests
-                PlayerActions action = new PlayerActions();
-                action.m_action = Quest.Action.Craft;
-                action.m_keyWord = item.GetTool().ToString();
-                action.m_number = 1;
-                QuestManager.GetQuestManager().CheckQuest(action);
+                //see if there is not already a quest for this tool
+                if (!m_toolQuests.Contains(item.GetTool()))
+                {
+                    //add Quests
+                    Quest quest = new Quest(Quest.ActionType.Craft, item.GetTool().ToString(), 1, questAction);
+                    QuestManager.GetQuestManager().AddQuest(quest);
+                    //add this tool to the list of quests.
+                    m_toolQuests.Add(item.GetTool());
+                }
                 if (m_talking != null)
                     StopCoroutine(m_talking);
-
             }
         
         }
