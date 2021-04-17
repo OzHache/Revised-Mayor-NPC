@@ -23,12 +23,14 @@ public class CharacterDialogue : MonoBehaviour
     private DialogueContainer m_dialogueContainer;
     private string m_branchID = "";
     private string m_choiceId = "";
-
+    private bool m_dialogueComplete = false;
     protected Coroutine currentCoroutine;
+    protected Action m_onEndOfDialogue;
 
     //get this from a config file
     protected Vector3 scale = new Vector3(0.319f, 0.319f, 0.319f);
 
+    public bool IsComplete() { return m_dialogueComplete; }
 
     private void Reset()
     {
@@ -121,9 +123,8 @@ public class CharacterDialogue : MonoBehaviour
                 _choice.name = branch.m_choices[i].m_choiceId;
                 _choice.SetActive(false);
                 m_choices.Add(_choice);
-                    
-                
             }
+            m_branchID = branch.m_id;
         }
     }
 
@@ -143,6 +144,15 @@ public class CharacterDialogue : MonoBehaviour
         m_choiceId = gameObject.name;
         LoadDialogue();
         Activate();
+        if(m_branchID == "End")
+        {
+            if (m_onEndOfDialogue != null)
+                m_onEndOfDialogue.Invoke();
+        }
+    }
+    public void AddEndOfDialogueAction(Action action)
+    {
+        m_onEndOfDialogue = action;
     }
 
     internal void Deactivate()

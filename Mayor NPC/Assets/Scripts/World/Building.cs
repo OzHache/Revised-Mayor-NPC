@@ -53,6 +53,12 @@ public class Building : UIInteractable
                 break;
             case BuildingStage.Completed:
                 m_completedBuilding.SetActive(true);
+                //update this quest
+                PlayerActions action;
+                action.m_action = Quest.ActionType.Build;
+                action.m_keyWord = "Building";
+                action.m_number = 1;
+                QuestManager.GetQuestManager().UpdateQuests(action);
                 break;
             default:
                 GetComponent<Collider2D>().enabled = false;

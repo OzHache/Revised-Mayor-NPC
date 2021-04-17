@@ -20,10 +20,8 @@ public class WoodCutting : UIInteractable
         switch (action)
         {
             case InteractionTypes.Use:
-                Debug.Log("Adding this item to the inventory");
                 //Send a message to the Game Manager to take the object
                 GameManager.GetGameManager().AddToPlayerInventory(item);
-                
                 break;
             default:
 

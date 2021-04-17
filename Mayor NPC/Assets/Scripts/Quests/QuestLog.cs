@@ -40,7 +40,7 @@ public class QuestLog : MonoBehaviour
     }
     public void CloseQuest()
     {
-        Debug.Log("Quest Complete" + m_quest.name);
+        Debug.Log("Quest Complete" + m_quest.GetQuest());
         Destroy(gameObject);
     }
 }

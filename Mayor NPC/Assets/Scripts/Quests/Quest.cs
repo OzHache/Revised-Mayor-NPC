@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
-public class Quest : ScriptableObject
+public class Quest
 {
     public Quest(ActionType action, string keyword, int amount, Action onComplete = null)
     {
@@ -13,10 +14,38 @@ public class Quest : ScriptableObject
         m_id = s_lastId;
         s_lastId++;
     }
+
+    //used then created from a serialization
+    public void Initialize() 
+    {
+        m_id = s_lastId;
+        s_lastId++;
+    }
+    public void SetAction(Action action)
+    {
+        OnTriggerEvents = action;
+    }
+
     private static int s_lastId = 0;
-    public enum ActionType { Collect, Build, Use, Craft }
+    public enum ActionType {
+        [XmlEnum(Name = "Collect")]
+        Collect,
+        [XmlEnum(Name = "Build")]
+        Build,
+        [XmlEnum(Name = "Use")]
+        Use,
+        [XmlEnum(Name = "Craft")]
+        Craft 
+    }
+    public void AddChildrenQuest(Quest child)
+    {
+        m_children.Add(child);
+    }
+    [XmlEnumAttribute("action")]
     private ActionType m_action;
+    [XmlAttribute("keyword")]
     private string m_keyWord;
+    [XmlAttribute("number")]
     private int m_remaining;
     private bool m_completed = false;
     private bool m_discovered = false;

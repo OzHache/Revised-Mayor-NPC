@@ -33,11 +33,11 @@
             </Choices>
         </Branch>
         <Branch id="3.a">
-            <Text>The evil wizard. 
-                You have been a way for a while haven't you? </Text>
+            <Text>The evil wizard.
+            You have been a way for a while haven't you? </Text>
             <Choices>
                 <Choice>
-                    <ChoiceID>4</ChoiceID>
+                    <ChoiceID>End</ChoiceID>
                     <ChoiceText>Continue</ChoiceText>
                 </Choice>
             </Choices>
@@ -46,15 +46,16 @@
             <Text>Time to get to reconstruction</Text>
             <Choices>
                 <Choice >
-                    <ChoiceID>4</ChoiceID>
+                    <ChoiceID>End</ChoiceID>
                     <ChoiceText>Continue</ChoiceText>
                 </Choice>
             </Choices>
         </Branch>
-        <Branch id="4">
+        <Branch id="End">
             <Text>You will need to  knock down some trees to build the house to the north</Text>
             <Choices>
-                <!-- No choices here. This is the end of the cutscene-->
+              <ChoiceID>End</ChoiceID>
+              <ChoiceText>~</ChoiceText>
             </Choices>
         </Branch>
     </Branches>

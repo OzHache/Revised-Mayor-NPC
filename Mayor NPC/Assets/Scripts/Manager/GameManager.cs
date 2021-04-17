@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
         return gameManager;
     }
 
+
     //Event Handlers
     public delegate void NewDay();
     public static event NewDay NewDayEvent;
@@ -72,6 +73,12 @@ public class GameManager : MonoBehaviour
         //start wait for new day
         StartCoroutine(WaitForNewDay());
     }
+
+    internal void PauseAction()
+    {
+        throw new NotImplementedException();
+    }
+
     IEnumerator WaitForNewDay()
     {
         //for now, use a timer

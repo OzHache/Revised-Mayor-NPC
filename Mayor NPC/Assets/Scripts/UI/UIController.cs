@@ -6,11 +6,11 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Canvas))]
 public class UIController : MonoBehaviour
 {
-    private Canvas myCanvas;
+    [SerializeField] List<GameObject> m_activations;
     // Start is called before the first frame update
     void Start()
     {
-        myCanvas = GetComponent<Canvas>();
+        
     }
 
     // Update is called once per frame
@@ -21,9 +21,17 @@ public class UIController : MonoBehaviour
 
     internal bool Activate()
     {
-        //toggle enabled
-        myCanvas.enabled = (!myCanvas.enabled);
+        var isActive = false;
+        if (m_activations != null)
+        {
+            isActive = m_activations[0].activeSelf;
+            foreach (var item in m_activations)
+            {
+                item.SetActive(!item.activeSelf);
+            }
+        }
+        
         //return status
-        return myCanvas.enabled;
+        return isActive;
     }
 }

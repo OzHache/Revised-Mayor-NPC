@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_speed = 5;
     [SerializeField] private float m_maxStamina = 50;
     private float m_usedStamina = 0f;
-    public float getStamina { get { return m_maxStamina - m_usedStamina; } }
+    public float getStamina { get { return m_maxStamina + m_usedStamina; } }
     public float getMaxStamina { get { return m_maxStamina; } }
     //References
     private Vector2 m_moveDirection = Vector2.zero;
@@ -134,9 +134,9 @@ public class PlayerController : MonoBehaviour
         StaminaUpdate(1);
 
     }
-    private void StaminaUpdate(float amount)
+    public void StaminaUpdate(float amount)
     {
-        m_usedStamina  = Mathf.Clamp(m_usedStamina += amount, 0, m_maxStamina);
+        m_usedStamina  = Mathf.Clamp(m_usedStamina += amount,-m_maxStamina, 0);
 
         if(StaminaUpdater != null)
         {

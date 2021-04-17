@@ -44,6 +44,8 @@ public class TreeCutting : UIInteractable
                     //Send a message to the Game Manager to take the object
                     MessageFactory.GetMessageFactory().CreateFloatingMessage("-1 STA",FloatingMessage.MessageCategory.k_Stamina,gameObject);
                     GameManager.GetGameManager().AddToPlayerInventory(m_item, amount);
+                    //send stamina useage to player
+                    GameManager.GetGameManager().m_playerController.StaminaUpdate(-1);
                 }
                 if(hitCount == m_numberOfHits)
                 {

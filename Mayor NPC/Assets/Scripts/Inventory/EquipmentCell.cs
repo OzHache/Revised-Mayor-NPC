@@ -21,11 +21,12 @@ public class EquipmentCell : InventoryCell
         {
             m_lockImage.sprite = m_lockedItem.art;
             //lower the alpha
-            var color = m_lockImage.color;
+            var color = image.color;
+            m_startingColor = color;
             color.a = 0.25f;
             m_lockImage.color = color;
             //disable the item icon
-            m_startingColor = color;
+            
             image.color = Vector4.zero;
         }
 
@@ -46,6 +47,8 @@ public class EquipmentCell : InventoryCell
     {
         // this does not need to do anything
     }
+
+    //referenced from the button on the equipment slot
      public void OnButtonClick()
     {
         //this item has not been crafted yet
