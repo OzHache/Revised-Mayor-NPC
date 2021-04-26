@@ -51,8 +51,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //y sort
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
         //Get input
-       GetInput();
+        GetInput();
         if(m_moveDirection != Vector2.zero){
             StopAllCoroutines();
         }
