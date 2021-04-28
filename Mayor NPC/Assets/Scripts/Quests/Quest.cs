@@ -35,7 +35,9 @@ public class Quest
         [XmlEnum(Name = "Use")]
         Use,
         [XmlEnum(Name = "Craft")]
-        Craft 
+        Craft, 
+        [XmlEnum(Name = "Kill")]
+        Kill
     }
     public void AddChildrenQuest(Quest child)
     {

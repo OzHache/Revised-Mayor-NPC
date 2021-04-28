@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Villager : MonoBehaviour
+{
+    private Movement m_movement;
+    [SerializeField] private float m_speed = 5.0f;
+    [SerializeField] private float m_maxDistance = 1.5f;
+    [SerializeField] protected CharacterDialogue m_characterDialogue;
+    //villager information
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        Setup();
+    }
+
+    protected void Setup()
+    {
+        m_movement = gameObject.AddComponent<Movement>();
+        //y sort
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    internal void Activate()
+    {
+        //activate on activate functions
+
+        gameObject.SetActive(true);
+    }
+    internal void Move(GameObject target)
+    {
+        Vector2 destination = target.transform.position;
+        if (m_movement.CanGetToDestination(destination, m_maxDistance))
+            StartCoroutine(MoveTo(destination));
+
+    }
+
+    private IEnumerator MoveTo(Vector2 destination)
+    {
+        Vector2 next = m_movement.GetNextCoordinate();
+        while (!m_movement.didArrive())
+        {
+            while(Vector2.Distance(transform.position, next) > 0.01f)
+            {
+                Vector2 translation = (next - (Vector2)transform.position).normalized * m_speed;
+                transform.Translate(translation);
+                yield return null;
+            }
+        }
+    }
+}

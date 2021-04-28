@@ -22,14 +22,35 @@ public class GameLoop
     {
         //create all the needed events
         CutSceneOne();
+        CutSceneTwo();
 
+    }
+
+    private void CutSceneTwo()
+    {
+        ///Kill 3 enemies
+        Quest enemiesQuest = new Quest(Quest.ActionType.Kill, "Enemies", 3, ()=>EndQuest(1));
+        Quest recoverBeacon = new Quest(Quest.ActionType.Use, "Beacon", 1, null);
+        QuestsActions questActions = new QuestsActions(
+            //this Quest
+            new List<Quest> { enemiesQuest, recoverBeacon },
+            //Start CutScene go to the beacon
+            new List<Action> { () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("Beacon"), 3.0f) },
+            //End of Cut Scene
+            //See new NPC Arrive off the coast
+            new List<Action> {
+                //Activate the first villager
+                () => VillagerManager.Activate("Villager1"),
+                //Pan to the new villager
+                () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("Villager1"), 3.0f)
+            });
     }
 
     private void CutSceneOne()
     {
 
         //Player will need to build a house
-        Quest quest = new Quest(Quest.ActionType.Build, "Building", 1, () => EndQuest(1));
+        Quest quest = new Quest(Quest.ActionType.Build, "Building", 1, () => EndQuest(0));
         QuestsActions questsActions = new QuestsActions(
         //This Quest
         new List<Quest>() { quest },
@@ -38,12 +59,20 @@ public class GameLoop
         new List<Action>() { () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("Building"), 3.0f) },
         //End of CutScene
         //Start Tracking the OldLady
-         new List<Action>() { () =>                   Camera.main.gameObject.GetComponent<CameraFollow>().ChangeTarget(GameObject.Find("OldLady")),
+         new List<Action>() {
+             () => Camera.main.gameObject.GetComponent<CameraFollow>().ChangeTarget(GameObject.Find("OldLady")),
+             MoveTo("OldLady",GameManager.GetGameManager().Player),
          //Pause the player and any enemies
-           ()=>GameManager.GetGameManager().PauseAction(),
-           ()=>GameObject.Find("OldLady").GetComponent<OldLady>().StartScene(2)
-         });
+            ()=>GameManager.GetGameManager().PauseAction(),
+            ()=>GameObject.Find("OldLady").GetComponent<OldLady>().StartScene(1)
+         }) ;
         m_cutScenes.Add(questsActions);
+    }
+
+    private Action MoveTo(string ActorName, GameObject position)
+    {
+        Debug.Log("Moving");
+        return ()=> GameObject.Find(ActorName).GetComponent<Villager>().Move(position);
     }
 
     public List<Quest> GetQuest(int sceneNumber)

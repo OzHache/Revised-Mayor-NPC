@@ -29,15 +29,18 @@ public class FloatingMessage : MonoBehaviour
             default:
                 break;
         }
-        transform.parent = null;
+        /*transform.parent = null;
         m_parent = Instantiate(new GameObject(), messanger.transform.position, Quaternion.identity);
-        transform.parent = m_parent.transform;
+        m_parent.name = "NewParent";
+        transform.parent = m_parent.transform;*/
+        
     }
-    
 
-    public void End()
+    //called from the animation
+    private void End()
     {
-        Destroy(m_parent);
+        
+        Destroy(gameObject);
     }
 
 }
