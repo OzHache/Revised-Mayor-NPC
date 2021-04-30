@@ -49,9 +49,12 @@ public class Movement : MonoBehaviour
         m_openList[0].location = CenterOfGridAt(transform.position);
 
         start.G = 0; //There is no distance from here to the start;
-        
-        while(m_openList.Count > 0)
+        start.H = Vector2.Distance(start.location, destination);
+        int maxCount = 1000;
+        int count = 0;
+        while(m_openList.Count > 0 && count < maxCount)
         {
+            count++;
             Node current = GetLowestFScore();
 
             if (Vector2.Distance(current.location, m_destination.location) < maxDistance){
@@ -65,6 +68,7 @@ public class Movement : MonoBehaviour
             //for each neighbour of current
             foreach(var node in GetNeighbours(current))
             {
+                Debug.Log("Checking Node at" + node.location);
                 float tenativeGScore = current.G + Vector2.Distance(current.location, node.location);
                 if(tenativeGScore < node.G)
                 {
@@ -136,7 +140,7 @@ public class Movement : MonoBehaviour
                 
                 RaycastHit2D hit;
                 //go to the center of the next unit
-                 hit = Physics2D.Raycast(home.location, direction, 1.4f);
+                 hit = Physics2D.Raycast(home.location, direction, direction.magnitude);
                 if(hit.transform != null)
                 {
                     m_impassable.Add(destination);
@@ -144,7 +148,7 @@ public class Movement : MonoBehaviour
                 }
                 //otherwise add the node 
                 var node = new Node();
-                node.location = home.location + destination;
+                node.location = home.location + direction;
                 //Distance to the destination
                 node.H = Vector2.Distance(node.location, m_destination.location);
                 neighbours.Add(node);

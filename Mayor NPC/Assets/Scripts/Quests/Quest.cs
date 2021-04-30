@@ -97,6 +97,14 @@ public class Quest
     {
         return m_action.ToString()+" " + m_remaining.ToString() +" "+ m_keyWord;
     }
+    internal void ForceComplete()
+    {
+        m_completed = true;
+        if (m_completed && OnTriggerEvents != null)
+        {
+            OnTriggerEvents.Invoke();
+        }
+    }
 }
 struct PlayerActions
 {

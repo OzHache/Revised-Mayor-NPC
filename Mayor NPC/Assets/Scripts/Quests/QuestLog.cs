@@ -43,5 +43,9 @@ public class QuestLog : MonoBehaviour
         Debug.Log("Quest Complete" + m_quest.GetQuest());
         Destroy(gameObject);
     }
+    public void ForceComplete()
+    {
+        m_quest.ForceComplete();
+    }
 }
 

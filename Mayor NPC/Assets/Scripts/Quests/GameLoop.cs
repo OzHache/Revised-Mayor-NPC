@@ -29,13 +29,15 @@ public class GameLoop
     private void CutSceneTwo()
     {
         ///Kill 3 enemies
-        Quest enemiesQuest = new Quest(Quest.ActionType.Kill, "Enemies", 3, ()=>EndQuest(1));
+        Quest enemiesQuest = new Quest(Quest.ActionType.Kill, "Enemies", 3, null);
         Quest recoverBeacon = new Quest(Quest.ActionType.Use, "Beacon", 1, null);
         QuestsActions questActions = new QuestsActions(
             //this Quest
             new List<Quest> { enemiesQuest, recoverBeacon },
             //Start CutScene go to the beacon
-            new List<Action> { () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("Beacon"), 3.0f) },
+            new List<Action> { () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("Beacon"), 3.0f),
+            ()=>EnemySpawner.GetSpawner().SpawnWave(size: 3)
+            },
             //End of Cut Scene
             //See new NPC Arrive off the coast
             new List<Action> {
@@ -44,6 +46,7 @@ public class GameLoop
                 //Pan to the new villager
                 () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("Villager1"), 3.0f)
             });
+        m_cutScenes.Add(questActions);
     }
 
     private void CutSceneOne()

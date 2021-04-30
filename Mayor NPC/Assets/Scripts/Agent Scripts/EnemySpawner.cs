@@ -4,20 +4,30 @@ using UnityEngine;
 using UnityEditor;
 public class EnemySpawner : MonoBehaviour
 {
+    private static EnemySpawner s_instance;
+    public static EnemySpawner GetSpawner() { return s_instance; }
     [SerializeField] private GameObject m_enemy;
     [SerializeField] private List<GameObject> m_enemyPool = new List<GameObject>();
     [SerializeField] private int m_amountToPool;
+    private int m_waveSize = 0;
     [SerializeField] private float m_spawnDelay;
     [SerializeField] private Vector2 m_spawnSpace;
     [SerializeField] private bool m_ShowSpawn = false;
-    private bool m_canSpawn = true;
+    private bool m_canSpawn = false;
     // Start is called before the first frame update
     void Start()
     {
+        s_instance = this;
         StartCoroutine(SmartPooling());
         StartCoroutine(SpawnEnemy());
     }
-
+    public void SpawnWave( int size)
+    {
+        m_canSpawn = true;
+        m_waveSize = size;
+        StartCoroutine(SmartPooling());
+        StartCoroutine(SpawnEnemy());
+    }
     private void OnDrawGizmos()
     {
         if (m_ShowSpawn)
@@ -76,8 +86,11 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(m_spawnDelay);
+        int waveSize = m_waveSize;
         while (m_canSpawn)
         {
+
+            m_canSpawn = waveSize > 0;
             foreach(GameObject enemy in m_enemyPool)
             {
                 if (!enemy.activeInHierarchy)
@@ -94,15 +107,17 @@ public class EnemySpawner : MonoBehaviour
                     }
                     enemy.transform.position = new Vector3(x, y, 0);
                     enemy.SetActive(true);
-                    m_canSpawn = true;
+                    waveSize--; // decrease the remaining to spawn;
                     break;
                 }
                 else
                 {
-                    m_canSpawn = false;
+                    //hard break if we cannot find a safe spot to spawn
+                    
                     continue;
                 }              
             }
+            
             yield return new WaitForSeconds(m_spawnDelay);
         }
 

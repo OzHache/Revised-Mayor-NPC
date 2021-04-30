@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
 
     internal void PauseAction()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     IEnumerator WaitForNewDay()

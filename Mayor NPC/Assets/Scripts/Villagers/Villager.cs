@@ -6,7 +6,7 @@ using UnityEngine;
 public class Villager : MonoBehaviour
 {
     private Movement m_movement;
-    [SerializeField] private float m_speed = 5.0f;
+    [SerializeField] private float m_speed = 1.0f;
     [SerializeField] private float m_maxDistance = 1.5f;
     [SerializeField] protected CharacterDialogue m_characterDialogue;
     //villager information
@@ -46,12 +46,14 @@ public class Villager : MonoBehaviour
 
     private IEnumerator MoveTo(Vector2 destination)
     {
-        Vector2 next = m_movement.GetNextCoordinate();
+        
         while (!m_movement.didArrive())
         {
+            Vector2 next = m_movement.GetNextCoordinate();
             while(Vector2.Distance(transform.position, next) > 0.01f)
             {
-                Vector2 translation = (next - (Vector2)transform.position).normalized * m_speed;
+                float maxDistance = Vector2.Distance(transform.position, destination);
+                Vector2 translation = (next - (Vector2)transform.position).normalized * Mathf.Clamp(m_speed, 0, maxDistance) * Time.deltaTime;
                 transform.Translate(translation);
                 yield return null;
             }
