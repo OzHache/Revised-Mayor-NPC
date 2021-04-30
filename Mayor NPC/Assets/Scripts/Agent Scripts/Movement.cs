@@ -68,7 +68,7 @@ public class Movement : MonoBehaviour
             //for each neighbour of current
             foreach(var node in GetNeighbours(current))
             {
-                Debug.Log("Checking Node at" + node.location);
+                //Debug.Log("Checking Node at" + node.location);
                 float tenativeGScore = current.G + Vector2.Distance(current.location, node.location);
                 if(tenativeGScore < node.G)
                 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 //Quest actions are a collection of quests and triggered actions used on each CutScene
 using QuestsActions = 
@@ -29,7 +30,17 @@ public class GameLoop
     private void CutSceneTwo()
     {
         ///Kill 3 enemies
-        Quest enemiesQuest = new Quest(Quest.ActionType.Kill, "Enemies", 3, null);
+        Quest enemiesQuest = new Quest(Quest.ActionType.Kill, "Enemies", 3, ()=>
+        {
+            // set the Beacon to be able to be interacted with
+            var beacon = GameObject.Find("Beacon").GetComponent<Beacon>();
+            Assert.IsNotNull(beacon);
+            if(beacon != null) 
+            {
+                beacon.m_isInteractable = true;
+            }
+            
+        });
         Quest recoverBeacon = new Quest(Quest.ActionType.Use, "Beacon", 1, null);
         QuestsActions questActions = new QuestsActions(
             //this Quest

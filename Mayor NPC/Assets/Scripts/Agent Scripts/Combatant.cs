@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// SuperCombat script for any class character that can engage in combat
@@ -24,12 +24,18 @@ public class Combatant : MonoBehaviour
     [SerializeField] private float chanceToCrit = 0.01f;
     [SerializeField] private WeaponItem weaponItem;
     private bool isWeaponReady = true;
+    private Action OnDeath;
 
     //manage defence
 
     private void Start()
     {
         RestartCharacter();
+    }
+
+    public void SetOnDeath(Action action)
+    {
+        OnDeath = action;
     }
 
     //all classes can melee
@@ -87,6 +93,11 @@ public class Combatant : MonoBehaviour
         }
         if(healthRemaining <= 0)
         {
+            //At this point the combatant has died.
+            if(OnDeath != null)
+            {
+                OnDeath.Invoke();
+            }
             this.enabled = false;
             RestartCharacter();
             OnMouseExit();

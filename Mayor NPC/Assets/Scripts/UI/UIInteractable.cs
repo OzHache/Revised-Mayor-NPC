@@ -24,6 +24,7 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
     //To be Modified if the object can be NOT interactable.
     public bool m_isInteractable = true;
 
+    //Activate is what triggers when this object is used, the Word that is passed in is the string that corresponds to an action driven by theUIBUttonValues
     abstract protected void Activate(string action);
 
     [SerializeField] protected List<InteractionTypes> interactions = new List<InteractionTypes>();

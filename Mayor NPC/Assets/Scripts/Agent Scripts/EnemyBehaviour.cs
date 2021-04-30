@@ -27,6 +27,17 @@ public class EnemyBehaviour : MonoBehaviour
         player = GameManager.GetGameManager().Player;
         combatant = GetComponent<Combatant>();
         StartCoroutine(LookForPlayer());
+
+        
+        combatant.SetOnDeath(()=>
+        {
+            //Set up the on Death action on the combatant
+            PlayerActions action;
+            action.m_action = Quest.ActionType.Kill;
+            action.m_keyWord = "Enemy";
+            action.m_number = 1;
+            QuestManager.GetQuestManager().UpdateQuests(action);
+        });
     }
 
     // Update is called once per frame
