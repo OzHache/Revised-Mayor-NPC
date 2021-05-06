@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
     //Calculated value of the position in 2D space
     private Vector2 position { get { return (Vector2)transform.position; } }
 
-    // Start is called before the first frame update
     void Awake()
     {
         //Set References
@@ -61,6 +60,8 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (GameManager.GetGameManager().isGamePaused)
+            return;
         //Move the player in the direction of travel
         var directionToMove = m_moveDirection.normalized * m_speed;
         m_rb.velocity = directionToMove;

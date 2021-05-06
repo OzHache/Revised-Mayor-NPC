@@ -76,7 +76,11 @@ public class GameManager : MonoBehaviour
 
     internal void PauseAction()
     {
-        //throw new NotImplementedException();
+        //this should be listend to by all movement objects
+        if(GamePaused != null)
+        {
+            GamePaused();
+        }
     }
 
     IEnumerator WaitForNewDay()

@@ -37,7 +37,7 @@
             You have been a way for a while haven't you? </Text>
             <Choices>
                 <Choice>
-                    <ChoiceID>End</ChoiceID>
+                    <ChoiceID>Last</ChoiceID>
                     <ChoiceText>Continue</ChoiceText>
                 </Choice>
             </Choices>
@@ -46,16 +46,18 @@
             <Text>Time to get to reconstruction</Text>
             <Choices>
                 <Choice >
-                    <ChoiceID>End</ChoiceID>
+                    <ChoiceID>Last</ChoiceID>
                     <ChoiceText>Continue</ChoiceText>
                 </Choice>
             </Choices>
         </Branch>
-        <Branch id="End">
+        <Branch id="Last">
             <Text>You will need to  knock down some trees to build the house to the north</Text>
             <Choices>
-              <ChoiceID>End</ChoiceID>
-              <ChoiceText>~</ChoiceText>
+              <Choice>
+                <ChoiceID>End</ChoiceID>
+                <ChoiceText>Accept</ChoiceText>
+              </Choice>
             </Choices>
         </Branch>
     </Branches>

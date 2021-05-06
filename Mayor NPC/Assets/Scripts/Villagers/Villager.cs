@@ -52,6 +52,8 @@ public class Villager : MonoBehaviour
             Vector2 next = m_movement.GetNextCoordinate();
             while(Vector2.Distance(transform.position, next) > 0.01f)
             {
+                if (GameManager.GetGameManager().isGamePaused)
+                    return;
                 float maxDistance = Vector2.Distance(transform.position, destination);
                 Vector2 translation = (next - (Vector2)transform.position).normalized * Mathf.Clamp(m_speed, 0, maxDistance) * Time.deltaTime;
                 transform.Translate(translation);

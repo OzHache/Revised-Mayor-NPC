@@ -85,7 +85,7 @@ public class GameLoop
 
     private Action MoveTo(string ActorName, GameObject position)
     {
-        Debug.Log("Moving");
+        //Debug.Log("Moving");
         return ()=> GameObject.Find(ActorName).GetComponent<Villager>().Move(position);
     }
 

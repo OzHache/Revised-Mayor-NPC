@@ -37,6 +37,7 @@ public class EnemyBehaviour : MonoBehaviour
             action.m_keyWord = "Enemy";
             action.m_number = 1;
             QuestManager.GetQuestManager().UpdateQuests(action);
+            //todo: drop loot
         });
     }
 
@@ -55,6 +56,8 @@ public class EnemyBehaviour : MonoBehaviour
         isAttacking = true;
         while (canSeePlayer)
         {
+            if (GameManager.GetGameManager().isGamePaused)
+                yield return null;
             //if we are too far to attack, move closer
             if(Vector3.Distance(transform.position, player.transform.position) > combatant.meleeRange)
             {

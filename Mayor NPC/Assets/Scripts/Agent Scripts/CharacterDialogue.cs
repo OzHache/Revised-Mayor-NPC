@@ -63,7 +63,7 @@ public class CharacterDialogue : MonoBehaviour
         m_meshRenderer = GetComponent<MeshRenderer>();
         if(m_meshRenderer != null)
             m_meshRenderer.enabled = false;
-        if(m_choiceRect == null)
+        if(m_choiceRect == null && !gameObject.CompareTag("Player"))
         {
             Debug.LogError("This needs a choices Panel set up" + gameObject.name);
         }
@@ -71,8 +71,9 @@ public class CharacterDialogue : MonoBehaviour
 
     internal void Activate()
     {
+        GetComponent<MeshRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
         //see if I currently have a dialogue
-        if(m_dialogueContainer == null)
+        if (m_dialogueContainer == null)
         {
             //Load the dialogue
             LoadDialogue();
@@ -135,20 +136,26 @@ public class CharacterDialogue : MonoBehaviour
         for (var i = m_choiceRect.childCount -1; i >= 0; i--)
         {
             m_choiceRect.GetChild(i).gameObject.SetActive(false);
-            
         }
     }
     public void OnButtonClick(GameObject gameObject)
     {
+        //on the choice click
         //get the name 
         m_choiceId = gameObject.name;
-        LoadDialogue();
-        Activate();
-        if(m_branchID == "End")
+        if(m_choiceId == "End")
         {
             if (m_onEndOfDialogue != null)
                 m_onEndOfDialogue.Invoke();
+            ClearChoices();
         }
+        LoadDialogue();
+        Activate();
+        /*if(m_branchID == "End")
+        {
+            if (m_onEndOfDialogue != null)
+                m_onEndOfDialogue.Invoke();
+        }*/
     }
     public void AddEndOfDialogueAction(Action action)
     {
@@ -185,8 +192,6 @@ public class CharacterDialogue : MonoBehaviour
         string currentMessage = m_messages[m_currentMessage];
         currentMessage += " ";
         //fill the text block with a blank array of approximately how many lines we will need
-        
-
 
         while (currentCharacter < currentMessage.Length)
         {
