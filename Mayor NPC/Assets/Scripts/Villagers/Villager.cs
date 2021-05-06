@@ -27,7 +27,7 @@ public class Villager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     internal void Activate()
@@ -46,18 +46,23 @@ public class Villager : MonoBehaviour
 
     private IEnumerator MoveTo(Vector2 destination)
     {
-        
+
         while (!m_movement.didArrive())
         {
             Vector2 next = m_movement.GetNextCoordinate();
-            while(Vector2.Distance(transform.position, next) > 0.01f)
+            while (Vector2.Distance(transform.position, next) > 0.01f)
             {
                 if (GameManager.GetGameManager().isGamePaused)
-                    return;
-                float maxDistance = Vector2.Distance(transform.position, destination);
-                Vector2 translation = (next - (Vector2)transform.position).normalized * Mathf.Clamp(m_speed, 0, maxDistance) * Time.deltaTime;
-                transform.Translate(translation);
-                yield return null;
+                {
+                    yield return null;
+                }
+                else
+                {
+                    float maxDistance = Vector2.Distance(transform.position, destination);
+                    Vector2 translation = (next - (Vector2)transform.position).normalized * Mathf.Clamp(m_speed, 0, maxDistance) * Time.deltaTime;
+                    transform.Translate(translation);
+                    yield return null;
+                }
             }
         }
     }

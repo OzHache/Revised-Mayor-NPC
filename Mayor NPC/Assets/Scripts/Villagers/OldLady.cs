@@ -28,6 +28,7 @@ public class OldLady : Villager
 
     internal void StartScene(int i)
     {
+        //Pause the game
         //trigger the Quest for this scene
         var quests = gameLoop.GetQuest(i);
         if(quests != null)

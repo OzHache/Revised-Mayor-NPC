@@ -76,6 +76,8 @@ public class GameManager : MonoBehaviour
 
     internal void PauseAction()
     {
+        Debug.Log("Game Paused");
+        isGamePaused = !isGamePaused;
         //this should be listend to by all movement objects
         if(GamePaused != null)
         {

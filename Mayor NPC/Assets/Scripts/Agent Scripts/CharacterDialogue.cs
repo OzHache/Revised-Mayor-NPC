@@ -26,6 +26,9 @@ public class CharacterDialogue : MonoBehaviour
     private bool m_dialogueComplete = false;
     protected Coroutine currentCoroutine;
     protected Action m_onEndOfDialogue;
+    private bool m_pauseOnDialogue = true;
+
+    public void SetPauseOnDialogue(bool b) => m_pauseOnDialogue = b;
 
     //get this from a config file
     protected Vector3 scale = new Vector3(0.319f, 0.319f, 0.319f);
@@ -34,25 +37,6 @@ public class CharacterDialogue : MonoBehaviour
 
     private void Reset()
     {
-        /*if (transform.GetComponentInChildren<MeshRenderer>() == null) 
-        {
-            *//*m_dialogueObject = Instantiate(new GameObject(), Vector3.zero, Quaternion.identity, gameObject.transform);*//*
-            
-            var meshRenderer = m_dialogueObject.AddComponent<MeshRenderer>();
-            m_textMesh = m_dialogueObject.AddComponent<TextMesh>();
-            //Set up the Text
-            m_textMesh.font = m_font;
-            m_textMesh.text = gameObject.name;
-            m_textMesh.anchor = TextAnchor.MiddleCenter;
-            //Set up the Dialogue Game Object
-            m_dialogueObject.transform.localScale = scale;
-            //Set up the Mesh Renderer
-            meshRenderer.lightProbeUsage = UnityEngine.Rendering.LightProbeUsage.Off;
-            meshRenderer.reflectionProbeUsage = UnityEngine.Rendering.ReflectionProbeUsage.Off;
-            meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            meshRenderer.receiveShadows = false;
-            m_dialogueObject.transform.position = Vector3.up;
-        }*/
         m_textMesh.font = m_font;
 
     }
@@ -71,6 +55,9 @@ public class CharacterDialogue : MonoBehaviour
 
     internal void Activate()
     {
+        //if we have been told to pause on dialogue
+        if (m_pauseOnDialogue)
+            GameManager.GetGameManager().PauseAction();
         GetComponent<MeshRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
         //see if I currently have a dialogue
         if (m_dialogueContainer == null)
@@ -145,6 +132,8 @@ public class CharacterDialogue : MonoBehaviour
         m_choiceId = gameObject.name;
         if(m_choiceId == "End")
         {
+            m_pauseOnDialogue = false;
+            //GameManager.GetGameManager().PauseAction();
             if (m_onEndOfDialogue != null)
                 m_onEndOfDialogue.Invoke();
             ClearChoices();

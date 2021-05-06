@@ -61,7 +61,10 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         if (GameManager.GetGameManager().isGamePaused)
+        {
+            m_rb.velocity = Vector2.zero;
             return;
+        }
         //Move the player in the direction of travel
         var directionToMove = m_moveDirection.normalized * m_speed;
         m_rb.velocity = directionToMove;
