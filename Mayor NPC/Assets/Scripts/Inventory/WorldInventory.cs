@@ -39,7 +39,7 @@ public class WorldInventory : MonoBehaviour
     }
     private void OnMouseEnter()
     {
-        inventoryCanvas.gameObject.SetActive(true);
+        //inventoryCanvas.gameObject.SetActive(true);
         isMouseOver = true;
         
     }
@@ -69,7 +69,7 @@ public class WorldInventory : MonoBehaviour
     {
         isMouseOff = true;
         yield return new WaitForSeconds(.5f);
-        inventoryCanvas.gameObject.SetActive(false);
+        //inventoryCanvas.gameObject.SetActive(false);
         isMouseOff = false;
 
     }

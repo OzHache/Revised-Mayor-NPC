@@ -99,7 +99,7 @@ public class Building : UIInteractable
                 {
                     return true;
                 }
-                if (m_inventoryCell.numberOfItems >= currentAmountNeeded)
+                if (m_inventoryCell.numberOfItems <= 0)
                 {
                     return true;
                 }
@@ -109,7 +109,7 @@ public class Building : UIInteractable
                 {
                     return true;
                 }
-                if (m_inventoryCell.numberOfItems >= currentAmountNeeded)
+                if (m_inventoryCell.numberOfItems <= 0)
                 {
                     return true;
                 }
@@ -152,10 +152,13 @@ public class Building : UIInteractable
                 }
                 break;
             case InteractionTypes.Add:
+                // clear the inventory cells
                 m_inventoryCell.Remove(currentAmountNeeded);
                 m_inventoryCell.Clear();
+                //change the available interactions 
                 RemoveInteraction(InteractionTypes.Add);
                 AddInteraction(InteractionTypes.Build);
+                //Set the current amount needed to -1
                 currentAmountNeeded = -1;
                 isNeededItemsSubmitted = true;
                 break;
@@ -170,11 +173,11 @@ public class Building : UIInteractable
         {
             case BuildingStage.Foundation:
                 currentAmountNeeded = amountOfFoundationItems[0];
-                m_inventoryCell.LockInventory(foundationRequiredItems[0]);
+                m_inventoryCell.LockInventory(foundationRequiredItems[0], amountOfFoundationItems[0]);
                 break;
             case BuildingStage.Framing:
                 currentAmountNeeded = amountOfFramingItems[0];
-                m_inventoryCell.LockInventory(framingRequiredItems[0]);
+                m_inventoryCell.LockInventory(framingRequiredItems[0], amountOfFramingItems[0]);
                 break;
             default:
                 break;

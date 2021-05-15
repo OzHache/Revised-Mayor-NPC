@@ -72,7 +72,7 @@ public class GameLoop
         //Go to the Building and then come back
         new List<Action>() {
             () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("Building"), 3.0f),
-            ()=>GameManager.GetGameManager().PauseAction()
+            ()=>GameManager.GetGameManager().PauseAction(false)
         },
         //End of CutScene
         //Start Tracking the OldLady
@@ -80,7 +80,6 @@ public class GameLoop
              () => Camera.main.gameObject.GetComponent<CameraFollow>().ChangeTarget(GameObject.Find("OldLady")),
              MoveTo("OldLady",GameManager.GetGameManager().Player),
          //Pause the player and any enemies
-            ()=>GameManager.GetGameManager().PauseAction(),
             ()=>GameObject.Find("OldLady").GetComponent<OldLady>().StartScene(1)
          }); ;
         m_cutScenes.Add(questsActions);

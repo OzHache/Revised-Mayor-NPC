@@ -53,11 +53,12 @@ public class CharacterDialogue : MonoBehaviour
         }
     }
 
-    internal void Activate()
+    internal void Activate(bool initial = false)
     {
+
         //if we have been told to pause on dialogue
-        if (m_pauseOnDialogue)
-            GameManager.GetGameManager().PauseAction();
+        if (m_pauseOnDialogue && initial)
+            GameManager.GetGameManager().PauseAction(true);
         GetComponent<MeshRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
         //see if I currently have a dialogue
         if (m_dialogueContainer == null)

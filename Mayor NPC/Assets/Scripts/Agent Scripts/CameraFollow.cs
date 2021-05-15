@@ -55,8 +55,10 @@ public class CameraFollow : MonoBehaviour
     /// <returns></returns>
     private IEnumerator MoveToTargetCoroutine(GameObject newTarget, float time)
     {
-        //Get the direction to the target
-        Vector2 dest2D = newTarget.transform.position;
+        GameManager.GetGameManager().PauseAction(true);
+    
+    //Get the direction to the target
+    Vector2 dest2D = newTarget.transform.position;
         Vector2 start2D = transform.position;
         //keeps z at zero
         Vector3 direction = (dest2D - start2D).normalized;
@@ -87,8 +89,9 @@ public class CameraFollow : MonoBehaviour
             dist = Vector2.Distance(dest2D, transform.position);
             yield return null;
         }
-        //start move Camera again
-        m_target = m_player;
+        GameManager.GetGameManager().PauseAction(false);
+    //start move Camera again
+    m_target = m_player;
         coroutine = StartCoroutine(MoveCamera());
     }
 

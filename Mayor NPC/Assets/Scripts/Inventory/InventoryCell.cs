@@ -37,7 +37,12 @@ public class InventoryCell : MonoBehaviour, IDropHandler
 
     virtual internal void Add(int amount = 1)
     {
-        numberOfItems += amount;
+        //if the items are locked
+        if (lockedInventory)
+            numberOfItems -= amount;
+        else
+            numberOfItems += amount;
+        
         UpdateUI();
     }
     virtual internal void RemoveOne()
@@ -76,7 +81,11 @@ public class InventoryCell : MonoBehaviour, IDropHandler
     {
         //
         this.item = newItem;
-        numberOfItems = 1;
+        if(lockedInventory)
+            numberOfItems -= amount;
+        else
+            numberOfItems = 1;
+
         UpdateUI();
         Debug.Log("A new item has been added" + item.name);
     }
@@ -104,6 +113,15 @@ public class InventoryCell : MonoBehaviour, IDropHandler
             counter.text = numberOfItems.ToString();
         }
 
+        if (m_onlyAccepts != null)
+        {
+            image.enabled = true;
+            // set the art
+            image.sprite = m_onlyAccepts.art;
+            //change the value we need
+            counter.text = numberOfItems.ToString();
+        }
+
         //Update the durability slider or the Counter
     }
 
@@ -116,9 +134,12 @@ public class InventoryCell : MonoBehaviour, IDropHandler
     /// Lock and unlock the inventory with the item to lock
     /// </summary>
     /// <param name="itemToLock">InventoryItem to locok the inventory with</param>
-    public void LockInventory (InventoryItem itemToLock)
+    public void LockInventory (InventoryItem itemToLock, int amount = 0)
     {
+        numberOfItems = amount;
         m_onlyAccepts = itemToLock;
+        UpdateUI();
+
     }
     public void UnlockInventory()
     {

@@ -74,11 +74,18 @@ public class GameManager : MonoBehaviour
         StartCoroutine(WaitForNewDay());
     }
 
-    internal void PauseAction()
+    internal void PauseAction(bool? willPause )
     {
-        Debug.Log("Game Paused");
-        isGamePaused = !isGamePaused;
-        //this should be listend to by all movement objects
+        if (willPause == null)
+        {
+            willPause = !isGamePaused;
+        }
+        else if (willPause != isGamePaused)
+        {
+            Debug.Log("Game Paused");
+            isGamePaused = !isGamePaused;
+            //this should be listend to by all movement objects
+        }
         if(GamePaused != null)
         {
             GamePaused();

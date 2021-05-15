@@ -18,7 +18,7 @@ public class PassiveNPCDialogue : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            m_dialogue.Activate();
+            m_dialogue.Activate(true);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
