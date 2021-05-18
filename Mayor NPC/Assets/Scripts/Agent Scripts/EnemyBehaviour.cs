@@ -20,6 +20,9 @@ public class EnemyBehaviour : MonoBehaviour
     //Track if is attacking for the Coroutine
     private bool isAttacking = false;
 
+    //Loot table
+    [SerializeField] private InventoryItem m_loot;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +41,7 @@ public class EnemyBehaviour : MonoBehaviour
             action.m_number = 1;
             QuestManager.GetQuestManager().UpdateQuests(action);
             //todo: drop loot
+            Dropper.GetDropper().Drop(m_loot);
         });
     }
 
@@ -101,16 +105,16 @@ public class EnemyBehaviour : MonoBehaviour
             //direction of the player
             Ray2D ray2D = new Ray2D(transform.position, player.transform.position - transform.position);
             RaycastHit2D[] hits = Physics2D.RaycastAll(ray2D.origin, ray2D.direction, visionRange);
-            if (hits.Length > 1)
+            if (hits.Length > 0)
 
             {
-                if (hits[1])
+                if (hits[0])
                 {
                     //If this is the player then I can see the player
-                    if (hits[1].transform == player.transform)
+                    if (hits[0].transform == player.transform)
                     {
                         canSeePlayer = true;
-                        playerLastPosition = hits[1].transform.position;
+                        playerLastPosition = hits[0].transform.position;
                         continue;
                     }
                 }

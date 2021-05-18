@@ -35,7 +35,8 @@ public class MessageFactory : MonoBehaviour
 
     public void CreateFloatingMessage(string message, FloatingMessage.MessageCategory messageType, GameObject messanger)
     {
-        var messageObject = Instantiate(FloatingMessageObject, Vector3.zero, Quaternion.identity,messanger.transform);
+        var parent = Instantiate(new GameObject(), messanger.transform.position, Quaternion.identity);
+        var messageObject = Instantiate(FloatingMessageObject, Vector3.zero, Quaternion.identity, parent.transform);
         messageObject.transform.position = Vector3.zero;
         messageObject.name = " message Fact";
         var script = messageObject.GetComponent<FloatingMessage>();

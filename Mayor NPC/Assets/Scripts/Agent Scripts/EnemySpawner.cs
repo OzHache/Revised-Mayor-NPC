@@ -14,6 +14,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Vector2 m_spawnSpace;
     [SerializeField] private bool m_ShowSpawn = false;
     private bool m_canSpawn = false;
+
+    [SerializeField] private bool _deBugSpawn = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,13 +23,55 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SmartPooling());
         StartCoroutine(SpawnEnemy());
     }
+
+    private void Update()
+    {
+        if (_deBugSpawn)
+        {
+            _DebugSpawn();
+        }
+    }
+
     public void SpawnWave( int size)
     {
         m_canSpawn = true;
         m_waveSize = size;
         StartCoroutine(SmartPooling());
         StartCoroutine(SpawnEnemy());
+
+
     }
+
+    private void _DebugSpawn()
+    {
+        _deBugSpawn = false;
+        foreach (GameObject enemy in m_enemyPool)
+        {
+            if (!enemy.activeInHierarchy)
+            {
+                bool safe = false;
+                float x = 0;
+                float y = 0;
+                while (!safe)
+                {
+                    //find a safe space
+                    x = Random.Range(transform.position.x - m_spawnSpace.x, transform.position.x + m_spawnSpace.x);
+                    y = Random.Range(transform.position.y - m_spawnSpace.y, transform.position.y + m_spawnSpace.y);
+                    safe = !Physics2D.BoxCast(new Vector2(x, y), Vector2.one, 0f, Vector2.zero);
+                }
+                enemy.transform.position = new Vector3(x, y, 0);
+                enemy.SetActive(true);
+                break;
+            }
+            else
+            {
+                //hard break if we cannot find a safe spot to spawn
+
+                continue;
+            }
+        }
+    }
+
     private void OnDrawGizmos()
     {
         if (m_ShowSpawn)

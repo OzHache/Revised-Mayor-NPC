@@ -13,7 +13,7 @@ public class HealthMonitor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        slider.maxValue = combatant.getMaxHealth;
+        slider.maxValue = combatant.GetMaxHealth();
         slider.value = combatant.healthRemaining;
     }
 }

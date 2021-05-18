@@ -10,13 +10,14 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(Weapon))]
 public class Combatant : MonoBehaviour
 {
-    
+    private static PlayerController s_player;
 
     //Default to is not the player
     [SerializeField] private bool isPlayer = false;
     //Class scalars
     [SerializeField] private int health = 10;
-    public int getMaxHealth { get { return health; } }
+    [SerializeField] private int m_maxHealth = 10;
+    public int GetMaxHealth() { return m_maxHealth; }
     public int healthRemaining { get; private set; }
     //MeleeRange
     [SerializeField] internal float meleeRange = 1f;
@@ -24,6 +25,7 @@ public class Combatant : MonoBehaviour
     [SerializeField] private float chanceToCrit = 0.01f;
     [SerializeField] private WeaponItem weaponItem;
     private bool isWeaponReady = true;
+    [SerializeField] private bool _debugInvincible = false;
     private Action OnDeath;
 
     //manage defence
@@ -31,6 +33,16 @@ public class Combatant : MonoBehaviour
     private void Start()
     {
         RestartCharacter();
+        if (isPlayer)
+        {
+            s_player = GetComponent<PlayerController>();
+        }
+    }
+
+    //on button press
+    public void Engage()
+    {
+        s_player.Engage(gameObject);
     }
 
     public void SetOnDeath(Action action)
@@ -65,20 +77,19 @@ public class Combatant : MonoBehaviour
             //See if it is a crit
             if(hit > 1 - chanceToCrit)
             {
-                opposition.TakeDamage(rawDamage: weaponItem.maxDamage * weaponItem.critMultiplyer);
+                opposition.TakeDamage(weaponItem.maxDamage * weaponItem.critMultiplyer);
             }
             else
             {
-                opposition.TakeDamage(rawDamage: weaponItem.hitDamage);
+                opposition.TakeDamage(weaponItem.hitDamage);
             }
-            
             Debug.Log(gameObject.name + " Hit " + opposition.gameObject.name);
             didMiss = false;
         }
         
         else
         
-        StartCoroutine(WeaponCoolDown(didMiss));
+            StartCoroutine(WeaponCoolDown(didMiss));
     }
 
     private void TakeDamage(int rawDamage)
@@ -86,15 +97,15 @@ public class Combatant : MonoBehaviour
         //manage defense;
         //manage skills like dodge
         healthRemaining -= rawDamage;
-        Debug.Log(gameObject.name +" "+ healthRemaining);
+        Debug.Log(gameObject.name +" "+ healthRemaining+ " Health remaining");
         if (gameObject.CompareTag("Player"))
         {
             GameManager.GetGameManager().m_playerController.TakeDamage();
         }
-        if(healthRemaining <= 0)
+        if(healthRemaining <= 0 && ! _debugInvincible)
         {
             //At this point the combatant has died.
-            if(OnDeath != null)
+            if(OnDeath != null )
             {
                 OnDeath.Invoke();
             }

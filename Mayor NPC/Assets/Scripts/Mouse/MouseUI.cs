@@ -70,7 +70,7 @@ public class MouseUI : MonoBehaviour
         }
     }
 
-    public GameObject GetObjectAtMouse()
+    public void GetObjectAtMouse()
     { 
         //see if we can talk about this item
         if (m_focusItem != null) {
@@ -89,13 +89,13 @@ public class MouseUI : MonoBehaviour
             if (hit.transform.GetComponent<Combatant>() && !hit.transform.CompareTag("Player"))
             {
                 m_player.GetComponent<PlayerController>().Engage(hit.transform.gameObject);
-                return null;
+                return;
             }
-            return hit.transform.gameObject;
+            return;
         }
         //see if we are over our focus object
-        
-        return null;
+
+        return;
     }
 
     //Manage when the mouse is over the UI

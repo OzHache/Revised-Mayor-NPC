@@ -33,7 +33,6 @@ public class Building : UIInteractable
     {
         SetStage();
         Setup();
-        //cell = GetComponent<InventorySystem>().inventoryCells.First<InventoryCell>();
     }
 
     private void SetStage()
@@ -66,8 +65,8 @@ public class Building : UIInteractable
         }
     }
 
-        // Update is called once per frame
-        void Update()
+    // Update is called once per frame
+    private void Update()
     {
         if (currentAmountNeeded == -1 && !isNeededItemsSubmitted)
         {
@@ -78,10 +77,9 @@ public class Building : UIInteractable
 
     private void UpdateInteractions()
     {
-        if (!m_isInteractable)
+        if (m_isInteractable)
         {
-            m_isInteractable = CheckRequiredItems();
-          
+            CheckRequiredItems();
         }
     }
 
@@ -97,20 +95,29 @@ public class Building : UIInteractable
             case BuildingStage.Foundation:
                 if (amountOfFoundationItems == null)
                 {
+                    if (!interactions.Contains(InteractionTypes.Build) && !interactions.Contains(InteractionTypes.Add))
+                        AddInteraction(InteractionTypes.Add);
                     return true;
                 }
                 if (m_inventoryCell.numberOfItems <= 0)
                 {
+                    if(!interactions.Contains(InteractionTypes.Build) && !interactions.Contains(InteractionTypes.Add))
+                    AddInteraction(InteractionTypes.Add);
+
                     return true;
                 }
                 break;
             case BuildingStage.Framing:
                 if (amountOfFramingItems == null)
                 {
+                    if (!interactions.Contains(InteractionTypes.Build) && !interactions.Contains(InteractionTypes.Add))
+                        AddInteraction(InteractionTypes.Add);
                     return true;
                 }
                 if (m_inventoryCell.numberOfItems <= 0)
                 {
+                    if (!interactions.Contains(InteractionTypes.Build) && !interactions.Contains(InteractionTypes.Add))
+                        AddInteraction(InteractionTypes.Add);
                     return true;
                 }
                 break;
@@ -137,13 +144,11 @@ public class Building : UIInteractable
                 {
                     case BuildingStage.Foundation:
                         currentStage = BuildingStage.Framing;
-                        AddInteraction(InteractionTypes.Add);
                         RemoveInteraction(InteractionTypes.Build);
                         isNeededItemsSubmitted = false;
                         break;
                     case BuildingStage.Framing:
                         currentStage = BuildingStage.Completed;
-                        AddInteraction(InteractionTypes.Add);
                         RemoveInteraction(InteractionTypes.Build);
                         isNeededItemsSubmitted = false;
                         break;

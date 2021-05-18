@@ -7,6 +7,14 @@ public class CraftSupplies: UIInteractable
     //Reference to the Inventory Item
     [SerializeField] protected InventoryItem item;
 
+    public void SetupItem(InventoryItem item)
+    {
+        this.item = item;
+        GetComponent<SpriteRenderer>().sprite = item.art;
+        m_descriptionOfObject = item.description;
+        Setup();
+    }
+
     private void Start()
     {
         Setup();

@@ -158,9 +158,9 @@ public class PlayerController : MonoBehaviour
     }
 
     //Return the health from the combat base class
-    public float GetMaxHealth()
+    public int GetMaxHealth()
     {
-        float maxHealth = m_combatant.getMaxHealth;
+        int maxHealth = m_combatant.GetMaxHealth();
         return maxHealth;
     }
 

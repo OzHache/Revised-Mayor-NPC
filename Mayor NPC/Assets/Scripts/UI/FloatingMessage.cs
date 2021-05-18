@@ -40,7 +40,7 @@ public class FloatingMessage : MonoBehaviour
     private void End()
     {
         
-        Destroy(gameObject);
+        Destroy(gameObject.transform.parent.gameObject);
     }
 
 }

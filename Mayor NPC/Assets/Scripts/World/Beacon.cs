@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// the beacon needs to operate like the Building. You should be able to add "Oil" to the beacon and then activate it to get NPC's to show up
+/// </summary>
 public class Beacon : UIInteractable
 {
     protected override void Activate(string message)
