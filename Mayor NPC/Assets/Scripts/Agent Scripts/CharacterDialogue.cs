@@ -117,6 +117,15 @@ public class CharacterDialogue : MonoBehaviour
         }
     }
 
+    public void SetDialogueID( string id)
+    {
+        m_dialogueOwnerId = id;
+        m_dialogueContainer = null;
+        m_choiceId = "";
+        m_branchID = "";
+        LoadDialogue();
+    }
+
     private void ClearChoices()
     {
         //Deactivate all the choices

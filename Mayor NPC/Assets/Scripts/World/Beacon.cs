@@ -8,6 +8,15 @@ using UnityEngine;
 /// </summary>
 public class Beacon : UIInteractable
 {
+    //Beacon Properties
+    [SerializeField] private InventoryCell m_inventoryCell;
+
+    private int m_currentAmountNeeded = -1;
+    private bool m_isNeededItemsSubmitted = false;
+    //Editor Properties
+    [SerializeField] private InventoryItem m_requiredItem;
+    [SerializeField] private int m_amountOfRequiredItem;
+
     protected override void Activate(string message)
     {
         InteractionTypes action = InteractionTypes.Unused;
@@ -20,6 +29,18 @@ public class Beacon : UIInteractable
 
         switch (action)
         {
+            case InteractionTypes.Add:
+                Debug.Log("Add");
+                // clear the inventory cells
+                m_inventoryCell.Remove(m_currentAmountNeeded);
+                m_inventoryCell.Clear();
+                //change the available interactions 
+                RemoveInteraction(InteractionTypes.Add);
+                AddInteraction(InteractionTypes.Use);
+                //Set the current amount needed to -1
+                m_currentAmountNeeded = -1;
+                m_isNeededItemsSubmitted = true;
+                break;
             case InteractionTypes.Use:
                 //send a message to the Quest Manager to update this quest as completed
                 PlayerActions playerAction;
@@ -29,6 +50,7 @@ public class Beacon : UIInteractable
                 QuestManager.GetQuestManager().UpdateQuests(playerAction);
                 //can only be interacted wth once. 
                 m_isInteractable = false;
+                RemoveInteraction(InteractionTypes.Use);
                 break;
         }
     }
@@ -39,10 +61,43 @@ public class Beacon : UIInteractable
     {
         
     }
+    private void UpdateInteractions()
+    {
+        if (m_isInteractable)
+        {
+            CheckRequiredItems();
+        }
+    }
+    /// <summary>
+    /// Check on the required items to see if there is an amount that has been met
+    /// </summary>
+
+    private void CheckRequiredItems()
+    {
+        if (m_inventoryCell.numberOfItems <= 0 && !interactions.Contains(InteractionTypes.Use))
+            AddInteraction(InteractionTypes.Use);
+    }
+
+
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (m_currentAmountNeeded == -1 && !m_isNeededItemsSubmitted)
+        {
+            UpdateAmountNeeded();
+        }
+        UpdateInteractions();
+
     }
+    /// <summary>
+    /// Update the amount needed based on howmany itmes that we still require
+    /// </summary>
+    private void UpdateAmountNeeded()
+    {
+        m_currentAmountNeeded = m_amountOfRequiredItem;
+        m_inventoryCell.LockInventory(m_requiredItem, m_amountOfRequiredItem);
+               
+    }
+
 }

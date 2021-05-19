@@ -20,8 +20,8 @@ public class Building : UIInteractable
     [SerializeField] private InventoryItem[] framingRequiredItems;
     [SerializeField] private int[] amountOfFramingItems;
 
-    private int currentAmountNeeded = -1;
-    private bool isNeededItemsSubmitted = false;
+    private int m_currentAmountNeeded = -1;
+    private bool m_isNeededItemsSubmitted = false;
 
     //Stages of building
     public enum BuildingStage { Foundation, Framing, Completed, Destroyed, Empty}
@@ -68,7 +68,7 @@ public class Building : UIInteractable
     // Update is called once per frame
     private void Update()
     {
-        if (currentAmountNeeded == -1 && !isNeededItemsSubmitted)
+        if (m_currentAmountNeeded == -1 && !m_isNeededItemsSubmitted)
         {
             UpdateAmountNeeded();
         }
@@ -86,7 +86,7 @@ public class Building : UIInteractable
     private bool CheckRequiredItems()
     {
         //If the items have already been submited then this is interactable. 
-        if (isNeededItemsSubmitted)
+        if (m_isNeededItemsSubmitted)
         {
             return true;
         }
@@ -145,12 +145,12 @@ public class Building : UIInteractable
                     case BuildingStage.Foundation:
                         currentStage = BuildingStage.Framing;
                         RemoveInteraction(InteractionTypes.Build);
-                        isNeededItemsSubmitted = false;
+                        m_isNeededItemsSubmitted = false;
                         break;
                     case BuildingStage.Framing:
                         currentStage = BuildingStage.Completed;
                         RemoveInteraction(InteractionTypes.Build);
-                        isNeededItemsSubmitted = false;
+                        m_isNeededItemsSubmitted = false;
                         break;
                     default:
                         break;
@@ -158,14 +158,14 @@ public class Building : UIInteractable
                 break;
             case InteractionTypes.Add:
                 // clear the inventory cells
-                m_inventoryCell.Remove(currentAmountNeeded);
+                m_inventoryCell.Remove(m_currentAmountNeeded);
                 m_inventoryCell.Clear();
                 //change the available interactions 
                 RemoveInteraction(InteractionTypes.Add);
                 AddInteraction(InteractionTypes.Build);
                 //Set the current amount needed to -1
-                currentAmountNeeded = -1;
-                isNeededItemsSubmitted = true;
+                m_currentAmountNeeded = -1;
+                m_isNeededItemsSubmitted = true;
                 break;
             default:
                 break;
@@ -177,11 +177,11 @@ public class Building : UIInteractable
         switch (currentStage)
         {
             case BuildingStage.Foundation:
-                currentAmountNeeded = amountOfFoundationItems[0];
+                m_currentAmountNeeded = amountOfFoundationItems[0];
                 m_inventoryCell.LockInventory(foundationRequiredItems[0], amountOfFoundationItems[0]);
                 break;
             case BuildingStage.Framing:
-                currentAmountNeeded = amountOfFramingItems[0];
+                m_currentAmountNeeded = amountOfFramingItems[0];
                 m_inventoryCell.LockInventory(framingRequiredItems[0], amountOfFramingItems[0]);
                 break;
             default:

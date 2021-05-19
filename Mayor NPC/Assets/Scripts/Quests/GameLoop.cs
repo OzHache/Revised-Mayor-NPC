@@ -77,11 +77,12 @@ public class GameLoop
         //End of CutScene
         //Start Tracking the OldLady
          new List<Action>() {
+             ()=>GameObject.Find("OldLady").GetComponentInChildren<CharacterDialogue>().SetDialogueID("CutScene2"),
              () => Camera.main.gameObject.GetComponent<CameraFollow>().ChangeTarget(GameObject.Find("OldLady")),
              MoveTo("OldLady",GameManager.GetGameManager().Player),
          //Pause the player and any enemies
             ()=>GameObject.Find("OldLady").GetComponent<OldLady>().StartScene(1)
-         }); ;
+         }); 
         m_cutScenes.Add(questsActions);
     }
 

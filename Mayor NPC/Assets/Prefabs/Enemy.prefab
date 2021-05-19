@@ -326,7 +326,7 @@ MonoBehaviour:
   newLookInterval: 2
   activeLookInterval: 0.5
   speed: 2
-  m_loot: {fileID: 11400000, guid: 40fc393d8c5e54077923c30ac6137a84, type: 2}
+  m_loot: {fileID: 11400000, guid: b9476210005ead7498cda43f82b9a59e, type: 2}
 --- !u!114 &522400153163544314
 MonoBehaviour:
   m_ObjectHideFlags: 0
