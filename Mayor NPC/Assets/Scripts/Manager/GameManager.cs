@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        UIManager.UIHasActivated += GamePause;
+        //UIManager.UIHasActivated += GamePause;
     }
 
 

@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //y sort
-        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 10f) * -1;
         //Get input
         GetInput();
         if(m_moveDirection != Vector2.zero){
