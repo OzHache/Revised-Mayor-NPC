@@ -167,3 +167,4 @@ MonoBehaviour:
   m_numberOfHits: 3
   m_amountPerHit: 1
   m_amountWhenFell: 3
+  m_ChopSound: {fileID: 8300000, guid: c99e0553e98655b43a7f1f17533b2ab1, type: 3}

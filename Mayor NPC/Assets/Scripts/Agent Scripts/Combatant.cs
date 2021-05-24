@@ -27,6 +27,8 @@ public class Combatant : MonoBehaviour
     private bool isWeaponReady = true;
     [SerializeField] private bool _debugInvincible = false;
     private Action OnDeath;
+    [SerializeField] private AudioClip m_hitSound;
+    private int m_soundID;
 
     //manage defence
 
@@ -37,6 +39,7 @@ public class Combatant : MonoBehaviour
         {
             s_player = GetComponent<PlayerController>();
         }
+        m_soundID = SoundManager.GetSoundManager().RegisterSoundToAction(m_hitSound);
     }
 
     //on button press
@@ -70,6 +73,7 @@ public class Combatant : MonoBehaviour
             }
             //Missed
             Debug.Log("Miss");
+            SoundManager.GetSoundManager().PlaySound(m_soundID);
         }
         //see if we hit
         else if(hit <= weaponItem.hitChance)
@@ -85,6 +89,7 @@ public class Combatant : MonoBehaviour
             }
             Debug.Log(gameObject.name + " Hit " + opposition.gameObject.name);
             didMiss = false;
+            SoundManager.GetSoundManager().PlaySound(m_soundID);
         }
         
         else

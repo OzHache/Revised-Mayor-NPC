@@ -287,6 +287,7 @@ MonoBehaviour:
   chanceToCrit: 0.01
   weaponItem: {fileID: 11400000, guid: cd54f271100014409a7bb41ce2daa518, type: 2}
   _debugInvincible: 0
+  m_hitSound: {fileID: 8300000, guid: 1c1f6d1264d7fd747ba61fcf04f9fb03, type: 3}
 --- !u!50 &2164979468188571890
 Rigidbody2D:
   serializedVersion: 4

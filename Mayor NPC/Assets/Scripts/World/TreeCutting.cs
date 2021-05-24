@@ -11,6 +11,8 @@ public class TreeCutting : UIInteractable
     private int hitCount = 0;
     [SerializeField] private int m_amountPerHit = 1;
     [SerializeField] private int m_amountWhenFell = 3;
+    [SerializeField] private AudioClip m_ChopSound;
+    private int m_soundID;
     
     
     //animator
@@ -41,6 +43,7 @@ public class TreeCutting : UIInteractable
                     {
                         animator.SetTrigger("Chop");
                     }
+                    SoundManager.GetSoundManager().PlaySound(m_soundID);
                     //Send a message to the Game Manager to take the object
                     MessageFactory.GetMessageFactory().CreateFloatingMessage("-1 STA",FloatingMessage.MessageCategory.k_Stamina,gameObject);
                     GameManager.GetGameManager().AddToPlayerInventory(m_item, amount);
@@ -66,7 +69,7 @@ public class TreeCutting : UIInteractable
     {
         Setup();
         animator = GetComponent<Animator>();
-
+        m_soundID = SoundManager.GetSoundManager().RegisterSoundToAction(m_ChopSound);
     }
 
 }

@@ -33,6 +33,9 @@ public class CharacterDialogue : MonoBehaviour
     //get this from a config file
     protected Vector3 scale = new Vector3(0.319f, 0.319f, 0.319f);
 
+    //Sound Properties
+    private int m_soundID;
+    [SerializeField] AudioClip m_speehAudio;
     public bool IsComplete() { return m_dialogueComplete; }
 
     private void Reset()
@@ -51,6 +54,8 @@ public class CharacterDialogue : MonoBehaviour
         {
             Debug.LogError("This needs a choices Panel set up" + gameObject.name);
         }
+        //Register the sound
+        m_soundID = SoundManager.GetSoundManager().RegisterSoundToAction(m_speehAudio);
     }
 
     internal void Activate(bool initial = false)
@@ -143,18 +148,12 @@ public class CharacterDialogue : MonoBehaviour
         if(m_choiceId == "End")
         {
             m_pauseOnDialogue = false;
-            //GameManager.GetGameManager().PauseAction();
             if (m_onEndOfDialogue != null)
                 m_onEndOfDialogue.Invoke();
             ClearChoices();
         }
         LoadDialogue();
         Activate();
-        /*if(m_branchID == "End")
-        {
-            if (m_onEndOfDialogue != null)
-                m_onEndOfDialogue.Invoke();
-        }*/
     }
     public void AddEndOfDialogueAction(Action action)
     {
@@ -205,6 +204,7 @@ public class CharacterDialogue : MonoBehaviour
                     {
                         m_textMesh.text += currentMessage.Substring(currentCharacter, 1);
                         currentCharacter++;
+                        SoundManager.GetSoundManager().PlaySound(m_soundID);
                         yield return new WaitForSeconds(m_messageSpeed);
                     }
                     charactersOnLine = 0;
@@ -217,6 +217,7 @@ public class CharacterDialogue : MonoBehaviour
                 currentCharacter++;
                 charactersOnLine++;
             }
+            SoundManager.GetSoundManager().PlaySound(m_soundID);
             yield return new WaitForSeconds(m_messageSpeed);
         }
         currentCoroutine = null;
