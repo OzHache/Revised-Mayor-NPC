@@ -21,7 +21,7 @@ public class Villager : MonoBehaviour
     {
         m_movement = gameObject.AddComponent<Movement>();
         //y sort
-        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y) * -1 + 50;
     }
 
     // Update is called once per frame

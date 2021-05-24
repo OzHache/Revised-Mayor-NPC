@@ -37,11 +37,12 @@ public class TreeCutting : UIInteractable
                     {
                         amount = m_amountWhenFell;
                         animator.SetBool("Cut", true);
-                       
+                       GetComponent<CircleCollider2D>().enabled = false;
                     }
                     else
                     {
                         animator.SetTrigger("Chop");
+                        
                     }
                     SoundManager.GetSoundManager().PlaySound(m_soundID);
                     //Send a message to the Game Manager to take the object

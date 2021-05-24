@@ -63,7 +63,7 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
     protected void Setup()
     {
         //ySort
-        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y) * -1 + 50;
         //Make sure there is a description
         if (m_descriptionOfObject == null)
         {
