@@ -24,6 +24,42 @@ public class GameLoop
         //create all the needed events
         CutSceneOne();
         CutSceneTwo();
+        CutSceneThree();
+
+    }
+
+    private void CutSceneThree()
+    {
+        ///Collect the Key
+        Quest collectKey = new Quest(Quest.ActionType.Collect, "Key", 1, null);
+        //Open and unlock the Gate
+        Quest openGate = new Quest(Quest.ActionType.Unlock, "Gate", 1, null);
+
+        QuestsActions questActions = new QuestsActions(
+            //this Quest
+            new List<Quest> { collectKey, openGate },
+            //Start CutScene go to the beacon
+            new List<Action> 
+            { () =>
+                {
+                    // set the Key to be able to be interacted with
+                    var key = GameObject.Find("Key1").GetComponent<KeyObject>();
+                    Assert.IsNotNull(key);
+                    if (key != null)
+                    {
+                        key.m_isInteractable = true;
+                    }
+                }
+            },
+            //End of Cut Scene
+            //See new NPC Arrive off the coast
+            new List<Action> {
+                //Activate the first villager
+                ()=>GameObject.Find("WorldDialogue").GetComponent<CharacterDialogue>().SetDialogueID("CutScene4"),
+                //Pan to the new villager
+                () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("VillageCenter"), 5.0f)
+            });
+        m_cutScenes.Add(questActions);
 
     }
 
@@ -52,10 +88,14 @@ public class GameLoop
             //End of Cut Scene
             //See new NPC Arrive off the coast
             new List<Action> {
+                //Set up the Next Dialogue
+                ()=>GameObject.Find("WorldDialogue").GetComponent<CharacterDialogue>().SetDialogueID("CutScene3"),
                 //Activate the first villager
                 () => VillagerManager.Activate("Villager1"),
                 //Pan to the new villager
-                () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("Villager1"), 3.0f)
+                () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("Villager1"), 3.0f),
+                //Start up Scene 2
+                ()=>GameObject.Find("OldLady").GetComponent<OldLady>().StartScene(2)
             });
         m_cutScenes.Add(questActions);
     }
@@ -77,7 +117,7 @@ public class GameLoop
         //End of CutScene
         //Start Tracking the OldLady
          new List<Action>() {
-             ()=>GameObject.Find("OldLady").GetComponentInChildren<CharacterDialogue>().SetDialogueID("CutScene2"),
+             ()=>GameObject.Find("WorldDialogue").GetComponent<CharacterDialogue>().SetDialogueID("CutScene2"),
              () => Camera.main.gameObject.GetComponent<CameraFollow>().ChangeTarget(GameObject.Find("OldLady")),
              MoveTo("OldLady",GameManager.GetGameManager().Player),
          //Pause the player and any enemies

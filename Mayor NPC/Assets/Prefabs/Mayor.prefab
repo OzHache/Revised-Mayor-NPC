@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8828785601879350122}
   - component: {fileID: 8828785601879350123}
   - component: {fileID: 8828785601879350116}
+  - component: {fileID: 8747452907528412593}
   m_Layer: 0
   m_Name: Mayor
   m_TagString: Player
@@ -96,7 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cd0e253988158f4d91fcfdeaeab5fde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  m_speed: 5
+  m_maxStamina: 50
 --- !u!114 &8828785601879350116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,4 +111,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb185b01d9a84d71ab65b641977de01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryCells: []
+  m_inventoryCells: []
+  m_equipmentCells: []
+--- !u!58 &8747452907528412593
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8828785601879350120}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.51

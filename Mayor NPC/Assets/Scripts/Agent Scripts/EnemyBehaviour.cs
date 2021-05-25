@@ -37,10 +37,10 @@ public class EnemyBehaviour : MonoBehaviour
             //Set up the on Death action on the combatant
             PlayerActions action;
             action.m_action = Quest.ActionType.Kill;
-            action.m_keyWord = "Enemy";
+            action.m_keyWord = "Enemies";
             action.m_number = 1;
             QuestManager.GetQuestManager().UpdateQuests(action);
-            //todo: drop loot
+            
             Dropper.GetDropper().Drop(m_loot);
         });
     }
@@ -48,6 +48,7 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (canSeePlayer && !isAttacking)
         {
             StartCoroutine(AttackPlayer());
@@ -80,7 +81,9 @@ public class EnemyBehaviour : MonoBehaviour
     //Move to the players last known position
     private void MoveToPlayer()
     {
+        
         transform.position = Vector3.MoveTowards(transform.position, playerLastPosition, speed * Time.deltaTime);
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y) * -1 + 50;
     }
 
     //Debugging

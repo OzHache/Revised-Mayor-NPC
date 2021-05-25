@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DialogueTree owner="CutScene3">
+    <Branches>
+        <Branch id="0">
+            <Text>We Already have NPC's returning !</Text>
+            <Choices>
+                <Choice> 
+                    <ChoiceID>1</ChoiceID>
+                    <ChoiceText>Continue</ChoiceText>
+                </Choice>
+            </Choices>
+        </Branch>
+        <Branch id="1">
+            <Text>The villagers will not be safe out here</Text>
+            <Choices>
+                <Choice>
+                    <ChoiceID>2</ChoiceID>
+                    <ChoiceText>Continue</ChoiceText>
+                </Choice>
+            </Choices>
+        </Branch>
+        <Branch id="2">
+            <Text>We need to get through the gate to the north and back to the village center</Text>
+            <Choices>
+                <Choice>
+                    <ChoiceID>3</ChoiceID>
+                    <ChoiceText>Continue</ChoiceText>
+                </Choice>
+            </Choices>
+        </Branch>
+      <Branch id="3">
+        <Text>I think the Gate is locked. You will need to find the Key!</Text>
+        <Choices>
+          <Choice>
+            <ChoiceID>Last</ChoiceID>
+            <ChoiceText>Continue</ChoiceText>
+          </Choice>
+        </Choices>
+      </Branch>
+        <Branch id="Last">
+            <Text>I Last saw my key near by. I think I was next to four flowers. I think one of them was purple...</Text>
+            <Choices>
+              <Choice>
+                <ChoiceID>End</ChoiceID>
+                <ChoiceText>Accept</ChoiceText>
+              </Choice>
+            </Choices>
+        </Branch>
+    </Branches>
+</DialogueTree>

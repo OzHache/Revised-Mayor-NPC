@@ -11,7 +11,7 @@ public class OldLady : Villager
     // Start is called before the first frame update
     void Start()
     {
-        m_characterDialogue = GetComponentInChildren<CharacterDialogue>();
+        
         gameLoop.Initialize();
 
         //start the quest
@@ -28,6 +28,8 @@ public class OldLady : Villager
 
     internal void StartScene(int i)
     {
+        if (i == 0) //first time
+            m_characterDialogue.AddEndOfDialogueAction(null);
         //Pause the game
         //trigger the Quest for this scene
         var quests = gameLoop.GetQuest(i);

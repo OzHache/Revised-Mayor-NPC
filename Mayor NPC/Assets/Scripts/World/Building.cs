@@ -19,7 +19,7 @@ public class Building : UIInteractable
     [SerializeField] private int[] amountOfFoundationItems;
     [SerializeField] private InventoryItem[] framingRequiredItems;
     [SerializeField] private int[] amountOfFramingItems;
-
+    [SerializeField] private RectTransform m_inventoryCanvas;
     private int m_currentAmountNeeded = -1;
     private bool m_isNeededItemsSubmitted = false;
 
@@ -45,10 +45,12 @@ public class Building : UIInteractable
         {
             case BuildingStage.Foundation:
                 m_foundation.SetActive(true);
+                m_inventoryCanvas.gameObject.SetActive(true);
                 break;
             case BuildingStage.Framing:
                 m_foundation.SetActive(true);
                 m_framing.SetActive(true);
+                m_inventoryCanvas.gameObject.SetActive(true);
                 break;
             case BuildingStage.Completed:
                 m_completedBuilding.SetActive(true);
@@ -58,6 +60,7 @@ public class Building : UIInteractable
                 action.m_keyWord = "Building";
                 action.m_number = 1;
                 QuestManager.GetQuestManager().UpdateQuests(action);
+                m_inventoryCanvas.gameObject.SetActive(false);
                 break;
             default:
                 GetComponent<Collider2D>().enabled = false;
@@ -96,14 +99,15 @@ public class Building : UIInteractable
                 if (amountOfFoundationItems == null)
                 {
                     if (!interactions.Contains(InteractionTypes.Build) && !interactions.Contains(InteractionTypes.Add))
-                        AddInteraction(InteractionTypes.Add);
+                        m_inventoryCanvas.gameObject.SetActive(false);
+                    AddInteraction(InteractionTypes.Add);
                     return true;
                 }
                 if (m_inventoryCell.numberOfItems <= 0)
                 {
                     if(!interactions.Contains(InteractionTypes.Build) && !interactions.Contains(InteractionTypes.Add))
                     AddInteraction(InteractionTypes.Add);
-
+                    m_inventoryCanvas.gameObject.SetActive(false);
                     return true;
                 }
                 break;
@@ -112,12 +116,14 @@ public class Building : UIInteractable
                 {
                     if (!interactions.Contains(InteractionTypes.Build) && !interactions.Contains(InteractionTypes.Add))
                         AddInteraction(InteractionTypes.Add);
+                    m_inventoryCanvas.gameObject.SetActive(false);
                     return true;
                 }
                 if (m_inventoryCell.numberOfItems <= 0)
                 {
                     if (!interactions.Contains(InteractionTypes.Build) && !interactions.Contains(InteractionTypes.Add))
                         AddInteraction(InteractionTypes.Add);
+                    m_inventoryCanvas.gameObject.SetActive(false);
                     return true;
                 }
                 break;

@@ -16,7 +16,7 @@ public class Beacon : UIInteractable
     //Editor Properties
     [SerializeField] private InventoryItem m_requiredItem;
     [SerializeField] private int m_amountOfRequiredItem;
-
+    [SerializeField] private GameObject m_inventoryCanvas;
     protected override void Activate(string message)
     {
         InteractionTypes action = InteractionTypes.Unused;
@@ -75,7 +75,10 @@ public class Beacon : UIInteractable
     private void CheckRequiredItems()
     {
         if (m_inventoryCell.numberOfItems <= 0 && !interactions.Contains(InteractionTypes.Use))
+        {
             AddInteraction(InteractionTypes.Use);
+            m_inventoryCanvas.SetActive(false);
+        }
     }
 
 

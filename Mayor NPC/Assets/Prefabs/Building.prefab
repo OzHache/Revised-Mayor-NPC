@@ -1076,7 +1076,7 @@ GameObject:
   - component: {fileID: 6331475073503924836}
   - component: {fileID: 6331475073503924839}
   - component: {fileID: 6331475073503924838}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1100,7 +1100,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -0.5}
+  m_AnchoredPosition: {x: 0, y: 0.503}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6331475073503924836
@@ -1122,7 +1122,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10000
   m_TargetDisplay: 0
 --- !u!114 &6331475073503924839
 MonoBehaviour:
@@ -1315,7 +1315,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 99
   m_Sprite: {fileID: -6455241155473778892, guid: 484e522e5e305d0478ce0d56836c8fe8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1479,7 +1479,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 99
   m_Sprite: {fileID: 4290745047489149333, guid: 484e522e5e305d0478ce0d56836c8fe8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1643,7 +1643,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 99
   m_Sprite: {fileID: 5875093988811262693, guid: 484e522e5e305d0478ce0d56836c8fe8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2019,7 +2019,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6331475074150508194
@@ -2616,8 +2616,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   m_onlyAccepts: {fileID: 0}
-  image: {fileID: 0}
-  counter: {fileID: 0}
+  image: {fileID: 8913767987183799820}
+  counter: {fileID: 6331475074841613027}
   durabiltySlider: {fileID: 0}
 --- !u!1 &6331475074552156397
 GameObject:
@@ -3119,20 +3119,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65116dd1a466a546a6bb90b59d54b78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_interactionTool: 0
-  m_descriptionOfObject: 
+  m_interactionTool: 4
+  m_descriptionOfObject: A building
   m_isInteractable: 1
-  interactions: 05000000
-  m_inventoryCell: {fileID: 0}
-  m_foundation: {fileID: 0}
-  m_framing: {fileID: 0}
-  m_completedBuilding: {fileID: 0}
+  interactions: 
+  m_inventoryCell: {fileID: 6331475074546255642}
+  m_foundation: {fileID: 6331475074703675313}
+  m_framing: {fileID: 6331475073023064681}
+  m_completedBuilding: {fileID: 6331475073473270984}
   foundationRequiredItems:
   - {fileID: 11400000, guid: 977ec9e7bf6aa4740b47d904b0f2d1d7, type: 2}
   amountOfFoundationItems: 05000000
   framingRequiredItems:
   - {fileID: 11400000, guid: 977ec9e7bf6aa4740b47d904b0f2d1d7, type: 2}
   amountOfFramingItems: 0a000000
+  m_inventoryCanvas: {fileID: 6331475073503924837}
   currentStage: 0
 --- !u!61 &6331475074787462540
 BoxCollider2D:
@@ -3690,7 +3691,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 100
   m_Sprite: {fileID: 9080711821808828604, guid: 484e522e5e305d0478ce0d56836c8fe8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

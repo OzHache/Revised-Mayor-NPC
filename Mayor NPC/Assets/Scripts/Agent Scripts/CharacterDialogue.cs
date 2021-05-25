@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CharacterDialogue : MonoBehaviour
 {
     [SerializeField]private RectTransform m_choiceRect;
     private List<GameObject> m_choices = new List<GameObject>();
 
-    private TextMesh m_textMesh;
+    [SerializeField] private TextMeshProUGUI m_textMesh;
+    [SerializeField] private GameObject m_speechCanvas;
     private MeshRenderer m_meshRenderer;
     [SerializeField] protected Font m_font;
     [SerializeField] protected int m_maxCharacterLenght;
@@ -38,15 +38,10 @@ public class CharacterDialogue : MonoBehaviour
     [SerializeField] AudioClip m_speehAudio;
     public bool IsComplete() { return m_dialogueComplete; }
 
-    private void Reset()
-    {
-        m_textMesh.font = m_font;
-
-    }
     // Start is called before the first frame update
     void Start()
     {
-        m_textMesh = GetComponent<TextMesh>();
+        
         m_meshRenderer = GetComponent<MeshRenderer>();
         if(m_meshRenderer != null)
             m_meshRenderer.enabled = false;
@@ -73,6 +68,7 @@ public class CharacterDialogue : MonoBehaviour
         }
         if (m_meshRenderer != null)
             m_meshRenderer.enabled = true;
+        m_speechCanvas.SetActive(true);
         m_textMesh.text = "";
         currentCoroutine = StartCoroutine(PrintMessage());
     }
@@ -168,6 +164,7 @@ public class CharacterDialogue : MonoBehaviour
         {
             StopCoroutine(currentCoroutine);
         }
+        m_speechCanvas.SetActive(false);
     }
     internal void SetCurrentMessage(string message, bool clear = false)
     {
@@ -193,7 +190,7 @@ public class CharacterDialogue : MonoBehaviour
 
         while (currentCharacter < currentMessage.Length)
         {
-            //Determine if this word needs to be on a new line
+            /*//Determine if this word needs to be on a new line
             if (currentMessage.Substring(currentCharacter, currentMessage.IndexOf(" ", currentCharacter) - currentCharacter).Length + charactersOnLine > m_maxCharacterLenght)
             {
                 charactersOnLine = 0;
@@ -211,7 +208,7 @@ public class CharacterDialogue : MonoBehaviour
                     m_textMesh.text += "\n";
                 }
             }
-            else
+            else*/
             {
                 m_textMesh.text += currentMessage.Substring(currentCharacter, 1);
                 currentCharacter++;
