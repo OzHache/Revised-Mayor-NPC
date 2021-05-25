@@ -25,6 +25,68 @@ public class GameLoop
         CutSceneOne();
         CutSceneTwo();
         CutSceneThree();
+        CutSceneFour();
+        CutSceneFive();
+
+    }
+    private void CutSceneFive()
+    {
+        ///Kill 3 enemies
+        Quest enemiesQuest = new Quest(Quest.ActionType.Kill, "Enemies", 5, null);
+        
+        QuestsActions questActions = new QuestsActions(
+            //this Quest
+            new List<Quest> { enemiesQuest },
+            //Start CutScene go to the beacon
+            new List<Action> { () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("Beacon"), 3.0f),
+            ()=>EnemySpawner.GetSpawner().SpawnWave(size: 5)
+            },
+            //End of Cut Scene
+            //See new NPC Arrive off the coast
+            new List<Action> {
+                //Set up the Next Dialogue
+                ()=>GameObject.Find("WorldDialogue").GetComponent<CharacterDialogue>().SetDialogueID("CutScene6"),
+                //Activate the first villager
+                () => VillagerManager.Activate("Villager2"),
+                //Pan to the new villager
+                () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("Villager2"), 3.0f),
+                //Start up Scene 2
+                ()=>GameObject.Find("OldLady").GetComponent<OldLady>().StartScene(5),
+
+                MoveTo("Villager2", "Village2Home"),
+            });
+        m_cutScenes.Add(questActions);
+    }
+    private void CutSceneFour()
+    {
+        //Build up 3 more buildings
+        Quest quest = new Quest(Quest.ActionType.Build, "Building", 3,null);
+        Quest sleepingBag = new Quest(Quest.ActionType.Use, "SleepingBag", 1, null);
+        QuestsActions questActions = new QuestsActions(
+            //this Quest
+            new List<Quest> { quest, sleepingBag },
+            //Start CutScene go to the beacon
+            new List<Action>
+            { () =>
+                {
+                    // set the Key to be able to be interacted with
+                    var bag = GameObject.Find("SleepingBag").GetComponent<SleepingBag>();
+                    Assert.IsNotNull(bag);
+                    if (bag != null)
+                    {
+                        bag.m_isInteractable = true;
+                    }
+                }
+            },
+            //End of Cut Scene
+            //See new NPC Arrive off the coast
+            new List<Action> {
+                //Activate the first villager
+                ()=>GameObject.Find("WorldDialogue").GetComponent<CharacterDialogue>().SetDialogueID("CutScene5"),
+                //start the next scene
+                ()=>GameObject.Find("OldLady").GetComponent<OldLady>().StartScene(4)
+            });
+        m_cutScenes.Add(questActions);
 
     }
 
@@ -57,7 +119,12 @@ public class GameLoop
                 //Activate the first villager
                 ()=>GameObject.Find("WorldDialogue").GetComponent<CharacterDialogue>().SetDialogueID("CutScene4"),
                 //Pan to the new villager
-                () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("VillageCenter"), 5.0f)
+                () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("VillageCenter"), 5.0f),
+                MoveTo("OldLady", "VillageCenter"), 
+                MoveTo("Villager1", "Village1Home"),
+                //start the next scene
+                ()=>GameObject.Find("OldLady").GetComponent<OldLady>().StartScene(3)
+
             });
         m_cutScenes.Add(questActions);
 
@@ -131,7 +198,11 @@ public class GameLoop
         //Debug.Log("Moving");
         return ()=> GameObject.Find(ActorName).GetComponent<Villager>().Move(position);
     }
-
+    private Action MoveTo(string ActorName, string positionName)
+    {
+        
+        return () => GameObject.Find(ActorName).GetComponent<Villager>().Move(GameObject.Find(positionName));
+    }
     public List<Quest> GetQuest(int sceneNumber)
     {
         if (m_cutScenes.Count > sceneNumber)
@@ -166,6 +237,7 @@ public class GameLoop
                 {
                     if (action != null)
                         action.Invoke();
+                    UIManager.GetUIManager().DeactivateAll();
                 }
             }
         }

@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class FloatingMessage : MonoBehaviour
 {
     public enum MessageCategory { k_Stamina, k_HP}
     [SerializeField] static Color s_HpColor = Color.red;
     [SerializeField] static Color s_StaminaColor = Color.green;
-    [SerializeField] private TextMesh textMesh;
+    [SerializeField] private TextMeshProUGUI textMesh;
     private GameObject m_parent;
     
     private void Awake()

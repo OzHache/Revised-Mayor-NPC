@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_interactionTool: 4
   m_descriptionOfObject: Sleeping Bag
-  m_isInteractable: 1
+  m_isInteractable: 0
   interactions: 01000000
 --- !u!58 &3672205537924672036
 CircleCollider2D:

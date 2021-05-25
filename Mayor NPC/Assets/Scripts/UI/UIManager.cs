@@ -6,7 +6,8 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     //Static reference
-    private static UIManager instance;
+    private static UIManager s_instance;
+    public static UIManager GetUIManager() { return s_instance; }
 
     //References to each of the UIs
     [SerializeField] private UIController playerInventory;
@@ -20,7 +21,7 @@ public class UIManager : MonoBehaviour
     //Currently Active UI
     UIController ActiveUI;
     //returns true if this singleton has an active UI
-    public static bool isUIActive { get { return instance.ActiveUI != null; } }
+    public static bool isUIActive { get { return s_instance.ActiveUI != null; } }
 
     public delegate void UIActivated();
     public static event UIActivated UIHasActivated;
@@ -28,14 +29,14 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(instance != null)
+        if(s_instance != null)
         {
             Destroy(this);
             return;
         }
         else
         {
-            instance = this;
+            s_instance = this;
         }
         BuildDictionary();
 
@@ -105,6 +106,18 @@ public class UIManager : MonoBehaviour
             if (UIHasActivated != null)
             {
                 UIHasActivated();
+            }
+        }
+    }
+
+    public void DeactivateAll()
+    {
+        foreach(var elem in UIControllerDict)
+        {
+            if (!elem.Value.Activate())
+            {
+                //if it is active than deactivate;
+                elem.Value.Activate();
             }
         }
     }

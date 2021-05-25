@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DialogueTree owner="CutScene5">
+    <Branches>
+        <Branch id="0">
+            <Text>The Enemy is building up forces. There are so many of them now.</Text>
+            <Choices>
+                <Choice> 
+                    <ChoiceID>1</ChoiceID>
+                    <ChoiceText>Continue</ChoiceText>
+                </Choice>
+            </Choices>
+        </Branch>
+        <Branch id="1">
+            <Text>Take care of them before it gets too late</Text>
+            <Choices>
+                <Choice>
+                    <ChoiceID>Last</ChoiceID>
+                    <ChoiceText>Continue</ChoiceText>
+                </Choice>
+            </Choices>
+        </Branch>
+        <Branch id="Last">
+            <Text>Kill the enemies before they build up too many forces and they attack us</Text>
+            <Choices>
+              <Choice>
+                <ChoiceID>End</ChoiceID>
+                <ChoiceText>Accept</ChoiceText>
+              </Choice>
+            </Choices>
+        </Branch>
+    </Branches>
+</DialogueTree>

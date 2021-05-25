@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DialogueTree owner="CutScene4">
+    <Branches>
+        <Branch id="0">
+            <Text>You must be exhausted. There is a Sleeping Bag to the west that should restore you.</Text>
+            <Choices>
+                <Choice> 
+                    <ChoiceID>1</ChoiceID>
+                    <ChoiceText>Continue</ChoiceText>
+                </Choice>
+            </Choices>
+        </Branch>
+        <Branch id="1">
+            <Text>Beware though, The enemies are still out there and they may attack over night or build up forces.</Text>
+            <Choices>
+                <Choice>
+                    <ChoiceID>2</ChoiceID>
+                    <ChoiceText>Continue</ChoiceText>
+                </Choice>
+            </Choices>
+        </Branch>
+        <Branch id="2">
+            <Text>If you don't take care of them day to day they will build up enough to start a raid and destory the town again</Text>
+            <Choices>
+                <Choice>
+                    <ChoiceID>3</ChoiceID>
+                    <ChoiceText>Continue</ChoiceText>
+                </Choice>
+            </Choices>
+        </Branch>
+      <Branch id="3">
+        <Text>There are also a couple more houses here that need to be built up</Text>
+        <Choices>
+          <Choice>
+            <ChoiceID>Last</ChoiceID>
+            <ChoiceText>Continue</ChoiceText>
+          </Choice>
+        </Choices>
+      </Branch>
+        <Branch id="Last">
+            <Text>Build some more buildings so that more Villagers will return</Text>
+            <Choices>
+              <Choice>
+                <ChoiceID>End</ChoiceID>
+                <ChoiceText>Accept</ChoiceText>
+              </Choice>
+            </Choices>
+        </Branch>
+    </Branches>
+</DialogueTree>

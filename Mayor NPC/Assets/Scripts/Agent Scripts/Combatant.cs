@@ -56,7 +56,11 @@ public class Combatant : MonoBehaviour
     //all classes can melee
     virtual public void Melee(Combatant opposition)
     {
-        
+        //this should not function while the game is paused
+        if (GameManager.GetGameManager().isGamePaused)
+        {
+            return;
+        }
         //The weapon is still cooling down
         if (!isWeaponReady)
             return;
@@ -76,10 +80,10 @@ public class Combatant : MonoBehaviour
             SoundManager.GetSoundManager().PlaySound(m_soundID);
         }
         //see if we hit
-        else if(hit <= weaponItem.hitChance)
+        else if (hit <= weaponItem.hitChance)
         {
             //See if it is a crit
-            if(hit > 1 - chanceToCrit)
+            if (hit > 1 - chanceToCrit)
             {
                 opposition.TakeDamage(weaponItem.maxDamage * weaponItem.critMultiplyer);
             }
@@ -91,10 +95,15 @@ public class Combatant : MonoBehaviour
             didMiss = false;
             SoundManager.GetSoundManager().PlaySound(m_soundID);
         }
-        
-        else
-        
-            StartCoroutine(WeaponCoolDown(didMiss));
+        else 
+        {
+            MessageFactory.GetMessageFactory().CreateFloatingMessage("Miss", FloatingMessage.MessageCategory.k_HP, gameObject);
+            Debug.Log("Miss");
+
+        }
+
+
+        StartCoroutine(WeaponCoolDown(didMiss));
     }
 
     private void TakeDamage(int rawDamage)

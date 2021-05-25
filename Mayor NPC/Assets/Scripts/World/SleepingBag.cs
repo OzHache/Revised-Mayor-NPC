@@ -18,8 +18,13 @@ public class SleepingBag : UIInteractable
         GameManager.GetGameManager().PlayerSleep(isSafe: true);
     }
 
-    protected override void Activate(string action)
+    protected override void Activate(string _)
     {
+        PlayerActions action;
+        action.m_action = Quest.ActionType.Use;
+        action.m_keyWord = "SleepingBag";
+        action.m_number = 1;
+        QuestManager.GetQuestManager().UpdateQuests(action);
         Sleep();
     }
 }

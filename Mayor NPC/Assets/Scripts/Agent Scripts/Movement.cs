@@ -14,7 +14,24 @@ public class Movement : MonoBehaviour
     private static List<Vector2> m_impassable = new List<Vector2>();
     private Node m_destination;
     public float m_proximity = 0.01f;
+    [SerializeField] private Vector3 m_debugMovement;
+    [SerializeField] private bool m_debugMove = false;
+    [SerializeField] private bool m_debugIsMoving = false;
 
+    private void Start()
+    {
+        m_debugMovement = transform.position;
+    }
+    private void Update()
+    {
+        if(m_debugMove && ! m_debugIsMoving && Vector2.Distance(transform.position, m_debugMovement) > 1.5f)
+        {
+            bool canArrive = CanGetToDestination(m_debugMovement, 1.5f);
+            m_debugMove = false;
+            m_debugIsMoving = canArrive;
+            Debug.Log("Can Arrive at destination: " + canArrive);
+        }
+    }
     public bool didArrive()
     {
         float distance = Vector2.Distance(gameObject.transform.position, m_destination.location);
@@ -143,8 +160,12 @@ public class Movement : MonoBehaviour
                  hit = Physics2D.Raycast(home.location, direction, direction.magnitude);
                 if(hit.transform != null)
                 {
-                    m_impassable.Add(destination);
-                    continue;
+                    if (!hit.collider.isTrigger && Vector2.Distance(hit.transform.position, home.location + direction) < 0.4f)
+                    {
+                        //This is not a collider and the object is in the center of the place I am trying to get to
+                        m_impassable.Add(destination);
+                        continue;
+                    }
                 }
                 //otherwise add the node 
                 var node = new Node();

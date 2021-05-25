@@ -31,6 +31,11 @@ public class EnemySpawner : MonoBehaviour
             _DebugSpawn();
         }
     }
+    public void StartNightSpawn()
+    {
+        //subscribe to the newday event
+        GameManager.NewDayEvent += StartSpawning;
+    }
 
     public void SpawnWave( int size)
     {
@@ -101,8 +106,7 @@ public class EnemySpawner : MonoBehaviour
             enemy.SetActive(false);
         }
         m_canSpawn = true;
-        //subscribe to the newday event
-        GameManager.NewDayEvent += StartSpawning;
+
 
     }
     private void StartSpawning()
@@ -130,7 +134,7 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(m_spawnDelay);
-        int waveSize = m_waveSize;
+        int waveSize = m_waveSize -1;
         while (m_canSpawn)
         {
 
@@ -164,6 +168,6 @@ public class EnemySpawner : MonoBehaviour
             
             yield return new WaitForSeconds(m_spawnDelay);
         }
-
+        m_waveSize = 0;
     }
 }

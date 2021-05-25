@@ -2,7 +2,7 @@
 <DialogueTree owner="CutScene3">
     <Branches>
         <Branch id="0">
-            <Text>We Already have NPC's returning !</Text>
+            <Text>We already have NPCs returning!</Text>
             <Choices>
                 <Choice> 
                     <ChoiceID>1</ChoiceID>
@@ -38,7 +38,7 @@
         </Choices>
       </Branch>
         <Branch id="Last">
-            <Text>I Last saw my key near by. I think I was next to four flowers. I think one of them was purple...</Text>
+            <Text>I last saw my key near by. I think I was next to four flowers. I think one of them was purple...</Text>
             <Choices>
               <Choice>
                 <ChoiceID>End</ChoiceID>
