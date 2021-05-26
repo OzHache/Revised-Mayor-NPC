@@ -26,6 +26,8 @@ public class UIManager : MonoBehaviour
     public delegate void UIActivated();
     public static event UIActivated UIHasActivated;
 
+    [SerializeField] private DeathScreenEvents m_deathScreen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -120,5 +122,10 @@ public class UIManager : MonoBehaviour
                 elem.Value.Activate();
             }
         }
+    }
+
+    public void DeathScreen()
+    {
+        m_deathScreen.Activate();
     }
 }

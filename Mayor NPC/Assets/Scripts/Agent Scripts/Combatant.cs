@@ -64,7 +64,9 @@ public class Combatant : MonoBehaviour
         //The weapon is still cooling down
         if (!isWeaponReady)
             return;
+
         bool didMiss = true;
+
         var hit = Random.Range(0f, 1f);
         //if there is no weapon assigned, use basic melee
         if (weaponItem == null)
@@ -75,6 +77,7 @@ public class Combatant : MonoBehaviour
                 didMiss = false;
                 MessageFactory.GetMessageFactory().CreateFloatingMessage("Miss", FloatingMessage.MessageCategory.k_HP, gameObject);
             }
+
             //Missed
             Debug.Log("Miss");
             SoundManager.GetSoundManager().PlaySound(m_soundID);
@@ -108,8 +111,10 @@ public class Combatant : MonoBehaviour
 
     private void TakeDamage(int rawDamage)
     {
-        //manage defense;
-        //manage skills like dodge
+        //todo:manage defense;
+        //todo:manage skills like dodge
+
+        //apply damage
         healthRemaining -= rawDamage;
         Debug.Log(gameObject.name +" "+ healthRemaining+ " Health remaining");
         if (gameObject.CompareTag("Player"))
@@ -123,10 +128,21 @@ public class Combatant : MonoBehaviour
             {
                 OnDeath.Invoke();
             }
-            this.enabled = false;
             RestartCharacter();
             OnMouseExit();
-            gameObject.SetActive(false);
+            //If this is a player, then start the player reset cycle
+            if (gameObject.CompareTag("Player"))
+            {
+                GameManager.GetGameManager().m_playerController.Killed();
+            }
+            else
+            {
+                gameObject.SetActive(false);
+                this.enabled = false;
+
+            }
+
+
         }
         MessageFactory.GetMessageFactory().CreateFloatingMessage(rawDamage.ToString(), FloatingMessage.MessageCategory.k_HP, gameObject);
     }
@@ -165,7 +181,7 @@ public class Combatant : MonoBehaviour
     //Any actions needed to reset the character back to normal
     public void RestartCharacter()
     {
-        healthRemaining = health;
+        healthRemaining = m_maxHealth;
         if (GetComponent<EnemyBehaviour>()!= null)
         {
             GetComponent<EnemyBehaviour>().Restart();

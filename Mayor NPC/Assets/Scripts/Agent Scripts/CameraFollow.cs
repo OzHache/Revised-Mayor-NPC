@@ -10,6 +10,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float lag = 5.0f;
     [SerializeField] private float m_speed = 2.0f;
     Coroutine coroutine;
+    private bool m_pauseMovement = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,22 +19,22 @@ public class CameraFollow : MonoBehaviour
         m_target = m_player;
         coroutine = StartCoroutine(MoveCamera());
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-        
-    }
     private void OnDestroy()
     {
         StopAllCoroutines();
+    }
+
+    internal void SetActive(bool v)
+    {
+        m_pauseMovement = !v;
     }
 
     private IEnumerator MoveCamera()
     {
         while (true)
         {
+            if (m_pauseMovement)
+                yield return null;
             Vector3 newPos = Vector3.Lerp(transform.position, m_target.transform.position, lag);
             newPos.z = transform.position.z;
             transform.position = newPos;

@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private Combatant m_combatant;
     private bool m_engagedInConversation;
 
+    private Vector3 m_respawnLocation;
 
 
     //Updaters
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
         m_combatant = GetComponent<Combatant>();
         m_rb = GetComponent<Rigidbody2D>();
         m_dialgoueController = GetComponent<PlayerDialogueController>();
+        m_respawnLocation = transform.position;
     }
 
     // Update is called once per frame
@@ -69,6 +71,7 @@ public class PlayerController : MonoBehaviour
         var directionToMove = m_moveDirection.normalized * m_speed;
         m_rb.velocity = directionToMove;
     }
+
     internal void Sleep(bool isSafe, bool enemiesPreset)
     {
         if (!isSafe)
@@ -82,6 +85,7 @@ public class PlayerController : MonoBehaviour
         HealthUpdater();
         m_usedStamina = 0;
         StaminaUpdate(0);
+        m_respawnLocation = transform.position;
     }
 
     //Get the input values
@@ -137,9 +141,22 @@ public class PlayerController : MonoBehaviour
             enemyPos = combatant.transform.position;
         }
         this.m_combatant.Melee(combatant);
-        StaminaUpdate(1);
+        StaminaUpdate(-1);
 
     }
+
+    internal void Killed()
+    {
+        transform.position = m_respawnLocation;
+        UIManager.GetUIManager().DeathScreen();
+        m_combatant.RestartCharacter();
+        //Reset the used values
+        HealthUpdater();
+        m_usedStamina = 0;
+        StaminaUpdate(0);
+
+    }
+
     public void StaminaUpdate(float amount)
     {
         m_usedStamina  = Mathf.Clamp(m_usedStamina += amount,-m_maxStamina, 0);
