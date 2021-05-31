@@ -16,7 +16,7 @@ public class Villager : MonoBehaviour
     {
         Setup();
     }
-
+    //set up the character on the first load. 
     protected void Setup()
     {
         m_movement = gameObject.AddComponent<Movement>();
@@ -24,18 +24,19 @@ public class Villager : MonoBehaviour
         GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y) * -1 + 50;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    /// <summary>
+    /// Called from the Villager Manager to start this villager
+    /// </summary>
     internal void Activate()
     {
         //activate on activate functions
 
         gameObject.SetActive(true);
     }
+    /// <summary>
+    /// Moe to s specified Game Object IF I can get there
+    /// </summary>
+    /// <param name="target"> Destination</param>
     internal void Move(GameObject target)
     {
         Vector2 destination = target.transform.position;
@@ -43,7 +44,10 @@ public class Villager : MonoBehaviour
             StartCoroutine(MoveTo(destination));
 
     }
-
+    /// <summary>
+    /// Coroutine to move to target with Transform Translate
+    /// </summary>
+    /// <param name="destination">Destination</param>
     private IEnumerator MoveTo(Vector2 destination)
     {
 
