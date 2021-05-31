@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Generates a node based movement sceme 
@@ -57,6 +58,7 @@ public class Movement : MonoBehaviour
 
     private bool Search(Vector2 destination, float maxDistance)
     {
+        m_impassable.Clear();
         m_openList.Clear();
         m_nodes.Clear();
         //Start at this location
@@ -154,18 +156,48 @@ public class Movement : MonoBehaviour
                 {
                     continue;
                 }
-                
-                RaycastHit2D hit;
-                //go to the center of the next unit
-                 hit = Physics2D.Raycast(home.location, direction, direction.magnitude);
-                if(hit.transform != null)
+
+                //see if this location is on the list of obstacle
+                if(GridManager.GetGridManager().GridCellIsFilled(GridManager.Layers.k_obstacles, destination))
                 {
-                    if (!hit.collider.isTrigger && Vector2.Distance(hit.transform.position, home.location + direction) < 0.4f)
+                    m_impassable.Add(destination);
+                    continue;
+                }
+
+                //see if there is an object in the way
+                RaycastHit2D[] hits;
+                //go to the center of the next unit
+                 hits = Physics2D.RaycastAll(home.location, direction, direction.magnitude);
+                foreach (var hit in hits)
+                {
+                    //if we have hit something, see if that is on the cell we are moving to.
+                    if (hit.transform != null)
                     {
-                        //This is not a collider and the object is in the center of the place I am trying to get to
-                        m_impassable.Add(destination);
-                        continue;
+                        //if what I hit was a tile map collider, then I should have already ignored it
+                        if(hit.collider is TilemapCollider2D)
+                        {
+                            continue;
+                        }
+                        //this is a trigger and so I can pass through it
+                        else if (hit.collider.isTrigger)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            //see if the center of the the object is within the cell I am trying to move to
+                            if (Vector2.Distance(destination, hit.transform.position) < 0.5f)
+                            {
+                                m_impassable.Add(destination);
+                                break;
+                            }
+                        }
                     }
+                }
+                //if the destination was added as an impassable location
+                if (m_impassable.Contains(destination))
+                {
+                    continue;
                 }
                 //otherwise add the node 
                 var node = new Node();
