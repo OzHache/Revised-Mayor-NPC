@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DeathScreenEvents : MonoBehaviour
 {
@@ -10,7 +7,7 @@ public class DeathScreenEvents : MonoBehaviour
     /// Respawn character if they choose to keep going
     /// Give them a chance to quit
     /// </summary>
-    
+
 
 
     [SerializeField] private Animator animator;

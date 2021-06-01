@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ConnectCells : InventoryCell
 {
     //Other Cell Reference
-    [SerializeField]private ConnectCells otherCell;
+    [SerializeField] private ConnectCells otherCell;
 
     //See if the other cell is calling this one to update
     private void CheckForUpdate()
@@ -22,7 +19,7 @@ public class ConnectCells : InventoryCell
     {
         base.Add(amount);
         CheckForUpdate();
-        
+
     }
     public override void Clear()
     {
@@ -67,18 +64,18 @@ public class ConnectCells : InventoryCell
         otherCell.numberOfItems = numberOfItems;
         otherCell.UpdateUI();
         UpdateUI();
-       
+
     }
 
     public override bool Equals(object other)
     {
         //compare if the other is a connected cell
-        if(!(other is ConnectCells))
+        if (!(other is ConnectCells))
         {
             return false;
         }
         //Amount and type are the same
-        var otherCell = other as ConnectCells;
+        ConnectCells otherCell = other as ConnectCells;
         if (item == otherCell.item && numberOfItems == otherCell.numberOfItems)
         {
             return true;

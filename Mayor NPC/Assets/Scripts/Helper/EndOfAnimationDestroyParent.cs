@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EndOfAnimationDestroyParent : MonoBehaviour
@@ -9,7 +8,7 @@ public class EndOfAnimationDestroyParent : MonoBehaviour
     public void End()
     {
         m_spawnPosition = transform.position;
-        var parent = transform.parent;
+        Transform parent = transform.parent;
         transform.parent = null;
         Destroy(parent.gameObject);
         GetComponent<Animator>().enabled = false;

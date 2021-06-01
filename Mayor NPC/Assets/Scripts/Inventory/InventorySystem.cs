@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class InventorySystem : MonoBehaviour
@@ -9,12 +7,13 @@ public class InventorySystem : MonoBehaviour
     public List<EquipmentCell> m_equipmentCells = new List<EquipmentCell>();
     private void Start()
     {
-       foreach(InventoryCell cell in m_inventoryCells)
+        foreach (InventoryCell cell in m_inventoryCells)
         {
             cell.SetInventorySystem(this);
         }
     }
-    public void AddToInventory(InventoryItem item, int amount) {
+    public void AddToInventory(InventoryItem item, int amount)
+    {
         //update the quest manager with this new information
         PlayerActions action;
         action.m_action = Quest.ActionType.Collect;
@@ -22,16 +21,16 @@ public class InventorySystem : MonoBehaviour
         action.m_number = amount;
         QuestManager.GetQuestManager().UpdateQuests(action);
 
-        foreach(InventoryCell cell in m_inventoryCells)
+        foreach (InventoryCell cell in m_inventoryCells)
         {
             bool isEquipment = item is IEquipment;
 
             if (isEquipment)
             {
                 //try and place this item in an inventory
-                foreach(var slot in m_equipmentCells)
+                foreach (EquipmentCell slot in m_equipmentCells)
                 {
-                    if(slot.m_lockedItem == item)
+                    if (slot.m_lockedItem == item)
                     {
                         slot.AddItem(item);
                         return;
@@ -50,14 +49,14 @@ public class InventorySystem : MonoBehaviour
             }
         }
         //Otherwise see if there is a free space
-          
-         foreach (InventoryCell cell in m_inventoryCells)
+
+        foreach (InventoryCell cell in m_inventoryCells)
         {
-            if(cell.item == null)
+            if (cell.item == null)
             {
                 cell.AddItem(item, amount);
                 Debug.Log(item.name + " has been placed in to " + m_inventoryCells.IndexOf(cell));
-                return; 
+                return;
             }
         }
     }
@@ -80,11 +79,13 @@ public class InventorySystem : MonoBehaviour
     {
         List<ToolType> tools = new List<ToolType>();
         //Changing this to look through equipment first
-        foreach(var slot in m_equipmentCells)
+        foreach (EquipmentCell slot in m_equipmentCells)
         {
             //continue if the cell is empty
             if (slot.item == null)
+            {
                 continue;
+            }
             //check if this is a tool
             if (slot.item.IsTool())
             {
@@ -93,11 +94,13 @@ public class InventorySystem : MonoBehaviour
                 tools.Add(slot.item.GetToolType());
             }
         }
-        foreach(InventoryCell cell in m_inventoryCells)
+        foreach (InventoryCell cell in m_inventoryCells)
         {
             //continue if the cell is empty
             if (cell.item == null)
+            {
                 continue;
+            }
             //check if this is a tool
             if (cell.item.IsTool())
             {

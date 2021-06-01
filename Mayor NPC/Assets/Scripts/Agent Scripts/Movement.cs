@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -8,11 +7,11 @@ using UnityEngine.Tilemaps;
 /// </summary>
 public class Movement : MonoBehaviour
 {
-    
-    private List<Node> m_nodes = new List<Node>();
-    private List<Node> m_openList = new List<Node>();
+
+    private readonly List<Node> m_nodes = new List<Node>();
+    private readonly List<Node> m_openList = new List<Node>();
     //It's impassable for all objects that travel
-    private static List<Vector2> m_impassable = new List<Vector2>();
+    private static readonly List<Vector2> m_impassable = new List<Vector2>();
     private Node m_destination;
     public float m_proximity = 0.01f;
     [SerializeField] private Vector3 m_debugMovement;
@@ -25,7 +24,7 @@ public class Movement : MonoBehaviour
     }
     private void Update()
     {
-        if(m_debugMove && ! m_debugIsMoving && Vector2.Distance(transform.position, m_debugMovement) > 1.5f)
+        if (m_debugMove && !m_debugIsMoving && Vector2.Distance(transform.position, m_debugMovement) > 1.5f)
         {
             bool canArrive = CanGetToDestination(m_debugMovement, 1.5f);
             m_debugMove = false;
@@ -41,7 +40,10 @@ public class Movement : MonoBehaviour
     public Vector2 GetNextCoordinate()
     {
         if (m_nodes.Count < 1)
+        {
             return m_destination.location;
+        }
+
         Vector2 location = m_nodes[0].location;
         m_nodes.RemoveAt(0);
         return location;
@@ -49,7 +51,7 @@ public class Movement : MonoBehaviour
 
     public bool CanGetToDestination(Vector3 destination, float maxDistance)
     {
-        
+
         m_destination = new Node();
         m_destination.location = new Vector2(destination.x, destination.y);
         bool validPath = Search(destination, maxDistance);
@@ -62,8 +64,8 @@ public class Movement : MonoBehaviour
         m_openList.Clear();
         m_nodes.Clear();
         //Start at this location
-        var start = new Node();
- 
+        Node start = new Node();
+
         m_openList.Add(start);
         m_openList[0].location = CenterOfGridAt(transform.position);
 
@@ -71,12 +73,13 @@ public class Movement : MonoBehaviour
         start.H = Vector2.Distance(start.location, destination);
         int maxCount = 1000;
         int count = 0;
-        while(m_openList.Count > 0 && count < maxCount)
+        while (m_openList.Count > 0 && count < maxCount)
         {
             count++;
             Node current = GetLowestFScore();
 
-            if (Vector2.Distance(current.location, m_destination.location) < maxDistance){
+            if (Vector2.Distance(current.location, m_destination.location) < maxDistance)
+            {
                 //Set this as the new destination
                 m_destination = current;
                 return ReconstructPath(current);
@@ -85,17 +88,20 @@ public class Movement : MonoBehaviour
             m_openList.Remove(current);
 
             //for each neighbour of current
-            foreach(var node in GetNeighbours(current))
+            foreach (Node node in GetNeighbours(current))
             {
                 //Debug.Log("Checking Node at" + node.location);
                 float tenativeGScore = current.G + Vector2.Distance(current.location, node.location);
-                if(tenativeGScore < node.G)
+                if (tenativeGScore < node.G)
                 {
                     //this is a better path
                     node.m_cameFrom = current;
                     node.G = tenativeGScore;
                     if (m_openList.Contains(node))
+                    {
                         continue;
+                    }
+
                     m_openList.Add(node);
                 }
             }
@@ -107,7 +113,7 @@ public class Movement : MonoBehaviour
 
     private bool ReconstructPath(Node current)
     {
-        while(current.m_cameFrom != null)
+        while (current.m_cameFrom != null)
         {
             m_nodes.Add(current);
             current = current.m_cameFrom;
@@ -142,11 +148,11 @@ public class Movement : MonoBehaviour
     private List<Node> GetNeighbours(Node home)
     {
         List<Node> neighbours = new List<Node>();
-        for (var x = -1; x < 2; x++)
+        for (int x = -1; x < 2; x++)
         {
-            for (var y = -1; y < 2; y++)
+            for (int y = -1; y < 2; y++)
             {
-                if(x == 0 && y == 0)
+                if (x == 0 && y == 0)
                 {
                     continue; //skip myself
                 }
@@ -158,7 +164,7 @@ public class Movement : MonoBehaviour
                 }
 
                 //see if this location is on the list of obstacle
-                if(GridManager.GetGridManager().GridCellIsFilled(GridManager.Layers.k_obstacles, destination))
+                if (GridManager.GetGridManager().GridCellIsFilled(GridManager.Layers.k_obstacles, destination))
                 {
                     m_impassable.Add(destination);
                     continue;
@@ -167,14 +173,14 @@ public class Movement : MonoBehaviour
                 //see if there is an object in the way
                 RaycastHit2D[] hits;
                 //go to the center of the next unit
-                 hits = Physics2D.RaycastAll(home.location, direction, direction.magnitude);
-                foreach (var hit in hits)
+                hits = Physics2D.RaycastAll(home.location, direction, direction.magnitude);
+                foreach (RaycastHit2D hit in hits)
                 {
                     //if we have hit something, see if that is on the cell we are moving to.
                     if (hit.transform != null)
                     {
                         //if what I hit was a tile map collider, then I should have already ignored it
-                        if(hit.collider is TilemapCollider2D)
+                        if (hit.collider is TilemapCollider2D)
                         {
                             continue;
                         }
@@ -200,7 +206,7 @@ public class Movement : MonoBehaviour
                     continue;
                 }
                 //otherwise add the node 
-                var node = new Node();
+                Node node = new Node();
                 node.location = home.location + direction;
                 //Distance to the destination
                 node.H = Vector2.Distance(node.location, m_destination.location);
@@ -220,7 +226,7 @@ internal class Node
     internal float G = float.MaxValue;
     internal float H = float.MaxValue;
     internal float GetF() { return G + H; }
-    public override bool Equals(object obj) => this.Equals(obj as Node);
+    public override bool Equals(object obj) => Equals(obj as Node);
     public bool Equals(Node other)
     {
         if (other is null)

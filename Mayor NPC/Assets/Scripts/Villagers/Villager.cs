@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class Villager : MonoBehaviour
@@ -41,8 +39,9 @@ public class Villager : MonoBehaviour
     {
         Vector2 destination = target.transform.position;
         if (m_movement.CanGetToDestination(destination, m_maxDistance))
+        {
             StartCoroutine(MoveTo(destination));
-
+        }
     }
     /// <summary>
     /// Coroutine to move to target with Transform Translate

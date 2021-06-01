@@ -1,14 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(InventorySystem))]
 public class WorldInventory : MonoBehaviour
 {
     private SpriteRenderer m_renderer;
     [SerializeField] private InventoryObject inventoryObject;
-    [SerializeField]private Canvas inventoryCanvas;
+    [SerializeField] private Canvas inventoryCanvas;
     // Number of inventory Slots
     [SerializeField] InventorySystem inventorySystem;
     private bool isMouseOver;
@@ -17,7 +15,7 @@ public class WorldInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(inventoryObject == null)
+        if (inventoryObject == null)
         {
             Debug.LogError(gameObject.name + " does not have a required Inventory Object scriptable object assigned");
         }
@@ -30,18 +28,18 @@ public class WorldInventory : MonoBehaviour
         m_renderer.sprite = inventoryObject.closedArt;
         inventorySystem = GetComponent<InventorySystem>();
     }
-    
-    
+
+
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private void OnMouseEnter()
     {
         //inventoryCanvas.gameObject.SetActive(true);
         isMouseOver = true;
-        
+
     }
     private void OnMouseOver()
     {
@@ -65,7 +63,7 @@ public class WorldInventory : MonoBehaviour
     }
 
     //mouse off Coroutine
-    IEnumerator  MouseOff()
+    IEnumerator MouseOff()
     {
         isMouseOff = true;
         yield return new WaitForSeconds(.5f);

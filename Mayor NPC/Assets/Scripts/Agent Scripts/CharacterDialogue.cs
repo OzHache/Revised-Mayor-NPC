@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class CharacterDialogue : MonoBehaviour
 {
-    [SerializeField]private RectTransform m_choiceRect;
-    private List<GameObject> m_choices = new List<GameObject>();
+    [SerializeField] private RectTransform m_choiceRect;
+    private readonly List<GameObject> m_choices = new List<GameObject>();
 
     [SerializeField] private TextMeshProUGUI m_textMesh;
     [SerializeField] private GameObject m_speechCanvas;
@@ -19,11 +19,11 @@ public class CharacterDialogue : MonoBehaviour
     protected int m_currentMessage = 0;
 
     //Dialogue management
-    [SerializeField]private string m_dialogueOwnerId;
+    [SerializeField] private string m_dialogueOwnerId;
     private DialogueContainer m_dialogueContainer;
     private string m_branchID = "";
     private string m_choiceId = "";
-    private bool m_dialogueComplete = false;
+    private readonly bool m_dialogueComplete = false;
     protected Coroutine currentCoroutine;
     protected Action m_onEndOfDialogue;
     private bool m_pauseOnDialogue = true;
@@ -41,11 +41,14 @@ public class CharacterDialogue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         m_meshRenderer = GetComponent<MeshRenderer>();
-        if(m_meshRenderer != null)
+        if (m_meshRenderer != null)
+        {
             m_meshRenderer.enabled = false;
-        if(m_choiceRect == null && !gameObject.CompareTag("Player"))
+        }
+
+        if (m_choiceRect == null && !gameObject.CompareTag("Player"))
         {
             Debug.LogError("This needs a choices Panel set up" + gameObject.name);
         }
@@ -58,7 +61,10 @@ public class CharacterDialogue : MonoBehaviour
 
         //if we have been told to pause on dialogue
         if (m_pauseOnDialogue && initial)
+        {
             GameManager.GetGameManager().PauseAction(true);
+        }
+
         GetComponent<MeshRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
         //see if I currently have a dialogue
         if (m_dialogueContainer == null)
@@ -67,7 +73,10 @@ public class CharacterDialogue : MonoBehaviour
             LoadDialogue();
         }
         if (m_meshRenderer != null)
+        {
             m_meshRenderer.enabled = true;
+        }
+
         m_speechCanvas.SetActive(true);
         m_textMesh.text = "";
         currentCoroutine = StartCoroutine(PrintMessage());
@@ -79,7 +88,7 @@ public class CharacterDialogue : MonoBehaviour
         {
             m_dialogueContainer = DialogueLoader.GetLoader().GetDialogueContainerFor(m_dialogueOwnerId);
         }
-        if(m_dialogueContainer == null)
+        if (m_dialogueContainer == null)
         {
             Debug.Log("There is no Dialogue for Id" + m_dialogueOwnerId);
             return;
@@ -89,18 +98,18 @@ public class CharacterDialogue : MonoBehaviour
         //m_choice Id is set when there is a choice made
         DialogueBranch branch;
         //if we succeed here
-        if(m_dialogueContainer.GetNextBranch(out branch, m_choiceId))
+        if (m_dialogueContainer.GetNextBranch(out branch, m_choiceId))
         {
             m_currentMessage = 0;
             m_messages[0] = branch.m_maintext;
             //clear the choices
             ClearChoices();
 
-            for(var i = 0; i < branch.m_choices.Count; i++)
+            for (int i = 0; i < branch.m_choices.Count; i++)
             {
                 //see if i > than the amount of children in choices, then duplicate the last one
                 GameObject _choice;
-                if (i > m_choiceRect.childCount-1)
+                if (i > m_choiceRect.childCount - 1)
                 {
                     _choice = Instantiate<GameObject>(m_choiceRect.GetChild(0).gameObject, m_choiceRect);
                 }
@@ -118,7 +127,7 @@ public class CharacterDialogue : MonoBehaviour
         }
     }
 
-    public void SetDialogueID( string id)
+    public void SetDialogueID(string id)
     {
         m_dialogueOwnerId = id;
         m_dialogueContainer = null;
@@ -131,7 +140,7 @@ public class CharacterDialogue : MonoBehaviour
     {
         //Deactivate all the choices
         m_choices.Clear();
-        for (var i = m_choiceRect.childCount -1; i >= 0; i--)
+        for (int i = m_choiceRect.childCount - 1; i >= 0; i--)
         {
             m_choiceRect.GetChild(i).gameObject.SetActive(false);
         }
@@ -141,11 +150,14 @@ public class CharacterDialogue : MonoBehaviour
         //on the choice click
         //get the name 
         m_choiceId = gameObject.name;
-        if(m_choiceId == "End")
+        if (m_choiceId == "End")
         {
             m_pauseOnDialogue = false;
             if (m_onEndOfDialogue != null)
+            {
                 m_onEndOfDialogue.Invoke();
+            }
+
             ClearChoices();
         }
         LoadDialogue();
@@ -159,7 +171,10 @@ public class CharacterDialogue : MonoBehaviour
     internal void Deactivate()
     {
         if (m_meshRenderer != null)
+        {
             m_meshRenderer.enabled = false;
+        }
+
         if (currentCoroutine != null)
         {
             StopCoroutine(currentCoroutine);
@@ -218,13 +233,13 @@ public class CharacterDialogue : MonoBehaviour
             yield return new WaitForSeconds(m_messageSpeed);
         }
         currentCoroutine = null;
-        
+
         ActivateChoices();
     }
 
     private void ActivateChoices()
     {
-        foreach(var choice in m_choices)
+        foreach (GameObject choice in m_choices)
         {
             choice.SetActive(true);
         }

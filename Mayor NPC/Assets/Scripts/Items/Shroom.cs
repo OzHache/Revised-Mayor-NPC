@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Shroom : UIInteractable
 {
@@ -12,17 +10,17 @@ public class Shroom : UIInteractable
     protected override void Activate(string message)
     {
         InteractionTypes action = InteractionTypes.Unused;
-        if(System.Enum.IsDefined(typeof(InteractionTypes), message))
+        if (System.Enum.IsDefined(typeof(InteractionTypes), message))
         {
             action = (InteractionTypes)System.Enum.Parse(typeof(InteractionTypes), message);
         }
-        
+
 
 
         switch (action)
         {
             case InteractionTypes.Use:
-                GameManager.GetGameManager().m_playerController.AddStamina (staminaValue);
+                GameManager.GetGameManager().m_playerController.AddStamina(staminaValue);
                 Destroy(gameObject);
                 break;
             case InteractionTypes.Take:
@@ -44,6 +42,6 @@ public class Shroom : UIInteractable
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

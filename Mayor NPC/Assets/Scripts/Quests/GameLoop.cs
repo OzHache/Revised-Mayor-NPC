@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 //Quest actions are a collection of quests and triggered actions used on each CutScene
-using QuestsActions = 
+using QuestsActions =
     //Quests
-    System.Tuple<System.Collections.Generic.List<Quest>, 
+    System.Tuple<System.Collections.Generic.List<Quest>,
     //Actions at the begining of the Quest
-    System.Collections.Generic.List<System.Action>,  
+    System.Collections.Generic.List<System.Action>,
     //Actions triggered at the end of the Quest
     System.Collections.Generic.List<System.Action>>;
 //repository for creating cutscene missions. Eventually this will need to be seriealized
 public class GameLoop
 {
-
-    List<QuestsActions> m_cutScenes = new List<QuestsActions>();
+    readonly List<QuestsActions> m_cutScenes = new List<QuestsActions>();
     public void Initialize()
     {
         //create all the needed events
@@ -33,7 +29,7 @@ public class GameLoop
     {
         ///Kill 3 enemies
         Quest enemiesQuest = new Quest(Quest.ActionType.Kill, "Enemies", 5, null);
-        
+
         QuestsActions questActions = new QuestsActions(
             //this Quest
             new List<Quest> { enemiesQuest },
@@ -60,7 +56,7 @@ public class GameLoop
     private void CutSceneFour()
     {
         //Build up 3 more buildings
-        Quest quest = new Quest(Quest.ActionType.Build, "Building", 3,null);
+        Quest quest = new Quest(Quest.ActionType.Build, "Building", 3, null);
         Quest sleepingBag = new Quest(Quest.ActionType.Use, "SleepingBag", 1, null);
         QuestsActions questActions = new QuestsActions(
             //this Quest
@@ -70,7 +66,7 @@ public class GameLoop
             { () =>
                 {
                     // set the Key to be able to be interacted with
-                    var bag = GameObject.Find("SleepingBag").GetComponent<SleepingBag>();
+                    SleepingBag bag = GameObject.Find("SleepingBag").GetComponent<SleepingBag>();
                     Assert.IsNotNull(bag);
                     if (bag != null)
                     {
@@ -101,11 +97,11 @@ public class GameLoop
             //this Quest
             new List<Quest> { collectKey, openGate },
             //Start CutScene go to the beacon
-            new List<Action> 
+            new List<Action>
             { () =>
                 {
                     // set the Key to be able to be interacted with
-                    var key = GameObject.Find("Key1").GetComponent<KeyObject>();
+                    KeyObject key = GameObject.Find("Key1").GetComponent<KeyObject>();
                     Assert.IsNotNull(key);
                     if (key != null)
                     {
@@ -120,7 +116,7 @@ public class GameLoop
                 ()=>GameObject.Find("WorldDialogue").GetComponent<CharacterDialogue>().SetDialogueID("CutScene4"),
                 //Pan to the new villager
                 () => Camera.main.gameObject.GetComponent<CameraFollow>().MoveToTarget(GameObject.Find("VillageCenter"), 5.0f),
-                MoveTo("OldLady", "VillageCenter"), 
+                MoveTo("OldLady", "VillageCenter"),
                 MoveTo("Villager1", "Village1Home"),
                 //start the next scene
                 ()=>GameObject.Find("OldLady").GetComponent<OldLady>().StartScene(3)
@@ -133,16 +129,16 @@ public class GameLoop
     private void CutSceneTwo()
     {
         ///Kill 3 enemies
-        Quest enemiesQuest = new Quest(Quest.ActionType.Kill, "Enemies", 3, ()=>
+        Quest enemiesQuest = new Quest(Quest.ActionType.Kill, "Enemies", 3, () =>
         {
             // set the Beacon to be able to be interacted with
-            var beacon = GameObject.Find("Beacon").GetComponent<Beacon>();
+            Beacon beacon = GameObject.Find("Beacon").GetComponent<Beacon>();
             Assert.IsNotNull(beacon);
-            if(beacon != null) 
+            if (beacon != null)
             {
                 beacon.m_isInteractable = true;
             }
-            
+
         });
         Quest recoverBeacon = new Quest(Quest.ActionType.Use, "Beacon", 1, null);
         QuestsActions questActions = new QuestsActions(
@@ -189,18 +185,18 @@ public class GameLoop
              MoveTo("OldLady",GameManager.GetGameManager().Player),
          //Pause the player and any enemies
             ()=>GameObject.Find("OldLady").GetComponent<OldLady>().StartScene(1)
-         }); 
+         });
         m_cutScenes.Add(questsActions);
     }
 
     private Action MoveTo(string ActorName, GameObject position)
     {
         //Debug.Log("Moving");
-        return ()=> GameObject.Find(ActorName).GetComponent<Villager>().Move(position);
+        return () => GameObject.Find(ActorName).GetComponent<Villager>().Move(position);
     }
     private Action MoveTo(string ActorName, string positionName)
     {
-        
+
         return () => GameObject.Find(ActorName).GetComponent<Villager>().Move(GameObject.Find(positionName));
     }
     public List<Quest> GetQuest(int sceneNumber)
@@ -216,12 +212,14 @@ public class GameLoop
     {
         if (m_cutScenes.Count > sceneNumber)
         {
-            if(m_cutScenes[sceneNumber].Item2.Count > 0)
+            if (m_cutScenes[sceneNumber].Item2.Count > 0)
             {
-                foreach(var action in m_cutScenes[sceneNumber].Item2)
+                foreach (Action action in m_cutScenes[sceneNumber].Item2)
                 {
-                    if(action != null)
-                    action.Invoke();
+                    if (action != null)
+                    {
+                        action.Invoke();
+                    }
                 }
             }
         }
@@ -233,10 +231,13 @@ public class GameLoop
         {
             if (m_cutScenes[sceneNumber].Item3.Count > 0)
             {
-                foreach (var action in m_cutScenes[sceneNumber].Item3)
+                foreach (Action action in m_cutScenes[sceneNumber].Item3)
                 {
                     if (action != null)
+                    {
                         action.Invoke();
+                    }
+
                     UIManager.GetUIManager().DeactivateAll();
                 }
             }

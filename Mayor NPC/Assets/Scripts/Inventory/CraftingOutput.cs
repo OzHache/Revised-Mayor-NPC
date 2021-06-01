@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
-using TMPro;
 
 public class CraftingOutput : InventoryCell
 {
@@ -11,7 +8,7 @@ public class CraftingOutput : InventoryCell
     override internal void RemoveOne()
     {
         numberOfItems--;
-      
+
         UpdateUI();
         craftingStation.Activated();
         //Whenever an Item is crafted send a message to the questing system
@@ -19,7 +16,7 @@ public class CraftingOutput : InventoryCell
         action.m_action = Quest.ActionType.Craft;
         action.m_keyWord = item.name;
         action.m_number = 1;
-        QuestManager.GetQuestManager().UpdateQuests(action);  
+        QuestManager.GetQuestManager().UpdateQuests(action);
         if (numberOfItems == 0 || (item.isReuseable && durability <= 0))
         {
             Clear();

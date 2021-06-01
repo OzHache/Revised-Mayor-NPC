@@ -63,11 +63,13 @@ public class Combatant : MonoBehaviour
         }
         //The weapon is still cooling down
         if (!isWeaponReady)
+        {
             return;
+        }
 
         bool didMiss = true;
 
-        var hit = Random.Range(0f, 1f);
+        float hit = Random.Range(0f, 1f);
         //if there is no weapon assigned, use basic melee
         if (weaponItem == null)
         {
@@ -98,7 +100,7 @@ public class Combatant : MonoBehaviour
             didMiss = false;
             SoundManager.GetSoundManager().PlaySound(m_soundID);
         }
-        else 
+        else
         {
             MessageFactory.GetMessageFactory().CreateFloatingMessage("Miss", FloatingMessage.MessageCategory.k_HP, gameObject);
             Debug.Log("Miss");
@@ -116,15 +118,15 @@ public class Combatant : MonoBehaviour
 
         //apply damage
         healthRemaining -= rawDamage;
-        Debug.Log(gameObject.name +" "+ healthRemaining+ " Health remaining");
+        Debug.Log(gameObject.name + " " + healthRemaining + " Health remaining");
         if (gameObject.CompareTag("Player"))
         {
             GameManager.GetGameManager().m_playerController.TakeDamage();
         }
-        if(healthRemaining <= 0 && ! _debugInvincible)
+        if (healthRemaining <= 0 && !_debugInvincible)
         {
             //At this point the combatant has died.
-            if(OnDeath != null )
+            if (OnDeath != null)
             {
                 OnDeath.Invoke();
             }
@@ -138,7 +140,7 @@ public class Combatant : MonoBehaviour
             else
             {
                 gameObject.SetActive(false);
-                this.enabled = false;
+                enabled = false;
 
             }
 
@@ -156,7 +158,7 @@ public class Combatant : MonoBehaviour
     {
         MouseUI.GetMouseUI().MouseExit();
     }
-    
+
     IEnumerator WeaponCoolDown(bool didMiss)
     {
         isWeaponReady = false;
@@ -174,7 +176,7 @@ public class Combatant : MonoBehaviour
         {
             yield return null;
             coolDown -= Time.deltaTime;
-            
+
         }
         isWeaponReady = true;
     }
@@ -182,7 +184,7 @@ public class Combatant : MonoBehaviour
     public void RestartCharacter()
     {
         healthRemaining = m_maxHealth;
-        if (GetComponent<EnemyBehaviour>()!= null)
+        if (GetComponent<EnemyBehaviour>() != null)
         {
             GetComponent<EnemyBehaviour>().Restart();
         }

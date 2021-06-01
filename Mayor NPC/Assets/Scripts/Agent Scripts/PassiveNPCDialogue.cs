@@ -1,14 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PassiveNPCDialogue : MonoBehaviour
 {
-    [SerializeField]private CharacterDialogue m_dialogue;
+    [SerializeField] private CharacterDialogue m_dialogue;
 
     private void Start()
     {
-        if(m_dialogue == null)
+        if (m_dialogue == null)
         {
             Debug.LogError("There is no Character Dialogue on this gameObject " + gameObject.name);
             Destroy(this);

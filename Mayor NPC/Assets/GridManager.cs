@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 /// <summary>
@@ -12,12 +11,12 @@ public class GridManager : MonoBehaviour
     public static GridManager GetGridManager()
     {
         //See if tprivhere is a GridManager available in in the static entry or in the Game World
-        if(s_gridManager == null)
+        if (s_gridManager == null)
         {
             s_gridManager = FindObjectOfType<Grid>().GetComponent<GridManager>();
         }
         //No Grid Manager was found
-        if(s_gridManager == null)
+        if (s_gridManager == null)
         {
             Debug.LogError("No GridManager was found");
             return null;
@@ -31,7 +30,7 @@ public class GridManager : MonoBehaviour
         k_collectables, k_obstacles, k_background, k_decorations, k_groundDecorations
     }
 
-    private static Dictionary<Layers, string> m_layerToName = new Dictionary<Layers, string>()
+    private static readonly Dictionary<Layers, string> m_layerToName = new Dictionary<Layers, string>()
     {
         { Layers.k_collectables, "Collectables" },
         { Layers.k_background, "Background" },
@@ -48,21 +47,22 @@ public class GridManager : MonoBehaviour
     private void Start()
     {
         //Add all the maps to the maps list by the 
-        var maps = GetComponentsInChildren<Tilemap>();
+        Tilemap[] maps = GetComponentsInChildren<Tilemap>();
         {
-            foreach(var map in maps)
+            foreach (Tilemap map in maps)
             {
                 m_tileMaps.Add(map.gameObject.name, map);
             }
         }
     }
+
     /// <summary>
     /// Returns true if the Cell at the specified Position is filled on that layer
     /// </summary>
     /// <param name="Layer">Layer to Check(GameObject Name)</param>
     /// <param name="position">Position to check</param>
     /// <returns></returns>
-   public bool GridCellIsFilled(Layers layer, Vector3Int position)
+    public bool GridCellIsFilled(Layers layer, Vector3Int position)
     {
         return m_tileMaps[m_layerToName[layer]].HasTile(position);
     }

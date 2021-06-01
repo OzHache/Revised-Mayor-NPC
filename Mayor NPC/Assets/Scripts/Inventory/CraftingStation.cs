@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 //Take Two Crating items and convert them into a crafted Item
@@ -12,7 +10,7 @@ public class CraftingStation : MonoBehaviour
     //two inventory Cells
     [SerializeField] private InventoryCell leftCell;
     [SerializeField] private InventoryCell rightCell;
-    
+
 
     //Output Cell
     [SerializeField] private CraftingOutput outputCell;
@@ -24,7 +22,7 @@ public class CraftingStation : MonoBehaviour
 
     private void Update()
     {
-        if(leftCell.item != null && rightCell.item != null)
+        if (leftCell.item != null && rightCell.item != null)
         {
             isCrafting = true;
         }
@@ -37,14 +35,14 @@ public class CraftingStation : MonoBehaviour
         {
             //currentRecipie = null;
         }
-        
+
     }
 
     private void CheckForValidRecipie()
     {
-        foreach(Recipie recipie in recipies)
+        foreach (Recipie recipie in recipies)
         {
-            if(recipie.ValidateRecipie(leftCell.item, rightCell.item))
+            if (recipie.ValidateRecipie(leftCell.item, rightCell.item))
             {
                 currentRecipie = recipie;
                 UpdateUI();
@@ -64,7 +62,7 @@ public class CraftingStation : MonoBehaviour
     public void Activated()
     {
         //if this is a valid recipie
-        if(currentRecipie != null)
+        if (currentRecipie != null)
         {
             leftCell.RemoveOne();
             rightCell.RemoveOne();

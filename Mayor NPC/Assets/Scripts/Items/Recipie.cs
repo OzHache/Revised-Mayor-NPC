@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "New_Recipie", menuName = "CraftingRecipie")]
 
@@ -19,12 +18,12 @@ public class Recipie : ScriptableObject
     {
         bool isValid = false;
 
-        if(itemOne == inputOne && itemTwo == inputTwo)
+        if (itemOne == inputOne && itemTwo == inputTwo)
         {
             isValid = true;
         }
         //check for reversed craft
-        if(itemOne == inputTwo && itemTwo == inputOne)
+        if (itemOne == inputTwo && itemTwo == inputOne)
         {
             isValid = true;
         }

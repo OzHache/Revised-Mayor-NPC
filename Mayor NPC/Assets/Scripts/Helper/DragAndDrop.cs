@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler
@@ -19,7 +16,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         cell = gameObject.GetComponent<InventoryCell>();
     }
 
-        //Manage mouse over UI
+    //Manage mouse over UI
 
     private void OnMouseEnter()
     {
@@ -36,14 +33,14 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     {
         //pass the sprite of this gameobject to the mouseUI
         MouseInventory.GetMouseInvUI().PickUp(cell);
-        
+
     }
 
     public void OnDrag(PointerEventData eventData)
     {
     }
 
-    
+
 
     public void OnPointerDown(PointerEventData eventData)
     {

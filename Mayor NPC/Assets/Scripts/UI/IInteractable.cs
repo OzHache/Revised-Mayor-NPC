@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public interface IInteractable
 {
     /* Returns an array of strings that are used to identify the object and it's interactions
      * The last item is always the Description
      */
-    
-    Dictionary<UIButtonValues,string> Identify();
+
+    Dictionary<UIButtonValues, string> Identify();
 
     ToolType GetTool();
 
@@ -19,6 +17,6 @@ public enum InteractionTypes
     Use,
     Misc,
     Unused,
-    Build, 
+    Build,
     Add
 }

@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class SleepingBag : UIInteractable
+﻿public class SleepingBag : UIInteractable
 {
     private void Start()
     {

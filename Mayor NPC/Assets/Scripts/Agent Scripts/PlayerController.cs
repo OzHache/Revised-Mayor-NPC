@@ -1,9 +1,5 @@
-﻿
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 
@@ -18,7 +14,7 @@ public class PlayerController : MonoBehaviour
     //References
     private Vector2 m_moveDirection = Vector2.zero;
     private Rigidbody2D m_rb;
-    
+
     private PlayerDialogueController m_dialgoueController;
 
     private Coroutine m_conversation;
@@ -38,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public static event Stamina HealthUpdater;
 
     //Calculated value of the position in 2D space
-    private Vector2 position { get { return (Vector2)transform.position; } }
+    private Vector2 position { get { return transform.position; } }
 
     void Awake()
     {
@@ -53,10 +49,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //y sort
-        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y) * -1 +50;
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y) * -1 + 50;
         //Get input
         GetInput();
-        if(m_moveDirection != Vector2.zero){
+        if (m_moveDirection != Vector2.zero)
+        {
             StopAllCoroutines();
         }
     }
@@ -68,7 +65,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         //Move the player in the direction of travel
-        var directionToMove = m_moveDirection.normalized * m_speed;
+        Vector2 directionToMove = m_moveDirection.normalized * m_speed;
         m_rb.velocity = directionToMove;
     }
 
@@ -77,9 +74,13 @@ public class PlayerController : MonoBehaviour
         if (!isSafe)
         {
             if (enemiesPreset)
+            {
                 Debug.Log("lose 50% of goods");
+            }
             else
+            {
                 Debug.Log("lose 25% of goods");
+            }
         }
         m_combatant.RestartCharacter();
         HealthUpdater();
@@ -93,11 +94,13 @@ public class PlayerController : MonoBehaviour
     {
         //early out while engaged in a conversation
         if (m_engagedInConversation)
+        {
             return;
+        }
         //Controls -> wasd for movememt
         m_moveDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
     }
-    
+
     public void Engage(GameObject engageWith)
     {
         //See if this is a combatant
@@ -124,7 +127,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //say generic message
-    internal void Say(string message) 
+    internal void Say(string message)
     {
         m_dialgoueController.Say(message);
     }
@@ -134,13 +137,13 @@ public class PlayerController : MonoBehaviour
     {
         StopCoroutine("MoveToPosition");
         Vector2 enemyPos = combatant.transform.position;
-        while (Vector2.Distance(transform.position, enemyPos) > this.m_combatant.meleeRange)
+        while (Vector2.Distance(transform.position, enemyPos) > m_combatant.meleeRange)
         {
             transform.position = Vector2.MoveTowards(position, enemyPos, m_speed * Time.deltaTime);
             yield return null;
             enemyPos = combatant.transform.position;
         }
-        this.m_combatant.Melee(combatant);
+        m_combatant.Melee(combatant);
         StaminaUpdate(-1);
 
     }
@@ -159,9 +162,9 @@ public class PlayerController : MonoBehaviour
 
     public void StaminaUpdate(float amount)
     {
-        m_usedStamina  = Mathf.Clamp(m_usedStamina += amount,-m_maxStamina, 0);
+        m_usedStamina = Mathf.Clamp(m_usedStamina += amount, -m_maxStamina, 0);
 
-        if(StaminaUpdater != null)
+        if (StaminaUpdater != null)
         {
             StaminaUpdater();
         }
@@ -184,13 +187,13 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage()
     {
         HealthUpdater();
-    }  
-    
+    }
+
     internal void AddStamina(float amount)
     {
         StaminaUpdate(-amount);
     }
-    
+
     internal void StartConversation()
     {
         m_conversation = StartCoroutine(ConversationLock());
@@ -203,7 +206,7 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator ConversationLock()
     {
-        yield return new WaitUntil(()=>!m_engagedInConversation);
+        yield return new WaitUntil(() => !m_engagedInConversation);
     }
 
 }

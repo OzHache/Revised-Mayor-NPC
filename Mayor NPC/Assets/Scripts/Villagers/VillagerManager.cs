@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class VillagerManager : MonoBehaviour
@@ -15,13 +14,14 @@ public class VillagerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public static void Activate(string name)
     {
-        foreach(var villager in s_instance.m_villagers){
-            if(villager.name == name)
+        foreach (Villager villager in s_instance.m_villagers)
+        {
+            if (villager.name == name)
             {
                 villager.Activate();
             }

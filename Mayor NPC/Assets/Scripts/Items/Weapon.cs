@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Weapon : MonoBehaviour
 {
     private WeaponItem _weaponItem;
-    public WeaponItem  weaponItem {get{return _weaponItem;}}
+    public WeaponItem weaponItem { get { return _weaponItem; } }
     private new SpriteRenderer renderer;
     // Start is called before the first frame update
     private void Start()

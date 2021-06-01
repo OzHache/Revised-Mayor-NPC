@@ -2,10 +2,10 @@
 [CreateAssetMenu(fileName = "New_Weapon", menuName = "WeaponItem")]
 public class WeaponItem : InventoryItem, IEquipment
 {
-    private EquipmentTypes equipmentType = EquipmentTypes.Weapon;
+    private readonly EquipmentTypes equipmentType = EquipmentTypes.Weapon;
     public Sprite heldArt;
     //Does it take ammo?
-    [Range(0,1)]public float hitChance;
+    [Range(0, 1)] public float hitChance;
     public int maxDamage;
     public int minDamage;
     //Regular Hit calculation

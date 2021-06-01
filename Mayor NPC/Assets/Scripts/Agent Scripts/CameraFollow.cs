@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
@@ -34,7 +32,10 @@ public class CameraFollow : MonoBehaviour
         while (true)
         {
             if (m_pauseMovement)
+            {
                 yield return null;
+            }
+
             Vector3 newPos = Vector3.Lerp(transform.position, m_target.transform.position, lag);
             newPos.z = transform.position.z;
             transform.position = newPos;
@@ -45,7 +46,7 @@ public class CameraFollow : MonoBehaviour
     public void MoveToTarget(GameObject @object, float time)
     {
         StopCoroutine(coroutine);
-        
+
         StartCoroutine(MoveToTargetCoroutine(@object, time));
     }
     /// <summary>
@@ -57,16 +58,16 @@ public class CameraFollow : MonoBehaviour
     private IEnumerator MoveToTargetCoroutine(GameObject newTarget, float time)
     {
         GameManager.GetGameManager().PauseAction(true);
-    
-    //Get the direction to the target
-    Vector2 dest2D = newTarget.transform.position;
+
+        //Get the direction to the target
+        Vector2 dest2D = newTarget.transform.position;
         Vector2 start2D = transform.position;
         //keeps z at zero
         Vector3 direction = (dest2D - start2D).normalized;
         float dist = Vector2.Distance(dest2D, start2D);
         //move to the target
         StopCoroutine(coroutine);
-        while(dist > 0.5f)
+        while (dist > 0.5f)
         {
             transform.Translate(direction * Time.deltaTime * m_speed);
             dist = Vector2.Distance(dest2D, transform.position);
@@ -75,7 +76,7 @@ public class CameraFollow : MonoBehaviour
         //change the tracking to this
         m_target = newTarget;
         //pause action and start move camera
-        
+
         yield return new WaitForSeconds(time);
         //stop move camera and move back
         StopCoroutine(coroutine);
@@ -91,8 +92,8 @@ public class CameraFollow : MonoBehaviour
             yield return null;
         }
         GameManager.GetGameManager().PauseAction(false);
-    //start move Camera again
-    m_target = m_player;
+        //start move Camera again
+        m_target = m_player;
         coroutine = StartCoroutine(MoveCamera());
     }
 

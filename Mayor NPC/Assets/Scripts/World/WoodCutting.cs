@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WoodCutting : UIInteractable
 {
@@ -41,6 +39,6 @@ public class WoodCutting : UIInteractable
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

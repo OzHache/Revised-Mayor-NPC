@@ -8,10 +8,10 @@ using UnityEngine;
 class PlayerDialogueController : MonoBehaviour
 {
 
-    [SerializeField]private CharacterDialogue m_dialogue;
+    [SerializeField] private CharacterDialogue m_dialogue;
     private Coroutine m_talking;
     [SerializeField] private float m_talkDuration = 5.0f;
-    private List<ToolType> m_toolQuests = new List<ToolType>();
+    private readonly List<ToolType> m_toolQuests = new List<ToolType>();
 
     private void Start()
     {
@@ -20,7 +20,9 @@ class PlayerDialogueController : MonoBehaviour
     internal void TalkAbout(UIInteractable item, Action questAction = null)
     {
         if (m_talking != null)
+        {
             StopCoroutine(m_talking);
+        }
 
         string message = "That is a " + item.GetDescription();
         if (!GameManager.GetGameManager().GetTools().Contains(item.GetTool()))
@@ -38,9 +40,11 @@ class PlayerDialogueController : MonoBehaviour
                     m_toolQuests.Add(item.GetTool());
                 }
                 if (m_talking != null)
+                {
                     StopCoroutine(m_talking);
+                }
             }
-        
+
         }
         //manage all the other descriptions
 
@@ -57,7 +61,10 @@ class PlayerDialogueController : MonoBehaviour
             //other interactions
             timer += Time.deltaTime;
             if (timer > m_talkDuration)
+            {
                 running = false;
+            }
+
             yield return null;
         }
         m_dialogue.Deactivate();
@@ -69,7 +76,9 @@ class PlayerDialogueController : MonoBehaviour
     {
         //stop talking
         if (m_talking != null)
+        {
             StopCoroutine(m_talking);
+        }
 
         m_dialogue.SetCurrentMessage(message, true);
 

@@ -92,8 +92,8 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
     //Fill the interactions Dictionary with "Name","methodName",The First Item is always"Description" "Description of the item"
     private void FillInteractionDescription()
     {
-        
-        var i = 0;
+
+        int i = 0;
         foreach (InteractionTypes iType in interactions)
         {
             switch (i)
@@ -124,10 +124,10 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
         {
             return;
         }
-       /* if (m_interactionDescriptions.Count == 0)
-        {
-            return;
-        }*/
+        /* if (m_interactionDescriptions.Count == 0)
+         {
+             return;
+         }*/
         if (!MouseUI.GetMouseUI().MouseHover(gameObject))
         {
             //keep trying until it does pop up;
@@ -137,7 +137,7 @@ public abstract class UIInteractable : MonoBehaviour, IInteractable
 
     IEnumerator MouseHovering()
     {
-        
+
         while (!MouseUI.GetMouseUI().MouseHover(gameObject))
         {
             yield return null;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -14,9 +12,9 @@ public class UIManager : MonoBehaviour
 
     //Dictionary for relating characters to UIControlelrs
 
-    Dictionary<char, UIController> UIControllerDict = new Dictionary<char, UIController>();
+    readonly Dictionary<char, UIController> UIControllerDict = new Dictionary<char, UIController>();
     //list of valid user key inputs
-    private List<char> validUserInput = new List<char>();
+    private readonly List<char> validUserInput = new List<char>();
 
     //Currently Active UI
     UIController ActiveUI;
@@ -31,7 +29,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(s_instance != null)
+        if (s_instance != null)
         {
             Destroy(this);
             return;
@@ -62,7 +60,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void BuildReferenceArray()
     {
-        foreach(KeyValuePair<char, UIController> entry in UIControllerDict)
+        foreach (KeyValuePair<char, UIController> entry in UIControllerDict)
         {
             validUserInput.Add(entry.Key);
         }
@@ -79,7 +77,9 @@ public class UIManager : MonoBehaviour
         bool checkvalue = (ActiveUI != null);
         string inputThisFrame = Input.inputString;
         if (inputThisFrame.Length == 0)
+        {
             return;
+        }
         //seperate the first value this frame
         char input = inputThisFrame[0];
 
@@ -103,7 +103,7 @@ public class UIManager : MonoBehaviour
         }
 
         //see if the checkvalue has been changed
-        if(checkvalue != (ActiveUI != null))
+        if (checkvalue != (ActiveUI != null))
         {
             if (UIHasActivated != null)
             {
@@ -114,7 +114,7 @@ public class UIManager : MonoBehaviour
 
     public void DeactivateAll()
     {
-        foreach(var elem in UIControllerDict)
+        foreach (KeyValuePair<char, UIController> elem in UIControllerDict)
         {
             if (!elem.Value.Activate())
             {

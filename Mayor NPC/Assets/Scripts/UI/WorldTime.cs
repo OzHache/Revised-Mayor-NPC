@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldTime : MonoBehaviour
@@ -11,7 +10,7 @@ public class WorldTime : MonoBehaviour
     private TimeSpan time = TimeSpan.FromMinutes(0);
     public string GetTime() { return time.ToString(@"hh\:mm"); }
     //4am in minutes since midnight
-    private int startTime = 240;
+    private readonly int startTime = 240;
     // Pause Time
     private bool pauseTime = false;
     private bool isNewDay = false;
@@ -28,13 +27,13 @@ public class WorldTime : MonoBehaviour
 
     public static WorldTime GetWorldTime()
     {
-        if(instance == null)
+        if (instance == null)
         {
             //see if there is an instance in the game
-            if(FindObjectOfType<WorldTime>() == null)
+            if (FindObjectOfType<WorldTime>() == null)
             {
                 //add one to the Game Manager
-                instance  = FindObjectOfType<GameManager>().gameObject.AddComponent<WorldTime>();
+                instance = FindObjectOfType<GameManager>().gameObject.AddComponent<WorldTime>();
 
             }
         }
@@ -84,19 +83,19 @@ public class WorldTime : MonoBehaviour
 
         while (true)
         {
-            while (pauseTime )
+            while (pauseTime)
             {
                 if (isNewDay && minutes != startTime)
                 {
                     minutes = startTime;
                 }
                 yield return null;
-                
+
             }
             yield return new WaitForSeconds(.5f);
             minutes++;
             time = TimeSpan.FromMinutes(minutes);
-            if(NewSecondEvent != null)
+            if (NewSecondEvent != null)
             {
                 NewSecondEvent();
             }

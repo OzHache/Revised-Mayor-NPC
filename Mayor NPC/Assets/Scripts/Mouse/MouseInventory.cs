@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,14 +10,14 @@ public class MouseInventory : MonoBehaviour, IDropHandler
 {
     //Static Reference to the Mouse UI
     private static MouseInventory s_mouseInvUI;
-    public static MouseInventory GetMouseInvUI(){ return s_mouseInvUI;}
+    public static MouseInventory GetMouseInvUI() { return s_mouseInvUI; }
     //MouseUI
     private MouseUI m_mouseUI;
 
     //Canvas that holds the sprite for the item being dragged
     [SerializeField] private Canvas m_dragCanvas = null;
     [SerializeField] private RectTransform m_dragIconRect = null;
-  
+
     //Cell we are dragging from
     private InventoryCell m_fromCell;
     //Cell we are over right now
@@ -72,12 +70,12 @@ public class MouseInventory : MonoBehaviour, IDropHandler
         }
     }
     //The cell the mouse is over
-    internal void SetActiveCell(InventoryCell cell = null){m_hoverCell = cell;}
+    internal void SetActiveCell(InventoryCell cell = null) { m_hoverCell = cell; }
 
     #region IconDrag
     internal void PickUp(InventoryCell cell)
     {
-        
+
         m_fromCell = cell;
         //todo: make this add the spirte of the dragable object and then drop it onto another inventory object that will accept it or send it back OR drop on the ground
         m_dragIconRect.GetComponent<Image>().sprite = m_fromCell.item.art;
@@ -88,7 +86,7 @@ public class MouseInventory : MonoBehaviour, IDropHandler
 
     internal void ClearInventory(bool wasDropped)
     {
-        
+
         //remove one from the available
         //todo: eventually make this remove as many as we are dragging
         if (wasDropped)
@@ -105,9 +103,9 @@ public class MouseInventory : MonoBehaviour, IDropHandler
     {
         //return the number of items in the stack
         return 1;
-    }  
+    }
 
-    internal InventoryItem GetItem() {  return m_fromCell.item;  }
+    internal InventoryItem GetItem() { return m_fromCell.item; }
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -118,7 +116,7 @@ public class MouseInventory : MonoBehaviour, IDropHandler
         yield return null;
         m_dragCanvas.gameObject.SetActive(false);
         //see if the item is still in the inventory
-        if(m_fromCell != null)
+        if (m_fromCell != null)
         {
             //Instantiate(m_fromCell.item.)
         }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 [RequireComponent(typeof(Combatant))]
 public class EnemyBehaviour : MonoBehaviour
 {
     //Reference to the player game object
-    [SerializeField]GameObject player;
+    [SerializeField] GameObject player;
     // Enemy vision scalars
     [SerializeField] private float visionRange = 5f;
     public bool canSeePlayer = false;
@@ -31,8 +29,8 @@ public class EnemyBehaviour : MonoBehaviour
         combatant = GetComponent<Combatant>();
         StartCoroutine(LookForPlayer());
 
-        
-        combatant.SetOnDeath(()=>
+
+        combatant.SetOnDeath(() =>
         {
             //Set up the on Death action on the combatant
             PlayerActions action;
@@ -40,7 +38,7 @@ public class EnemyBehaviour : MonoBehaviour
             action.m_keyWord = "Enemies";
             action.m_number = 1;
             QuestManager.GetQuestManager().UpdateQuests(action);
-            
+
             Dropper.GetDropper().Drop(m_loot);
         });
     }
@@ -62,9 +60,11 @@ public class EnemyBehaviour : MonoBehaviour
         while (canSeePlayer)
         {
             if (GameManager.GetGameManager().isGamePaused)
+            {
                 yield return null;
+            }
             //if we are too far to attack, move closer
-            if(Vector3.Distance(transform.position, player.transform.position) > combatant.meleeRange)
+            if (Vector3.Distance(transform.position, player.transform.position) > combatant.meleeRange)
             {
                 MoveToPlayer();
             }
@@ -73,15 +73,15 @@ public class EnemyBehaviour : MonoBehaviour
                 combatant.Melee(player.GetComponent<Combatant>());
             }
             yield return null;
-            
+
         }
         isAttacking = false;
     }
-    
+
     //Move to the players last known position
     private void MoveToPlayer()
     {
-        
+
         transform.position = Vector3.MoveTowards(transform.position, playerLastPosition, speed * Time.deltaTime);
         GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y) * -1 + 50;
     }
@@ -103,7 +103,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(canSeePlayer?activeLookInterval:newLookInterval);
+            yield return new WaitForSeconds(canSeePlayer ? activeLookInterval : newLookInterval);
 
             //direction of the player
             Ray2D ray2D = new Ray2D(transform.position, player.transform.position - transform.position);
@@ -132,7 +132,7 @@ public class EnemyBehaviour : MonoBehaviour
     /// </summary>
     internal void Restart()
     {
-        canSeePlayer = false;   
+        canSeePlayer = false;
     }
 
     /// Basic behaviour: See if player is in visible range, 

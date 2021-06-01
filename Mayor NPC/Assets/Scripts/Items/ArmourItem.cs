@@ -19,5 +19,5 @@ public class ArmourItem : InventoryItem, IEquipment
 
 internal interface IEquipment
 {
-    EquipmentTypes GetEquipmentTypes(); 
+    EquipmentTypes GetEquipmentTypes();
 }

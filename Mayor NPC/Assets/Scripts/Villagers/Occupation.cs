@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
-[CreateAssetMenu(fileName = "Occupation", menuName ="NPC_Occupation")]
+[CreateAssetMenu(fileName = "Occupation", menuName = "NPC_Occupation")]
 
 /* Occupations are scriptable object that designate
  *
@@ -15,5 +14,5 @@ public class Occupation : ScriptableObject
     [Range(0, 12)]
     [SerializeField] private float hours;
 
-    
+
 }

@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
-public class CraftSupplies: UIInteractable
+public class CraftSupplies : UIInteractable
 {
     //Reference to the Inventory Item
     [SerializeField] protected InventoryItem item;

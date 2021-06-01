@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using UnityEngine;
@@ -7,26 +6,30 @@ using UnityEngine;
 public class DialogueLoader : MonoBehaviour
 {
     private static DialogueLoader s_dialogueLoader;
-    
+
     public const string m_path = "Dialogue";
-    private Dictionary<string, DialogueContainer> m_dialogues = new Dictionary<string, DialogueContainer>();
-    public static DialogueLoader GetLoader() 
-    { 
-        if(s_dialogueLoader == null)
+    private readonly Dictionary<string, DialogueContainer> m_dialogues = new Dictionary<string, DialogueContainer>();
+    public static DialogueLoader GetLoader()
+    {
+        if (s_dialogueLoader == null)
         {
             Debug.LogError("There is no DialogueLoader in the scene or it is trying to be accesses before it has been loaded");
             return null;
         }
-        return s_dialogueLoader; 
+        return s_dialogueLoader;
     }
     public DialogueContainer GetDialogueContainerFor(string id)
+    {
+        DialogueContainer container;
+        if (m_dialogues.TryGetValue(id, out container))
         {
-            DialogueContainer container;
-            if (m_dialogues.TryGetValue(id, out container))
-                return container;
-            else
-                return null;
+            return container;
         }
+        else
+        {
+            return null;
+        }
+    }
     private void Awake()
     {
         s_dialogueLoader = this;
@@ -38,7 +41,7 @@ public class DialogueLoader : MonoBehaviour
     {
         //load all from  the given path
         TextAsset[] _xmls = Resources.LoadAll<TextAsset>(path);
-        foreach (var _xml in _xmls)
+        foreach (TextAsset _xml in _xmls)
         {
             //serialize the dialogue contianer
             XmlSerializer serializer = new XmlSerializer(typeof(DialogueContainer));

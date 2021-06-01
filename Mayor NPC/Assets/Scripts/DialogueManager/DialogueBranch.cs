@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 
-public class DialogueBranch 
+public class DialogueBranch
 {
     //Each dialogue branch has the following information on load
     [XmlAttribute("id")]
@@ -16,12 +15,12 @@ public class DialogueBranch
 
 }
 
-public struct Choice 
+public struct Choice
 {
     [XmlElement("ChoiceID")]
     public string m_choiceId;
     [XmlElement("ChoiceText")]
     public string m_choiceText;
-    
-    
+
+
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class TreeCutting : UIInteractable
 {
@@ -13,8 +11,8 @@ public class TreeCutting : UIInteractable
     [SerializeField] private int m_amountWhenFell = 3;
     [SerializeField] private AudioClip m_ChopSound;
     private int m_soundID;
-    
-    
+
+
     //animator
     private Animator animator;
 
@@ -33,25 +31,25 @@ public class TreeCutting : UIInteractable
                 {
                     int amount = m_amountPerHit;
                     hitCount++;
-                    if(hitCount == m_numberOfHits)
+                    if (hitCount == m_numberOfHits)
                     {
                         amount = m_amountWhenFell;
                         animator.SetBool("Cut", true);
-                       GetComponent<CircleCollider2D>().enabled = false;
+                        GetComponent<CircleCollider2D>().enabled = false;
                     }
                     else
                     {
                         animator.SetTrigger("Chop");
-                        
+
                     }
                     SoundManager.GetSoundManager().PlaySound(m_soundID);
                     //Send a message to the Game Manager to take the object
-                    MessageFactory.GetMessageFactory().CreateFloatingMessage("-1 STA",FloatingMessage.MessageCategory.k_Stamina,gameObject);
+                    MessageFactory.GetMessageFactory().CreateFloatingMessage("-1 STA", FloatingMessage.MessageCategory.k_Stamina, gameObject);
                     GameManager.GetGameManager().AddToPlayerInventory(m_item, amount);
                     //send stamina useage to player
                     GameManager.GetGameManager().m_playerController.StaminaUpdate(-1);
                 }
-                if(hitCount == m_numberOfHits)
+                if (hitCount == m_numberOfHits)
                 {
                     GetComponent<BoxCollider2D>().enabled = false;
                 }

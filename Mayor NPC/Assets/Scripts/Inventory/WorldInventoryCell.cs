@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine.EventSystems;
 
 public class WorldInventoryCell : InventoryCell, IEndDragHandler
 {
@@ -32,7 +29,7 @@ public class WorldInventoryCell : InventoryCell, IEndDragHandler
     private void OnMouseOver()
     {
         m_inventory.OnMouseOn();
-        
+
     }
 
 }

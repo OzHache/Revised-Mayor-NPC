@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 /// <summary>
@@ -59,7 +57,7 @@ public class Beacon : UIInteractable
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
     private void UpdateInteractions()
     {
@@ -100,7 +98,7 @@ public class Beacon : UIInteractable
     {
         m_currentAmountNeeded = m_amountOfRequiredItem;
         m_inventoryCell.LockInventory(m_requiredItem, m_amountOfRequiredItem);
-               
+
     }
 
 }

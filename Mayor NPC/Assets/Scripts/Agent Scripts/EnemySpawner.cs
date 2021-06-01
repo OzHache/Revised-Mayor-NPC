@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 public class EnemySpawner : MonoBehaviour
 {
     private static EnemySpawner s_instance;
@@ -37,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
         GameManager.NewDayEvent += StartSpawning;
     }
 
-    public void SpawnWave( int size)
+    public void SpawnWave(int size)
     {
         m_canSpawn = true;
         m_waveSize = size;
@@ -84,12 +83,12 @@ public class EnemySpawner : MonoBehaviour
             Gizmos.color = Color.gray * new Vector4(1, 1, 1, .25f);
             Gizmos.DrawCube(transform.position, m_spawnSpace * 2);
         }
-       
+
     }
 
     IEnumerator SmartPooling()
     {
-        for(int i = m_enemyPool.Count; i < m_amountToPool; i++)
+        for (int i = m_enemyPool.Count; i < m_amountToPool; i++)
         {
             //pause between frames.
             yield return null;
@@ -101,7 +100,7 @@ public class EnemySpawner : MonoBehaviour
 
     internal void Restart()
     {
-        foreach(GameObject enemy in m_enemyPool)
+        foreach (GameObject enemy in m_enemyPool)
         {
             enemy.SetActive(false);
         }
@@ -120,12 +119,12 @@ public class EnemySpawner : MonoBehaviour
     {
         numOfActive = 0;
         bool activeEnemies = false;
-        foreach(GameObject enemy in m_enemyPool)
+        foreach (GameObject enemy in m_enemyPool)
         {
             if (enemy.activeInHierarchy)
             {
                 numOfActive++;
-                activeEnemies =  true;
+                activeEnemies = true;
             }
         }
         return activeEnemies;
@@ -134,12 +133,12 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(m_spawnDelay);
-        int waveSize = m_waveSize -1;
+        int waveSize = m_waveSize - 1;
         while (m_canSpawn)
         {
 
             m_canSpawn = waveSize > 0;
-            foreach(GameObject enemy in m_enemyPool)
+            foreach (GameObject enemy in m_enemyPool)
             {
                 if (!enemy.activeInHierarchy)
                 {
@@ -161,11 +160,11 @@ public class EnemySpawner : MonoBehaviour
                 else
                 {
                     //hard break if we cannot find a safe spot to spawn
-                    
+
                     continue;
-                }              
+                }
             }
-            
+
             yield return new WaitForSeconds(m_spawnDelay);
         }
         m_waveSize = 0;

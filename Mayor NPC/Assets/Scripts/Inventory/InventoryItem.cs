@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "New_Item", menuName = "InventoryItem")]
 public class InventoryItem : ScriptableObject
@@ -26,7 +25,7 @@ public class InventoryItem : ScriptableObject
         {
             return int.MaxValue;
         }
-        else if(isConsumeable)
+        else if (isConsumeable)
         {
             return -1;
         }

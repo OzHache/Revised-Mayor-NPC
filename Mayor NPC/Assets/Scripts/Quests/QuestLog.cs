@@ -1,15 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
-using System;
 
 public class QuestLog : MonoBehaviour
 {
     private TextMeshProUGUI m_text;
     private Quest m_quest;
 
-    public Quest GetQuest(){ return m_quest; }
+    public Quest GetQuest() { return m_quest; }
     private void Awake()
     {
         m_text = GetComponent<TextMeshProUGUI>();
@@ -29,7 +26,7 @@ public class QuestLog : MonoBehaviour
     internal int UpdateQuest(Quest.ActionType action, int amount)
     {
         int left = m_quest.UpdateQuest(action, amount);
-        
+
         UpdateUI();
         return left;
     }

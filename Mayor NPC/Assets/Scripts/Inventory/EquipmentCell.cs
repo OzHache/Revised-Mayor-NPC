@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,12 +19,12 @@ public class EquipmentCell : InventoryCell
         {
             m_lockImage.sprite = m_lockedItem.art;
             //lower the alpha
-            var color = image.color;
+            Color color = image.color;
             m_startingColor = color;
             color.a = 0.25f;
             m_lockImage.color = color;
             //disable the item icon
-            
+
             image.color = Vector4.zero;
         }
 
@@ -49,18 +47,20 @@ public class EquipmentCell : InventoryCell
     }
 
     //referenced from the button on the equipment slot
-     public void OnButtonClick()
+    public void OnButtonClick()
     {
         //this item has not been crafted yet
-        if(item == null)
+        if (item == null)
         {
             string recipie = "To make an " + m_lockedItem.name + " you will need ";
-            var ingredients = m_lockedItem.GetRecipie().Ingredients();
+            List<string> ingredients = m_lockedItem.GetRecipie().Ingredients();
             if (ingredients != null)
-                foreach (var item in ingredients)
+            {
+                foreach (string item in ingredients)
                 {
                     recipie += item;
-                    if (ingredients.IndexOf(item) != ingredients.Count - 1) {
+                    if (ingredients.IndexOf(item) != ingredients.Count - 1)
+                    {
                         recipie += " and ";
                     }
                     else
@@ -68,11 +68,12 @@ public class EquipmentCell : InventoryCell
                         recipie += ".";
                     }
                 }
+            }
 
             //Send a Message for the player to start getting the items they will nee
             GameManager.GetGameManager().m_playerController.Say(recipie);
             //send messages to the quest loaded for each quest to load in
-            foreach(Quest quest in quests)
+            foreach (Quest quest in quests)
             {
                 QuestManager.GetQuestManager().AddQuest(quest);
             }
@@ -86,5 +87,5 @@ public class EquipmentCell : InventoryCell
         image.color = m_startingColor;
         base.AddItem(newItem, amount);
     }
-} 
+}
 

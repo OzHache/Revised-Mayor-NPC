@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Super Class for all buildable Buildings. 
@@ -24,9 +20,9 @@ public class Building : UIInteractable
     private bool m_isNeededItemsSubmitted = false;
 
     //Stages of building
-    public enum BuildingStage { Foundation, Framing, Completed, Destroyed, Empty}
+    public enum BuildingStage { Foundation, Framing, Completed, Destroyed, Empty }
     //Current stage of building
-    [SerializeField]protected BuildingStage currentStage;
+    [SerializeField] protected BuildingStage currentStage;
 
     // Start is called before the first frame update
     void Start()
@@ -99,14 +95,20 @@ public class Building : UIInteractable
                 if (amountOfFoundationItems == null)
                 {
                     if (!interactions.Contains(InteractionTypes.Build) && !interactions.Contains(InteractionTypes.Add))
+                    {
                         m_inventoryCanvas.gameObject.SetActive(false);
+                    }
+
                     AddInteraction(InteractionTypes.Add);
                     return true;
                 }
                 if (m_inventoryCell.numberOfItems <= 0)
                 {
-                    if(!interactions.Contains(InteractionTypes.Build) && !interactions.Contains(InteractionTypes.Add))
-                    AddInteraction(InteractionTypes.Add);
+                    if (!interactions.Contains(InteractionTypes.Build) && !interactions.Contains(InteractionTypes.Add))
+                    {
+                        AddInteraction(InteractionTypes.Add);
+                    }
+
                     m_inventoryCanvas.gameObject.SetActive(false);
                     return true;
                 }
@@ -115,14 +117,20 @@ public class Building : UIInteractable
                 if (amountOfFramingItems == null)
                 {
                     if (!interactions.Contains(InteractionTypes.Build) && !interactions.Contains(InteractionTypes.Add))
+                    {
                         AddInteraction(InteractionTypes.Add);
+                    }
+
                     m_inventoryCanvas.gameObject.SetActive(false);
                     return true;
                 }
                 if (m_inventoryCell.numberOfItems <= 0)
                 {
                     if (!interactions.Contains(InteractionTypes.Build) && !interactions.Contains(InteractionTypes.Add))
+                    {
                         AddInteraction(InteractionTypes.Add);
+                    }
+
                     m_inventoryCanvas.gameObject.SetActive(false);
                     return true;
                 }
@@ -130,7 +138,7 @@ public class Building : UIInteractable
         }
         return false;
     }
-    
+
 
     protected override void Activate(string message)
     {

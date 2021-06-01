@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 /// <summary>
@@ -12,11 +10,11 @@ public class Dropper : MonoBehaviour
     public GameObject m_droppedPrefab;
     public static Dropper GetDropper()
     {
-        if(s_instance == null) 
+        if (s_instance == null)
         {
             //see if there is one already in the scene
             s_instance = FindObjectOfType<Dropper>();
-            if(s_instance == null)
+            if (s_instance == null)
             {
                 Debug.LogError("Ensure there is a Dropper in the game before this is called");
                 return null;
@@ -28,7 +26,9 @@ public class Dropper : MonoBehaviour
     private void Start()
     {
         if (s_instance == null)
+        {
             s_instance = this;
+        }
         else
         {
             Debug.LogError("There can be only one Dropper");
@@ -41,9 +41,9 @@ public class Dropper : MonoBehaviour
         //get the players position
         Transform startDrop = GameManager.GetGameManager().Player.transform;
         //create the parent
-        var parent = Instantiate(new GameObject(), startDrop.position, startDrop.rotation);
+        GameObject parent = Instantiate(new GameObject(), startDrop.position, startDrop.rotation);
         //add the dropped item to the parent
-        var droppedItem = Instantiate(m_droppedPrefab, parent.transform);
+        GameObject droppedItem = Instantiate(m_droppedPrefab, parent.transform);
         //Set up the item to be dropped
         droppedItem.GetComponent<CraftSupplies>().SetupItem(item);
     }

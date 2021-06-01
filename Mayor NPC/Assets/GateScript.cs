@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GateScript : MonoBehaviour
 {
@@ -22,7 +20,7 @@ public class GateScript : MonoBehaviour
             action.m_keyWord = "Gate";
             action.m_number = 1;
             QuestManager.GetQuestManager().UpdateQuests(action);
-            
+
             Destroy(this);
 
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(InventorySystem))]
@@ -20,7 +19,7 @@ public class GameManager : MonoBehaviour
     //Static reference
     public static GameManager GetGameManager()
     {
-        if(gameManager == null)
+        if (gameManager == null)
         {
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
@@ -47,7 +46,7 @@ public class GameManager : MonoBehaviour
         bool enemiesPresent = false;
         //See if there are enemies around
         EnemySpawner[] spawners = FindObjectsOfType<EnemySpawner>();
-        foreach(EnemySpawner spawner in spawners)
+        foreach (EnemySpawner spawner in spawners)
         {
             int numberOfEnemies = 0;
             if (spawner.EnemiesActive(out numberOfEnemies))
@@ -74,7 +73,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(WaitForNewDay());
     }
 
-    internal void PauseAction(bool? willPause )
+    internal void PauseAction(bool? willPause)
     {
         if (willPause == null)
         {
@@ -86,7 +85,7 @@ public class GameManager : MonoBehaviour
             isGamePaused = !isGamePaused;
             //this should be listend to by all movement objects
         }
-        if(GamePaused != null)
+        if (GamePaused != null)
         {
             GamePaused();
         }
@@ -107,7 +106,7 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    
+
     // Start is called before the first frame update
     private void Reset()
     {
@@ -121,7 +120,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 Player = GameObject.FindGameObjectWithTag("Player");
-                
+
             }
         }
         playerInventory = GetComponent<InventorySystem>();
@@ -163,8 +162,10 @@ public class GameManager : MonoBehaviour
         //see if there is available space
         bool spaceAvailable = playerInventory.IsSpaceAvailable(addItem);
 
-        if(spaceAvailable)
+        if (spaceAvailable)
+        {
             playerInventory.AddToInventory(addItem, amount);
+        }
 
         return spaceAvailable;
     }
@@ -173,7 +174,7 @@ public class GameManager : MonoBehaviour
     {
         isGamePaused = UIManager.isUIActive;
         //Activate all elements that need to be paused
-        if(GamePaused != null)
+        if (GamePaused != null)
         {
             GamePaused();
         }

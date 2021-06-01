@@ -1,20 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 
 public class PlayerStatUI : MonoBehaviour
 {
-    [SerializeField]private Slider staminaSlider;
+    [SerializeField] private Slider staminaSlider;
     private float staminaValue;
-    [SerializeField]private Slider healthSlider;
+    [SerializeField] private Slider healthSlider;
     private float healthValue;
     // Start is called before the first frame update
     void Start()
     {
-        
-        
+
+
         PlayerController.StaminaUpdater += UpdateStaminaUIElement;
         PlayerController.HealthUpdater += UpdateHPUIElement;
 
@@ -30,10 +28,10 @@ public class PlayerStatUI : MonoBehaviour
     }
 
 
-    public void UpdateHPUIElement( )
+    public void UpdateHPUIElement()
     {
-        
-        var HP = GameManager.GetGameManager().m_playerController.GetHealth();
+
+        float HP = GameManager.GetGameManager().m_playerController.GetHealth();
         HP = Mathf.Clamp(HP, 0, healthSlider.maxValue);
         healthSlider.value = HP;
         Canvas.ForceUpdateCanvases();
@@ -42,7 +40,7 @@ public class PlayerStatUI : MonoBehaviour
     public void UpdateStaminaUIElement()
     {
 
-        var stamina = GameManager.GetGameManager().m_playerController.getStamina;
+        float stamina = GameManager.GetGameManager().m_playerController.getStamina;
         staminaValue = Mathf.Clamp(stamina, 0, staminaSlider.maxValue);
         staminaSlider.value = staminaValue;
         Canvas.ForceUpdateCanvases();

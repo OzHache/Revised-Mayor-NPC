@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
 public class MouseUI : MonoBehaviour
 {
@@ -18,13 +16,13 @@ public class MouseUI : MonoBehaviour
     private Vector2 m_currentPosition = Vector2.zero;
 
     //reference to the Canvas
-    [SerializeField]private Canvas m_canvas;
-    
+    [SerializeField] private Canvas m_canvas;
+
     //TextMseshPro
-    [SerializeField]private TextMeshProUGUI m_descriptionTMP;
-    [SerializeField]private TextMeshProUGUI m_action_OneTMP;
-    [SerializeField]private TextMeshProUGUI m_action_TwoTMP;
-    [SerializeField]private TextMeshProUGUI m_action_ThreeTMP;
+    [SerializeField] private TextMeshProUGUI m_descriptionTMP;
+    [SerializeField] private TextMeshProUGUI m_action_OneTMP;
+    [SerializeField] private TextMeshProUGUI m_action_TwoTMP;
+    [SerializeField] private TextMeshProUGUI m_action_ThreeTMP;
 
     //References to the player
     private GameObject m_player { get { return GameManager.GetGameManager().Player; } }
@@ -35,15 +33,15 @@ public class MouseUI : MonoBehaviour
     public bool m_isUIActive;
     private Dictionary<UIButtonValues, string> m_UIActions = new Dictionary<UIButtonValues, string>();
     private bool m_isMouseOverUI = false;
-    
-    MouseUI(){ s_mouseUI = this; }   
+
+    MouseUI() { s_mouseUI = this; }
 
     public static MouseUI GetMouseUI()
     {
         if (s_mouseUI == null)
         {
             s_mouseUI = GameObject.Find("MouseObject").GetComponent<MouseUI>();
-            if(s_mouseUI == null)
+            if (s_mouseUI == null)
             {
                 Debug.LogError("No MouseObject");
             }
@@ -62,7 +60,9 @@ public class MouseUI : MonoBehaviour
     {
         //See if the UI needs to stay active
         if (m_canvas.gameObject.activeInHierarchy)
+        {
             SetUIActive();
+        }
         //Check for clicks
         if (Input.GetMouseButtonDown(0))
         {
@@ -71,11 +71,12 @@ public class MouseUI : MonoBehaviour
     }
 
     public void GetObjectAtMouse()
-    { 
+    {
         //see if we can talk about this item
-        if (m_focusItem != null) {
-            var distance = Vector2.Distance(GetMousePosition(), m_focusItem.transform.position);
-            if(distance < 0.25f)
+        if (m_focusItem != null)
+        {
+            float distance = Vector2.Distance(GetMousePosition(), m_focusItem.transform.position);
+            if (distance < 0.25f)
             {
                 GameManager.GetGameManager().m_playerController.TalkAbout(m_focusItem);
             }
@@ -99,45 +100,53 @@ public class MouseUI : MonoBehaviour
     }
 
     //Manage when the mouse is over the UI
-    internal void MouseOver(){ m_isMouseOverUI = true; }
+    internal void MouseOver() { m_isMouseOverUI = true; }
 
-    internal void MouseExit(){ m_isMouseOverUI = false; }
+    internal void MouseExit() { m_isMouseOverUI = false; }
 
     private void SetUIActive()
     {
         //If the focus item is null don't perform this action
         if (m_focusItem == null)
+        {
             return;
+        }
 
         if (m_canvas.gameObject.activeInHierarchy)
         {
             //Check the distance bettween the mouses current position and the UI
-            var mouseDistance = Vector2.Distance(GetMousePosition(), m_focusItem.transform.position);
-            if(mouseDistance > 2.75f)
+            float mouseDistance = Vector2.Distance(GetMousePosition(), m_focusItem.transform.position);
+            if (mouseDistance > 2.75f)
             {
                 m_focusItem = null;
                 m_canvas.gameObject.SetActive(false);
                 return;
             }
-            var playeryDistance = Vector2.Distance(m_player.transform.position, m_focusItem.transform.position);
+            float playeryDistance = Vector2.Distance(m_player.transform.position, m_focusItem.transform.position);
             if (playeryDistance > m_identificationRange)
             {
                 m_canvas.gameObject.SetActive(false);
                 m_focusItem = null;
             }
-            else if(playeryDistance > m_interactableRange)
+            else if (playeryDistance > m_interactableRange)
             {
                 if (!m_canvas.isActiveAndEnabled)
+                {
                     m_canvas.enabled = true;
+                }
+
                 m_descriptionTMP.gameObject.SetActive(true);
                 m_action_OneTMP.transform.parent.gameObject.SetActive(false);
                 m_action_TwoTMP.transform.parent.gameObject.SetActive(false);
                 m_action_TwoTMP.transform.parent.gameObject.SetActive(false);
-            } 
+            }
             else
             {
                 if (!m_canvas.isActiveAndEnabled)
+                {
                     m_canvas.enabled = true;
+                }
+
                 m_descriptionTMP.gameObject.SetActive(true);
                 m_action_OneTMP.transform.parent.gameObject.SetActive(true);
                 m_action_TwoTMP.transform.parent.gameObject.SetActive(true);
@@ -171,11 +180,11 @@ public class MouseUI : MonoBehaviour
     private void UpdateUI(GameObject hoverObject)
     {
         //see if there is a description
-        foreach(MonoBehaviour monoBehaviour in hoverObject.GetComponentsInChildren<MonoBehaviour>())
+        foreach (MonoBehaviour monoBehaviour in hoverObject.GetComponentsInChildren<MonoBehaviour>())
         {
-            if(monoBehaviour is UIInteractable)
+            if (monoBehaviour is UIInteractable)
             {
-                
+
                 m_focusItem = monoBehaviour as UIInteractable;
 
                 m_UIActions = m_focusItem.Identify();
@@ -199,13 +208,13 @@ public class MouseUI : MonoBehaviour
     //Returns the World Location of the mouse
     public Vector2 GetMousePosition(float scale = float.MinValue)
     {
-        if(scale == float.MinValue)
+        if (scale == float.MinValue)
         {
             scale = m_canvas.scaleFactor;
         }
         // get the pixel position of the mouse in the world, convert it to a grid location
         Vector2 pixelPosition = Input.mousePosition;
-        Vector2 worldPos = Camera.main.ScreenToWorldPoint(pixelPosition)* scale;
+        Vector2 worldPos = Camera.main.ScreenToWorldPoint(pixelPosition) * scale;
 
         return worldPos;
     }
@@ -220,14 +229,19 @@ public class MouseUI : MonoBehaviour
     private void SendAction(UIButtonValues buttonValues)
     {
         //If this item is null don't send messages
-        if(m_focusItem == null)
+        if (m_focusItem == null)
+        {
             return;
-        
+        }
+
         string action;
         m_UIActions.TryGetValue(buttonValues, out action);
         if (action == null)
+        {
             return;
-        m_focusItem.SendMessage("Activate",action);
+        }
+
+        m_focusItem.SendMessage("Activate", action);
         //Remoe UI and Deselect Focus Item
         m_canvas.gameObject.SetActive(false);
         m_focusItem = null;
