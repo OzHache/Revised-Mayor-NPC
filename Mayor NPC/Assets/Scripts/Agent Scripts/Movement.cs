@@ -126,7 +126,7 @@ public class Movement : MonoBehaviour
         }
         m_nodes.Reverse();
         //return if we have found a valid path (this should never fail)
-        return m_nodes[m_nodes.Count - 1] == m_destination;
+        return m_nodes.Count > 0 && m_nodes[m_nodes.Count - 1] == m_destination;
     }
 
     private Node GetLowestFScore()

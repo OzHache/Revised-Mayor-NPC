@@ -10,7 +10,13 @@ public class Villager : MonoBehaviour
     [SerializeField] private float m_maxDistance = 1.5f;
     [SerializeField] protected CharacterDialogue m_characterDialogue;
 
-    
+    //-----------------------
+    //Resource inventory management
+    //-----------------------
+    Dictionary<Resource.ResourceType, int> m_resourceNeeds = new Dictionary<Resource.ResourceType, int>();
+    Dictionary<Resource.ResourceType, int> m_resources = new Dictionary<Resource.ResourceType, int>();
+    Dictionary<Resource.ResourceType, int> m_resourceReservations = new Dictionary<Resource.ResourceType, int>();
+
 
 
     //villager information
@@ -37,19 +43,25 @@ public class Villager : MonoBehaviour
 
         gameObject.SetActive(true);
     }
+
     /// <summary>
     /// Moe to s specified Game Object IF I can get there
     /// </summary>
     /// <param name="target"> Destination</param>
     internal Vector3 Move(GameObject target)
     {
-        Vector2 destination = target.transform.position;
+        return Move(target.transform.position);
+    }
+    internal Vector3 Move(Vector3 target)
+    {
+        Vector2 destination = target;
         if (m_movement.CanGetToDestination(destination, m_maxDistance))
         {
             StartCoroutine(MoveTo(destination));
         }
         return m_movement.GetDestination();
     }
+
     /// <summary>
     /// Coroutine to move to target with Transform Translate
     /// </summary>
@@ -77,26 +89,81 @@ public class Villager : MonoBehaviour
         }
     }
 
+    //clear all the current needed resource items
     internal void ClearPendingResourceNeeds()
     {
-        throw new NotImplementedException();
+        m_resourceNeeds.Clear();
     }
 
     //return deficiencies if I don't have enough of this resource 
     internal int ReserveResource(Resource.ResourceType resource, int amount)
     {
-        throw new NotImplementedException();
+        //see how much I am currently short
+        int shortAmount = 0;
+        m_resourceReservations.TryGetValue(resource, out shortAmount);
+        int onHand = 0;
+        m_resources.TryGetValue(resource, out onHand);
+
+        //add amount I need to increase my short by
+        shortAmount += amount;
+        //set  my reservation for this item the new short amount
+        m_resourceReservations[resource] = shortAmount;
+        //return how much I will need
+        return onHand - shortAmount;
     }
 
     //returns true if I have enough of this resource to statisfy all reservations
-    internal bool HasReservedResource(Resource.ResourceType m_resourceType)
+    internal bool HasReservedResource(Resource.ResourceType resourceType)
     {
-        throw new NotImplementedException();
+        //if I have reservations return if I have enough resources to satisfy reservations
+        if (m_resourceReservations.TryGetValue(resourceType, out int amount))
+        {
+            int amountOnHand = 0;
+            m_resources.TryGetValue(resourceType, out amountOnHand);
+            //return if I have atleast as much as I need
+            return amountOnHand >= amount;
+        }
+        //I have no reservations for this resource type
+        return true;
     }
 
     internal bool ArrivedAtDestination(Vector3 destination)
     {
         //we have arrived and we have arrived at the destination we were looking for
         return m_movement.didArrive() && m_movement.GetDestination() == destination;
+    }
+    //returns the amount in reserve for this item
+    internal int GetReservationsFor(Resource.ResourceType resourceType)
+    {
+        if (m_resourceReservations.TryGetValue(resourceType, out int amount))
+        {
+            return amount;
+        }
+        return 0;
+    }
+    /// <summary>
+    /// Returns the full amount of a resource clearing the space. 
+    /// THIS MUST BE RELOADED
+    /// </summary>
+    /// <param name="resourceToGet"> Resource to get</param>
+    /// <returns>int amount of resource </returns>
+    internal int GetAllOfResource(Resource.ResourceType resourceToGet)
+    {
+        if(m_resources.TryGetValue(resourceToGet, out int amount))
+        {
+            return amount;
+        }
+        return 0;
+    }
+
+    //Add resources back to inventory
+    internal void AddResource(Resource.ResourceType resourceType, int amountReturned)
+    {
+        //if there is an amount already in the resource add that to the amount returned
+        if (m_resources.TryGetValue(resourceType, out int amount))
+        {
+            amountReturned += amount;
+        }
+        m_resources[resourceType] = amountReturned;
     }
 }
