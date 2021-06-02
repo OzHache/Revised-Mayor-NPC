@@ -21,6 +21,9 @@ public class Want : MonoBehaviour
     [SerializeField, TextArea(0, 6),
         Tooltip("current Condition of the want")]
     private string m_currentCondition;
+
+   
+
     [SerializeField, Tooltip("Level of detail: \n" +
         "-none = none \n" +
         "-simple = need level & calculated need\n" +
@@ -126,6 +129,17 @@ public class Want : MonoBehaviour
     #endregion
 
     #region PublicFunctions
+    /// <summary>
+    /// Initialize will populate the values based on the Data Pack and set call back to this Task
+    /// </summary>
+    /// <param name="m_Data"></param>
+    /// <param name="wealth"></param>
+    internal void Initialize(WantData m_Data, ITasks task)
+    {
+        throw new NotImplementedException();
+    }
+
+
     /// <summary>
     /// satisfy a want by amount
     /// </summary>
@@ -290,8 +304,6 @@ public class Want : MonoBehaviour
     }
 
     #endregion
-
-
 }
 
 [Serializable]

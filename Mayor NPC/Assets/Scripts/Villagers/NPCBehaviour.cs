@@ -145,9 +145,7 @@ public class NPCBehaviour : MonoBehaviour
                     m_currentStep.m_location.Transact(amountPerTransAction, ref workAmount, out int resourceGenerated);
                     m_activity += string.Format("\nAdding {0} resource of {1} type to the npc", resourceGenerated, m_currentStep.m_location.GetResource());
                     m_villager.AddResource(m_currentStep.m_location.GetResource(), resourceGenerated);
-                    
                 }
-
                 break;
             }
 
@@ -156,11 +154,7 @@ public class NPCBehaviour : MonoBehaviour
             //amount needed
             int amountNeeded = m_villager.GetReservationsFor(m_currentStep.m_resourceType);
             
-            
-            
             //Attempt to transact for the amount required
-
-
             if (m_currentStep.m_location.Transact(amountNeeded, ref allOfResource, out int amountReturned))
             {
                 //push new resources
@@ -169,7 +163,7 @@ public class NPCBehaviour : MonoBehaviour
             else
             {
                 //error because we did not have enough for the transaction This should not happen
-                message = string.Format("\nAn error has occured for {0} resource. We failt to satisfy a reservation of {1} because we needed {2} of {3} but only had {4}"
+                message = string.Format("\nAn error has occured for {0} resource. We failed to satisfy a reservation of {1} because we needed {2} of {3} but only had {4}"
                     , m_currentStep.m_resourceType.ToString()
                     , m_villager.GetReservationsFor(m_currentStep.m_resourceType).ToString()
                     , amountNeeded.ToString()
