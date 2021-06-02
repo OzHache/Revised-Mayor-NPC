@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Villager : MonoBehaviour
@@ -7,6 +9,10 @@ public class Villager : MonoBehaviour
     [SerializeField] private float m_speed = 1.0f;
     [SerializeField] private float m_maxDistance = 1.5f;
     [SerializeField] protected CharacterDialogue m_characterDialogue;
+
+    
+
+
     //villager information
 
     // Start is called before the first frame update
@@ -35,13 +41,14 @@ public class Villager : MonoBehaviour
     /// Moe to s specified Game Object IF I can get there
     /// </summary>
     /// <param name="target"> Destination</param>
-    internal void Move(GameObject target)
+    internal Vector3 Move(GameObject target)
     {
         Vector2 destination = target.transform.position;
         if (m_movement.CanGetToDestination(destination, m_maxDistance))
         {
             StartCoroutine(MoveTo(destination));
         }
+        return m_movement.GetDestination();
     }
     /// <summary>
     /// Coroutine to move to target with Transform Translate
@@ -68,5 +75,28 @@ public class Villager : MonoBehaviour
                 }
             }
         }
+    }
+
+    internal void ClearPendingResourceNeeds()
+    {
+        throw new NotImplementedException();
+    }
+
+    //return deficiencies if I don't have enough of this resource 
+    internal int ReserveResource(Resource.ResourceType resource, int amount)
+    {
+        throw new NotImplementedException();
+    }
+
+    //returns true if I have enough of this resource to statisfy all reservations
+    internal bool HasReservedResource(Resource.ResourceType m_resourceType)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal bool ArrivedAtDestination(Vector3 destination)
+    {
+        //we have arrived and we have arrived at the destination we were looking for
+        return m_movement.didArrive() && m_movement.GetDestination() == destination;
     }
 }

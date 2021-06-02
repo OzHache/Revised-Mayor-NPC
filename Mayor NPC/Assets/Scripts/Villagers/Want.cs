@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+
 public enum LevelOfDetailLogging { k_none, k_simple, k_verbose }
 public class Want : MonoBehaviour
 {
     //The raw value for how much we need this want
     private float m_need = 0.0f;
+    
+    [SerializeField, 
+        Tooltip("This is the thing that we have a want for")] 
+    private Desireable m_desireable;
+    public Resource.ResourceType GetDesireable() => m_desireable.m_deisredResource;
+    public int GetDesiredAmount() => m_desireable.m_desiredAmount;
 
     #region InspectorLogging
+    //----------------------------------------
     [Header("Current condition")]
-    [SerializeField, TextArea,
+    //----------------------------------------
+    [SerializeField, TextArea(0, 6),
         Tooltip("current Condition of the want")]
     private string m_currentCondition;
     [SerializeField, Tooltip("Level of detail: \n" +
@@ -24,6 +33,8 @@ public class Want : MonoBehaviour
     [SerializeField,
         Tooltip("Name of the want in game", order = 3)]
     private string m_name;
+    //Getter for the name
+    public string GetName(){ return m_name; }
 
     #region CycleFields
     [Header("Cycles")]
@@ -69,15 +80,23 @@ public class Want : MonoBehaviour
     #endregion
 
     #region CalculationFields
-
+    //----------------------------------------
     [Space(2)]
     [Header("Need calculations")]
+    //----------------------------------------
     [SerializeField, Range(0.0f, 1.0f), Delayed,
         Tooltip("Weight considered when calculating preference for need")]
     private float m_weight;
+    //Calculated Need
+    public float m_calculatedNeed { get; private set; }
+
 
     //Interpreted Need Level
     private enum NeedLevel { k_normal, k_urgent, k_critical }
+
+    /// <summary>
+    /// Calculated field to determine the current Need Level
+    /// </summary>
     private NeedLevel m_needLevel
     {
         get
@@ -115,16 +134,23 @@ public class Want : MonoBehaviour
     {
         //clamp the need to no lower than 0
         m_need = Mathf.Clamp(m_need -= amount, 0.0f, float.MaxValue);
+        CalculateNeed();
     }
-    
+
+    #endregion
+
+
+    #region PrivateFunction
+
     /// <summary>
     /// calculates the need based on the values that have been tuned
+    /// Is Automatically called on each new cycle or when a the need is being satisfied
     /// </summary>
     /// <returns></returns>
-    public float CalculatedNeed()
+    private void CalculateNeed()
     {
         //normal need is need  *  1 + weight
-        float calcNeed = m_need *(1 + m_weight);
+        float calcNeed = m_need * (1 + m_weight);
         //Urgent need is m_need * 1 + urgentNeed
         if (m_needLevel >= NeedLevel.k_urgent)
             calcNeed += m_need * m_urgentNeed;
@@ -132,17 +158,13 @@ public class Want : MonoBehaviour
         if (m_needLevel == NeedLevel.k_critical)
             calcNeed += m_need * m_criticalNeed;
 
-        return calcNeed;
+        m_calculatedNeed = calcNeed;
     }
-    #endregion
-
-
-    #region PrivateFunction
 
     /// <summary>
     /// Status updater gets called every frame and updates thier information to the inspector activity log
     /// </summary>
-     
+
     private void UpdateStatus()
     {
         switch (m_detailLevel)
@@ -164,7 +186,7 @@ public class Want : MonoBehaviour
         m_currentCondition = string.Format(
             "Need Level: {0}\n" +
             "Raw Need: {1}\n" +
-            "Base weight of {2} : {3}"
+            "Base weight of {2} : {3}\n"
             , m_needLevel.ToString()
             , m_need
             , m_weight
@@ -174,15 +196,15 @@ public class Want : MonoBehaviour
         if(m_needLevel > NeedLevel.k_normal)
         {
             m_currentCondition += string.Format(
-                "Urgent Need of {0} Added : {1}", m_urgentLevel, m_urgentLevel * m_need );
+                "Urgent Need of {0} Added : {1}\n", m_urgentNeed, m_urgentNeed * m_need );
         }
         if(m_needLevel > NeedLevel.k_urgent)
         {
             m_currentCondition += string.Format(
-                "Critical Need of {0} Added : {1}", m_criticalLevel, m_urgentLevel * m_need);
+                "Critical Need of {0} Added : {1}\n", m_criticalNeed, m_criticalNeed * m_need);
         }
         //final calculated Need
-        m_currentCondition += string.Format("Calculated Need: {0}", CalculatedNeed().ToString());
+        m_currentCondition += string.Format("Calculated Need: {0}\n", m_calculatedNeed);
     }
 
     //gather the essential information
@@ -192,7 +214,7 @@ public class Want : MonoBehaviour
             "Need Level: {0}\n" +
             "Calculated Need: {1}"
             , m_needLevel.ToString()
-            , CalculatedNeed().ToString());
+            , m_calculatedNeed.ToString());
     }
 
     /// <summary>
@@ -261,7 +283,7 @@ public class Want : MonoBehaviour
 
         while (true)
         {
-
+            CalculateNeed();
             yield return new WaitForSeconds(m_secondsPerCycle);
             m_need += m_needIncreasePerCycle;
         }
@@ -270,4 +292,11 @@ public class Want : MonoBehaviour
     #endregion
 
 
+}
+
+[Serializable]
+public struct Desireable
+{
+    public Resource.ResourceType m_deisredResource;
+    public int m_desiredAmount;
 }

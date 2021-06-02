@@ -8,11 +8,17 @@
 public class Occupation : ScriptableObject
 {
     [Tooltip("Can be any location that the job requires")]
-    [SerializeField] private Transform location;
+    [SerializeField] private Transform m_location;
 
     [Tooltip("How long the job should last")]
     [Range(0, 12)]
-    [SerializeField] private float hours;
+    [SerializeField] private float m_hours;
+    [SerializeField,
+        Tooltip("Resource Generated at this location for the worker")]
+    private Resource m_workerResource;
+    [SerializeField,
+       Tooltip("Resource Generated at this location for the customer")]
+    private Resource m_customerResource;
 
 
 }

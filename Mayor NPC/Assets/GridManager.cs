@@ -39,7 +39,7 @@ public class GridManager : MonoBehaviour
         { Layers.k_obstacles, "Obstacles" }
     };
     //look up for all maps
-    private Dictionary<string, Tilemap> m_tileMaps;
+    private Dictionary<string, Tilemap> m_tileMaps = new Dictionary<string, Tilemap>();
 
     /// <summary>
     /// Set up the maps

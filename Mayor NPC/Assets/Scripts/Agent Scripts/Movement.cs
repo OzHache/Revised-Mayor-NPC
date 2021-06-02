@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -47,6 +48,11 @@ public class Movement : MonoBehaviour
         Vector2 location = m_nodes[0].location;
         m_nodes.RemoveAt(0);
         return location;
+    }
+
+    internal Vector3 GetDestination()
+    {
+        return m_destination.location;
     }
 
     public bool CanGetToDestination(Vector3 destination, float maxDistance)
