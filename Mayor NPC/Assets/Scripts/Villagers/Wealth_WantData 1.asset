@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba6dad245ed09ca4e91c864342ad2829, type: 3}
+  m_Name: Wealth_WantData 1
+  m_EditorClassIdentifier: 
+  m_desireable:
+    m_deisredResource: 0
+    m_desiredAmount: 10
+  m_name: Wealth
+  m_staticNeed: 1
+  m_secondsPerCycle: 0
+  m_needIncreasePerCycle: 0
+  m_urgentLevel: 50
+  m_urgentNeed: 0.25
+  m_criticalLevel: 100
+  m_criticalNeed: 0.5
+  m_weight: 0.15

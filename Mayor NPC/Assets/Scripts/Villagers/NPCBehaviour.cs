@@ -10,16 +10,19 @@ public class NPCBehaviour : MonoBehaviour
     //Villager attached to this same gameobject
     private Villager m_villager;
 
-    [TextArea, InspectorName("Activity"), 
+    [TextArea(minLines:0, maxLines:15), InspectorName("Activity"), 
         Tooltip("What am I doing right now")]
     
     public string m_activity;
+    [SerializeField] private bool m_clearOnFinishStep;
 
     [SerializeField, 
         Tooltip("Assigned Job, can be hard coded or they will look for an open job if they need money")]
     private Occupation m_occupation;
     //collection of Want components
     private List<Want> m_wants = new List<Want>();
+    //collection of Want components set to be removed
+    private List<Want> m_wantsToRemove = new List<Want>();
     //Dynamic list of locations that generate resources
     List<Location> m_locations = new List<Location>();
 
@@ -43,6 +46,11 @@ public class NPCBehaviour : MonoBehaviour
     {
         if(!m_wants.Contains(want))
             m_wants.Add(want);
+        //if we don't have a plan, check my wants
+        if(m_plan.Count == 0)
+        {
+            CheckWants();
+        }
     }
 
     private void CheckWants()
@@ -61,6 +69,11 @@ public class NPCBehaviour : MonoBehaviour
         if (m_wants.Count > 0)
             //find a location for my top priority
             FindLocation();
+    }
+
+    internal void RemoveWant(Want want)
+    {
+        m_wantsToRemove.Add(want);
     }
 
     //Identify locations that the NPC is aware of that generate resources for thier need
@@ -90,11 +103,35 @@ public class NPCBehaviour : MonoBehaviour
         //while there are still steps needed to be taken
         while(m_plan.Count > 0)
         {
-            //check if I have satisfied this step
-            if(m_villager.HasReservedResource(m_plan[0].m_location.GetResource()))
+            //check if I have satisfied this step (I have the reserved resources or I have the amount already on hand)
+
+            if(m_plan[0].m_location == null || m_villager.HasReservedResource(m_plan[0].m_location.GetResource()))
             {
+                if (m_clearOnFinishStep)
+                {
+                    m_activity = string.Empty;
+                }
                 m_activity += "\nFinshed step";
-                //then I have finished this step
+
+
+                //check over all the wants and try to update them as long as I am not working with a resource I already own
+                if (m_plan[0].m_location != null)
+                {
+                    foreach (var want in m_wants)
+                    {
+                        want.SatisfyBy(m_plan[0].m_amount, m_plan[0].m_location.GetResource());
+                    }
+                    if (m_wantsToRemove.Count > 0)
+                    {
+                        //clear satisfied wants
+                        foreach (var want in m_wantsToRemove)
+                        {
+                            m_wants.Remove(want);
+                        }
+                        m_wantsToRemove.Clear();
+                    }
+                }
+               //then I have finished this step
                 m_plan.RemoveAt(0);
             }
             //otherwise, go to the location for this step and trade resources for what I need
@@ -107,7 +144,8 @@ public class NPCBehaviour : MonoBehaviour
                 yield return new WaitUntil(()=> m_currentStep == null );
             }
         }
-
+        //check for wants
+        CheckWants();
     }
 
     private IEnumerator PerfromStep()
@@ -238,8 +276,6 @@ public class NPCBehaviour : MonoBehaviour
                 //if this location generates 
                 if (location.GetResource() == resource)
                 {
-                   /* message = string.Format("\nFound a location for {0} at {1}", resource, location.transform.position.ToString());
-                    m_activity += message;*/
                     locations.Add(location);
                 }
             }
@@ -279,7 +315,6 @@ public class NPCBehaviour : MonoBehaviour
             return true;
 
         } 
-
     }   
 }
 

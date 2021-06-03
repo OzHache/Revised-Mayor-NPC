@@ -5,14 +5,23 @@ using UnityEngine;
 public enum LevelOfDetailLogging { k_none, k_simple, k_verbose }
 public class Want : MonoBehaviour
 {
+    [SerializeField] WantData m_data;
+    private ITasks m_task;
+
     //The raw value for how much we need this want
     private float m_need = 0.0f;
-    
-    [SerializeField, 
-        Tooltip("This is the thing that we have a want for")] 
-    private Desireable m_desireable;
-    public Resource.ResourceType GetDesireable() => m_desireable.m_deisredResource;
-    public int GetDesiredAmount() => m_desireable.m_desiredAmount;
+    //Coroutine refrence for the cycle
+    private Coroutine m_cycle;
+
+    //Calculated Need
+    public float m_calculatedNeed { get; private set; }
+
+    //Interpreted Need Level
+
+    /// <summary>
+    /// Three levels of need: normal, urgent, critical
+    /// </summary>
+    private enum NeedLevel { k_normal, k_urgent, k_critical }
 
     #region InspectorLogging
     //----------------------------------------
@@ -29,73 +38,22 @@ public class Want : MonoBehaviour
         "-simple = need level & calculated need\n" +
         "-verbose = all details")]
     private LevelOfDetailLogging m_detailLevel;
+    private int? m_OverrideAmountWanted;
 
     #endregion
 
-    //name of the want
-    [SerializeField,
-        Tooltip("Name of the want in game", order = 3)]
-    private string m_name;
-    //Getter for the name
-    public string GetName(){ return m_name; }
+    //Getters for m_data
+    public Resource.ResourceType GetDesireable() => m_data.GetDesireable();
+    public int GetDesiredAmount()=> m_OverrideAmountWanted ?? m_data.GetDesiredAmount();   
+    public string GetName()=> m_data.GetName();
 
-    #region CycleFields
-    [Header("Cycles")]
-    [SerializeField,
-        Tooltip("Static Needs have a default value that needs to be met and when it is met they will no longer consider this need.\n" +
-        "DEBUG CHANGEABLE.\n" +
-        "CHANGES DO NOT PERSIST BUT CAN BE DYNAMICLY CHANGED HERE FOR TESTING", order = 1)]
-    private bool m_staticNeed;
+    internal void SetDesireAmount(int amount)
+    {
+        m_OverrideAmountWanted = amount;
+    }
 
-    [SerializeField, Delayed,
-        Tooltip("Seconds for each cycle")]
-    private float m_secondsPerCycle;
-
-    [SerializeField, Range(0.0f, 10.0f), Delayed,
-        Tooltip("How much need is added per cycle")]
-    private float m_needIncreasePerCycle;
-    //Coroutine refrence for the cycle
-    private Coroutine m_cycle;
-
-    #endregion
-
-    #region NeedLevels
-    /// <summary>
-    /// Three levels of need: normal, urgent, critical
-    /// </summary>
-
-    //URGENT 
-    [SerializeField, Delayed,
-         Tooltip("Point at which the need will be considered Urgent")]
-    private float m_urgentLevel;
-    [SerializeField, Range(0.0f, 1.0f), Delayed,
-         Tooltip("Additional percent when considering this an Urgent Need")]
-    private float m_urgentNeed;
-
-    //CRITICAL
-    [SerializeField, Delayed,
-         Tooltip("Point at which the need will be considered Critical")]
-    private float m_criticalLevel;
-    [SerializeField, Range(0.0f, 1.0f), Delayed,
-         Tooltip("Additional percent when considering this an Critical Need")]
-    private float m_criticalNeed;
-
-    #endregion
 
     #region CalculationFields
-    //----------------------------------------
-    [Space(2)]
-    [Header("Need calculations")]
-    //----------------------------------------
-    [SerializeField, Range(0.0f, 1.0f), Delayed,
-        Tooltip("Weight considered when calculating preference for need")]
-    private float m_weight;
-    //Calculated Need
-    public float m_calculatedNeed { get; private set; }
-
-
-    //Interpreted Need Level
-    private enum NeedLevel { k_normal, k_urgent, k_critical }
 
     /// <summary>
     /// Calculated field to determine the current Need Level
@@ -106,21 +64,18 @@ public class Want : MonoBehaviour
         {
             switch (m_need)
             {                
-                case float n when m_need >= m_urgentLevel && m_need < m_criticalLevel:  return NeedLevel.k_urgent;      //return urgent
-                case float n when m_need >= m_criticalLevel:                            return NeedLevel.k_critical;    //return critical
-                default:                                                                return NeedLevel.k_normal;      //return normal
+                case float n when m_need >= m_data.GetUrgentLevel() && m_need < m_data.GetCriticalLevel():  
+                    return NeedLevel.k_urgent;      //return urgent
+                case float n when m_need >= m_data.GetCriticalLevel():                            
+                    return NeedLevel.k_critical;    //return critical
+                default:                                                               
+                    return NeedLevel.k_normal;      //return normal
             }
         }
     }
     #endregion
 
     #region UnityMessages
-    private void Start()
-    {
-        GetComponent<NPCBehaviour>().AddWant(this);
-        StartCoroutine(DebugCheckChange());
-        m_cycle = StartCoroutine(WantCycle());
-    }
     private void Update()
     {
         UpdateStatus();
@@ -134,9 +89,14 @@ public class Want : MonoBehaviour
     /// </summary>
     /// <param name="m_Data"></param>
     /// <param name="wealth"></param>
-    internal void Initialize(WantData m_Data, ITasks task)
+    internal void Initialize(WantData data, ITasks task)
     {
-        throw new NotImplementedException();
+        m_data = data;
+        m_task = task;
+
+        GetComponent<NPCBehaviour>().AddWant(this);
+        StartCoroutine(DebugCheckChange());
+        m_cycle = StartCoroutine(WantCycle());
     }
 
 
@@ -144,10 +104,15 @@ public class Want : MonoBehaviour
     /// satisfy a want by amount
     /// </summary>
     /// <param name="amount">amount to satisfy need. Will drop the overall need value </param>
-    public void SatisfyBy(int amount)
+    public void SatisfyBy(int amount, Resource.ResourceType type)
     {
-        //clamp the need to no lower than 0
-        m_need = Mathf.Clamp(m_need -= amount, 0.0f, float.MaxValue);
+        //check that this want cares about this resource type
+        if (type == m_data.GetDesireable())
+        {
+            m_task.Satisfy(m_data.GetDesireable());
+            //clamp the need to no lower than 0
+            m_need = Mathf.Clamp(m_need -= amount, 0.0f, float.MaxValue);
+        } 
         CalculateNeed();
     }
 
@@ -155,6 +120,15 @@ public class Want : MonoBehaviour
 
 
     #region PrivateFunction
+    /// <summary>
+    /// Destroy this component and remove it from the NPC Behaviours
+    /// </summary>
+    internal void SetToDestruct()
+    {
+        //tell the NPC behaviour to forget this 
+        GetComponent<NPCBehaviour>().RemoveWant(this);
+        Destroy(this, .01f);
+    }
 
     /// <summary>
     /// calculates the need based on the values that have been tuned
@@ -164,13 +138,13 @@ public class Want : MonoBehaviour
     private void CalculateNeed()
     {
         //normal need is need  *  1 + weight
-        float calcNeed = m_need * (1 + m_weight);
+        float calcNeed = m_need * (1 + m_data.GetWeight());
         //Urgent need is m_need * 1 + urgentNeed
         if (m_needLevel >= NeedLevel.k_urgent)
-            calcNeed += m_need * m_urgentNeed;
+            calcNeed += m_need * m_data.GetUrgentNeed();
         //critical need is (m_need + urgent) * 1 * cricitalNeed
         if (m_needLevel == NeedLevel.k_critical)
-            calcNeed += m_need * m_criticalNeed;
+            calcNeed += m_need * m_data.GetCriticalNeed();
 
         m_calculatedNeed = calcNeed;
     }
@@ -178,7 +152,6 @@ public class Want : MonoBehaviour
     /// <summary>
     /// Status updater gets called every frame and updates thier information to the inspector activity log
     /// </summary>
-
     private void UpdateStatus()
     {
         switch (m_detailLevel)
@@ -193,6 +166,7 @@ public class Want : MonoBehaviour
                 break;
         }
     }
+
     //gather all information
     private void VerboseLogging()
     {
@@ -203,19 +177,19 @@ public class Want : MonoBehaviour
             "Base weight of {2} : {3}\n"
             , m_needLevel.ToString()
             , m_need
-            , m_weight
-            , m_need * m_weight
+            , m_data.GetWeight()
+            , m_need * m_data.GetWeight()
             );
         //need level calculations
         if(m_needLevel > NeedLevel.k_normal)
         {
             m_currentCondition += string.Format(
-                "Urgent Need of {0} Added : {1}\n", m_urgentNeed, m_urgentNeed * m_need );
+                "Urgent Need of {0} Added : {1}\n", m_data.GetUrgentNeed(), m_data.GetUrgentNeed() * m_need );
         }
         if(m_needLevel > NeedLevel.k_urgent)
         {
             m_currentCondition += string.Format(
-                "Critical Need of {0} Added : {1}\n", m_criticalNeed, m_criticalNeed * m_need);
+                "Critical Need of {0} Added : {1}\n", m_data.GetCriticalNeed(), m_data.GetCriticalNeed() * m_need);
         }
         //final calculated Need
         m_currentCondition += string.Format("Calculated Need: {0}\n", m_calculatedNeed);
@@ -238,9 +212,9 @@ public class Want : MonoBehaviour
     private IEnumerator DebugCheckChange()
     {
         //list of changes to check
-        bool staticNeed = m_staticNeed;
-        float urgentLevel = m_urgentLevel;
-        float criticalLevel = m_criticalLevel;
+        bool staticNeed = m_data.IsStatic();
+        float urgentLevel = m_data.GetUrgentLevel();
+        float criticalLevel = m_data.GetCriticalLevel();
 
         while(true)
         {
@@ -249,35 +223,35 @@ public class Want : MonoBehaviour
                 {
                     //can be extended to check for any changed values, This is not production and is intended for dubug changes ONLY
                     return
-                    m_staticNeed != staticNeed ||
-                    m_urgentLevel != urgentLevel ||
-                    m_criticalLevel != criticalLevel;
+                    m_data.IsStatic() != staticNeed ||
+                    m_data.GetUrgentLevel() != urgentLevel ||
+                    m_data.GetCriticalLevel() != criticalLevel;
                 });
             //trigger changes that would have happened at the start of the game
 
             //m_static determines if this want is cycle driven or if they have a static  want level
-            if (m_staticNeed != staticNeed)
+            if (m_data.IsStatic() != staticNeed)
             {
                 if (m_cycle != null)
                 {
                     StopCoroutine(m_cycle);                 //Killing this will ensure that the need will start the cycle in the correct condition
                 }
                 m_cycle = StartCoroutine(WantCycle());      //This will auto kill if this is a static need
-                staticNeed = m_staticNeed;
+                staticNeed = m_data.IsStatic();
             }
             //Urgent level changes, this cannot be greater than critical
-            if(m_urgentLevel != urgentLevel)
+            if(m_data.GetUrgentLevel() != urgentLevel)
             {
                 //this cannot be higher than cricital 
-                m_urgentLevel = Mathf.Clamp(m_urgentLevel, 0, Mathf.Clamp(m_criticalLevel - float.Epsilon, 0, float.MaxValue));
-                urgentLevel = m_urgentLevel;
+                m_data.SetUrgentLevel(Mathf.Clamp(m_data.GetUrgentLevel(), 0, Mathf.Clamp(m_data.GetCriticalLevel() - float.Epsilon, 0, float.MaxValue)));
+                urgentLevel = m_data.GetUrgentLevel();
             }
             //Critical level changes, this cannot be less than urgent
-            if (m_criticalLevel != criticalLevel)
+            if (m_data.GetCriticalLevel() != criticalLevel)
             {
                 //this cannot be higher than cricital 
-                m_criticalLevel = Mathf.Clamp(m_criticalLevel, m_urgentLevel + float.Epsilon, float.MaxValue);
-                criticalLevel = m_criticalLevel;
+                m_data.SetCriticalLevel( Mathf.Clamp(m_data.GetCriticalLevel(), m_data.GetUrgentLevel() + float.Epsilon, float.MaxValue));
+                criticalLevel = m_data.GetCriticalLevel();
             }
 
         }
@@ -290,7 +264,7 @@ public class Want : MonoBehaviour
     private IEnumerator WantCycle()
     {
         //if this is a static need cancle
-        if (m_staticNeed)
+        if (m_data.IsStatic())
         {
             yield break;
         }
@@ -298,8 +272,8 @@ public class Want : MonoBehaviour
         while (true)
         {
             CalculateNeed();
-            yield return new WaitForSeconds(m_secondsPerCycle);
-            m_need += m_needIncreasePerCycle;
+            yield return new WaitForSeconds(m_data.GetCycleDelay());
+            m_need += m_data.GetIncreasePerCycle();
         }
     }
 
